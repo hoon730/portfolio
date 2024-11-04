@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import Header from "../components/home/Header";
-
 import { BsQrCode } from "react-icons/bs";
+
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 const Container = styled.section`
   position: relative;
   z-index: 1;
+  cursor: url("/img/scanner_black2.png"), progress;
 `;
 
 const Inner = styled.div`
@@ -14,14 +17,18 @@ const Inner = styled.div`
   z-index: 1;
 `;
 
-const Title = styled.span`
+const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 70px;
+  margin: 27px 0;
   font-family: "PT Mono", monospace;
   letter-spacing: 1px;
   margin-bottom: 80px;
+  overflow: hidden;
+  span {
+    transform: translateY(100%);
+  }
 `;
 
 const DateBox = styled.div`
@@ -82,7 +89,7 @@ const NameRight = styled.div`
   }
 `;
 
-const BarcodeBox = styled.div`
+const TextBox = styled.div`
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -99,18 +106,45 @@ const Text = styled.span`
   font-weight: 300;
   letter-spacing: 1px;
 `;
+
+const BarcodeBox = styled.div`
+  position: relative;
+  overflow: hidden;
+`;
+
 const Barcode = styled.span`
   font-size: 150px;
   font-family: "Libre Barcode 39", system-ui;
 `;
 
+// 레이저 스타일
+const Laser = styled.div`
+  position: absolute;
+  top: 30%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 7px;
+  background: rgba(255, 89, 0, 0.65);
+  box-shadow: 0 0 14px rgba(255, 0, 0, 1);
+  display: none;
+`;
+
 const Home = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const tl = gsap.timeline();
+    tl.to(containerRef.current, {});
+  });
 
   return (
     <Container>
       <Header />
-      <Inner className="inner">
-        <Title>FRONTEND DEVELOPER</Title>
+      <Inner ref={containerRef} className="inner">
+        <Title className="title">
+          <span>FRONTEND DEVELOPER</span>
+        </Title>
         <DateBox>
           <Date>DATE : 2024-12-09</Date>
           <Category>CATEGORY : PORTFOLIO</Category>
@@ -127,10 +161,13 @@ const Home = () => {
             <span>HOON</span>
           </NameRight>
         </Name>
-        <BarcodeBox>
+        <TextBox>
           <Text>A SELF-HELP PORTFOLIO</Text>
-          <Barcode>donghoon</Barcode>
-        </BarcodeBox>
+          <BarcodeBox>
+            <Barcode>donghoon</Barcode>
+            <Laser />
+          </BarcodeBox>
+        </TextBox>
       </Inner>
     </Container>
   );
