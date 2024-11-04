@@ -5,6 +5,7 @@ const Container = styled.section``;
 
 const Inner = styled.div``;
 
+
 const Skill = () => {
   return (
     <Container>

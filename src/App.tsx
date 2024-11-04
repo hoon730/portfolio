@@ -74,6 +74,7 @@ const GlobalsStyle = createGlobalStyle`
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
+  cursor: url("/img/scanner_black.png") 50 50, auto;
 
   & > section {
     width: 100%;

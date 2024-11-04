@@ -4,23 +4,12 @@ import styled from "styled-components";
 const Container = styled.section``;
 
 const Inner = styled.div`
-  height: 65%;
-  display: flex;
-  align-items: center;
-  /* border-top: 3px dashed ${(props) => props.theme.fontColor};
-  border-bottom: 3px dashed ${(props) => props.theme.fontColor}; */
-  /* background-image: linear-gradient(
-    to right,
-    black 45%,
-    rgba(255, 255, 255, 0) 0%
-  );
-  background-position: bottom;
-  background-size: 23px 3px;
-  background-repeat: repeat-x; */
+  padding: 6% 0;
 `;
 
 const Bar = styled.div`
   width: 100%;
+  height: 3px;
   background-image: linear-gradient(
     to right,
     black 45%,
@@ -31,10 +20,19 @@ const Bar = styled.div`
   background-repeat: repeat-x;
 `;
 
+const Contents = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+`;
+
 const Desc = styled.div`
   width: 50%;
+  height: 500px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   span {
     display: inline-block;
     padding: 0 10px;
@@ -45,11 +43,11 @@ const Desc = styled.div`
   }
 `;
 
+const TextBox = styled.div``;
+
 const TextAbout = styled.div``;
 
-const TextMe = styled.div`
-  margin-bottom: 100px;
-`;
+const TextMe = styled.div``;
 
 const Introduction = styled.div`
   display: flex;
@@ -76,33 +74,37 @@ const Photo = styled.div`
 const About = () => {
   return (
     <Container>
-      <Bar />
       <Inner className="inner">
-        <Desc>
-          <TextAbout>
-            <span>ABOUT</span>
-          </TextAbout>
-          <TextMe>
-            <span>ME</span>
-          </TextMe>
-          <Introduction>
-            <p>
-              Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet
-              consectetur Mi vulputateametvulputate interdum .Bibendum a
-              imperdiet tortor purus dolor id.
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet
-              consectetur Mi vulputateametvulputate interdum .Bibendum a
-              imperdiet tortor purus dolor id.
-            </p>
-          </Introduction>
-        </Desc>
-        <Photo>
-          <div></div>
-        </Photo>
+        <Bar />
+        <Contents>
+          <Desc>
+            <TextBox>
+              <TextAbout>
+                <span>ABOUT</span>
+              </TextAbout>
+              <TextMe>
+                <span>ME</span>
+              </TextMe>
+            </TextBox>
+            <Introduction>
+              <p>
+                Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet
+                consectetur Mi vulputateametvulputate interdum .Bibendum a
+                imperdiet tortor purus dolor id.
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet
+                consectetur Mi vulputateametvulputate interdum .Bibendum a
+                imperdiet tortor purus dolor id.
+              </p>
+            </Introduction>
+          </Desc>
+          <Photo>
+            <div></div>
+          </Photo>
+        </Contents>
+        <Bar />
       </Inner>
-      <Bar />
     </Container>
   );
 };

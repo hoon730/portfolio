@@ -9,7 +9,10 @@ const Container = styled.section`
   z-index: 1;
 `;
 
-const Inner = styled.div``;
+const Inner = styled.div`
+  position: relative;
+  z-index: 1;
+`;
 
 const Title = styled.span`
   display: flex;
@@ -18,14 +21,14 @@ const Title = styled.span`
   height: 70px;
   font-family: "PT Mono", monospace;
   letter-spacing: 1px;
-  margin-bottom: 110px;
+  margin-bottom: 80px;
 `;
 
 const DateBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 70px;
+  margin-bottom: 60px;
 `;
 
 const Date = styled.span`
@@ -80,6 +83,10 @@ const NameRight = styled.div`
 `;
 
 const BarcodeBox = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -98,6 +105,7 @@ const Barcode = styled.span`
 `;
 
 const Home = () => {
+
   return (
     <Container>
       <Header />
