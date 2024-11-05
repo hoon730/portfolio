@@ -1,15 +1,18 @@
-import React, { useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import Header from "../components/home/Header";
 import { BsQrCode } from "react-icons/bs";
 
 import gsap from "gsap";
+import { CSSPlugin } from "gsap/CSSPlugin";
 import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(CSSPlugin);
 
 const Container = styled.section`
   position: relative;
   z-index: 1;
-  cursor: url("/img/scanner_black2.png"), progress;
+  cursor: url("/img/scanner_black2.png"), auto;
 `;
 
 const Inner = styled.div`
@@ -24,43 +27,32 @@ const Title = styled.div`
   margin: 27px 0;
   font-family: "PT Mono", monospace;
   letter-spacing: 1px;
-  margin-bottom: 80px;
+  margin-bottom: 100px;
   overflow: hidden;
-  span {
-    transform: translateY(100%);
-  }
 `;
 
 const DateBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 60px;
+  margin-bottom: 70px;
 `;
 
-const Date = styled.span`
+const Date = styled.div`
   letter-spacing: 1px;
+  overflow: hidden;
 `;
 
-const Category = styled.span`
+const Category = styled.div`
   letter-spacing: 1px;
+  overflow: hidden;
 `;
 
 const Name = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
-  position: relative;
-  margin-bottom: 80px;
-
-  &::before {
-    content: "";
-    position: absolute;
-    bottom: -2rem;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: ${(props) => props.theme.fontColor};
-  }
+  margin-bottom: 40px;
 
   span {
     display: flex;
@@ -70,12 +62,21 @@ const Name = styled.div`
 `;
 
 const NameLeft = styled.div`
+  width: 50%;
   display: flex;
   flex-direction: column;
+  & > div {
+    overflow: hidden;
+  }
 `;
 const NameRight = styled.div`
+  width: 50%;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  & > div {
+    overflow: hidden;
+  }
 
   span:first-child {
     position: relative;
@@ -83,10 +84,21 @@ const NameRight = styled.div`
     svg {
       position: absolute;
       top: 22px;
-      right: 0;
+      right: 15px;
       font-size: 130px;
     }
   }
+
+  span:last-child {
+    display: flex;
+    justify-content: flex-end;
+  }
+`;
+
+const Bar = styled.hr`
+  width: 100%;
+  height: 8px;
+  background: ${(props) => props.theme.fontColor};
 `;
 
 const TextBox = styled.div`
@@ -100,11 +112,12 @@ const TextBox = styled.div`
   text-align: center;
 `;
 
-const Text = styled.span`
+const Text = styled.div`
   font-family: "PT Mono", monospace;
   font-size: ${(props) => props.theme.fsExtraLarge};
   font-weight: 300;
   letter-spacing: 1px;
+  overflow: hidden;
 `;
 
 const BarcodeBox = styled.div`
@@ -112,9 +125,10 @@ const BarcodeBox = styled.div`
   overflow: hidden;
 `;
 
-const Barcode = styled.span`
+const Barcode = styled.div`
   font-size: 150px;
   font-family: "Libre Barcode 39", system-ui;
+  overflow: hidden;
 `;
 
 // 레이저 스타일
@@ -125,46 +139,78 @@ const Laser = styled.div`
   transform: translateY(-50%);
   width: 100%;
   height: 7px;
-  background: rgba(255, 89, 0, 0.65);
+  background: rgba(255, 17, 0, 0.7);
   box-shadow: 0 0 14px rgba(255, 0, 0, 1);
-  display: none;
 `;
 
-const Home = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
 
+const Home = () => {
   useGSAP(() => {
-    const tl = gsap.timeline();
-    tl.to(containerRef.current, {});
-  });
+    const tl1 = gsap.timeline();
+
+    // 텍스트 박스를 먼저 위로 올라오게 설정
+    tl1.from(".text_box", { y: -300, duration: 1, ease: "power1.inOut" });
+
+    // 나머지 요소들에 순차적으로 stagger 적용
+    tl1.from(
+      [
+        ".title",
+        ".date",
+        ".category",
+        ".yeom",
+        ".dong",
+        ".qrcode",
+        ".hoon",
+        ".portfolio",
+      ],
+      { y: 200, duration: 1, ease: "power1.inOut", stagger: 0.2 } // stagger로 순차 애니메이션
+    );
+  }, []);
 
   return (
     <Container>
       <Header />
-      <Inner ref={containerRef} className="inner">
-        <Title className="title">
-          <span>FRONTEND DEVELOPER</span>
+      <Inner className="inner">
+        <Title>
+          <span className="title">FRONTEND DEVELOPER</span>
         </Title>
         <DateBox>
-          <Date>DATE : 2024-12-09</Date>
-          <Category>CATEGORY : PORTFOLIO</Category>
+          <Date>
+            <div className="date">DATE : 2024-12-09</div>
+          </Date>
+          <Category>
+            <div className="category">CATEGORY : PORTFOLIO</div>
+          </Category>
         </DateBox>
         <Name>
           <NameLeft>
-            <span>YEOM</span>
-            <span>DONG</span>
+            <div>
+              <span className="yeom">YEOM</span>
+            </div>
+            <div>
+              <span className="dong">DONG</span>
+            </div>
           </NameLeft>
           <NameRight>
-            <span>
-              <BsQrCode />
-            </span>
-            <span>HOON</span>
+            <div>
+              <span>
+                <BsQrCode className="qrcode" />
+              </span>
+            </div>
+            <div>
+              <span className="hoon">HOON</span>
+            </div>
           </NameRight>
         </Name>
-        <TextBox>
-          <Text>A SELF-HELP PORTFOLIO</Text>
+        <Bar />
+        <TextBox className="text_box">
+          <Text>
+            <span className="portfolio">A SELF-HELP PORTFOLIO</span>
+          </Text>
           <BarcodeBox>
-            <Barcode>donghoon</Barcode>
+            <Barcode>
+              <span className="barcode">donghoon</span>
+            </Barcode>
             <Laser />
           </BarcodeBox>
         </TextBox>
