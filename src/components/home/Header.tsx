@@ -52,6 +52,7 @@ const Header = ({ isClick }: isClickProps) => {
       tl.to(["logo_box", ".logo", ".menu"], {
         y: 0,
         duration: 0.9,
+        delay: 2,
         ease: "power1.inOut",
       });
     }

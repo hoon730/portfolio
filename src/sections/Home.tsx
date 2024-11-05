@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import Header from "../components/home/Header";
 import { BsQrCode } from "react-icons/bs";
@@ -9,15 +9,59 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(CSSPlugin);
 
+const ShowingCursor = keyframes`
+  0% {
+    cursor: none;
+  }
+  80%{
+    cursor: none;
+  }
+  100%{
+    cursor: auto;
+  }
+`;
+
 const Container = styled.section`
   position: relative;
   z-index: 1;
-  cursor: url("/img/scanner_black2.png"), auto;
+  cursor: none;
+  &.active {
+    animation: ${ShowingCursor} 1s linear both;
+  }
 `;
 
 const Inner = styled.div`
   position: relative;
   z-index: 1;
+`;
+
+const Scanner = keyframes`
+  0% {
+    opacity: 1;
+  }
+  80%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+    display: none;
+  }
+`;
+
+const Cursor = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 70px;
+  height: 100px;
+  background: url("/img/scanner_black1.png") center/cover no-repeat;
+  z-index: 100;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+
+  &.active {
+    animation: ${Scanner} 1s linear both;
+  }
 `;
 
 const Title = styled.div`
@@ -113,10 +157,15 @@ const NameRight = styled.div`
   }
 `;
 
+const BarBox = styled.div`
+  overflow: hidden;
+`;
+
 const Bar = styled.hr`
   width: 100%;
   height: 8px;
   background: ${(props) => props.theme.fontColor};
+  transform: translateY(150%);
 `;
 
 const TextBox = styled.div`
@@ -156,7 +205,7 @@ const Scanning = keyframes`
   10% {
     opacity: 1;
   }
-  90% {
+  80% {
     opacity: 1;
   }
   100% {
@@ -170,8 +219,8 @@ const Laser = styled.div`
   left: 0;
   transform: translateY(-50%);
   width: 100%;
-  height: 7px;
-  background: rgba(255, 17, 0, 0.7);
+  height: 5px;
+  background: rgba(255, 64, 0, 0.7);
   box-shadow: 0 0 14px rgba(255, 0, 0, 1);
   opacity: 0;
 
@@ -182,15 +231,35 @@ const Laser = styled.div`
 
 const Home = () => {
   const [isClick, setIsClick] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleOnClick = () => {
     setIsClick(true);
   };
 
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setPosition({ x: e.clientX, y: e.clientY });
+    };
+
+    // 마우스 움직임을 감지하여 위치 업데이트
+    window.addEventListener("mousemove", handleMouseMove);
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
   useGSAP(() => {
     if (isClick) {
       const tl1 = gsap.timeline();
-      tl1.to(".text_box", { bottom: 0, duration: 1, ease: "power1.inOut" });
+      tl1.to(".text_box", {
+        bottom: 0,
+        duration: 1,
+        delay: 1,
+        ease: "power1.inOut",
+      });
       tl1.to(
         [
           ".title",
@@ -199,6 +268,7 @@ const Home = () => {
           ".yeom",
           ".dong",
           ".qrcode",
+          ".bar",
           ".hoon",
           ".portfolio",
         ],
@@ -208,7 +278,11 @@ const Home = () => {
   }, [isClick]);
 
   return (
-    <Container>
+    <Container className={isClick ? "active" : ""}>
+      <Cursor
+        className={isClick ? "active" : ""}
+        style={{ left: `${position.x}px`, top: `${position.y}px` }}
+      />
       <Header isClick={isClick} />
       <Inner className="inner">
         <Title>
@@ -242,7 +316,9 @@ const Home = () => {
             </div>
           </NameRight>
         </Name>
-        <Bar />
+        <BarBox>
+          <Bar className="bar" />
+        </BarBox>
         <TextBox className="text_box">
           <Text>
             <span className="portfolio">A SELF-HELP PORTFOLIO</span>
