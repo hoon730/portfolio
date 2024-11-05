@@ -30,26 +30,32 @@ const Logo = styled.div`
   padding: 0 5px;
   background: ${(props) => props.theme.fontColor};
   color: #f1f1f1;
-  overflow: hidden;
+  transform: translateY(150%);
 `;
 
 const Menu = styled.button`
   overflow: hidden;
   svg {
+    transform: translateY(150%);
     font-size: ${(props) => props.theme.fsExtraLarge};
   }
 `;
 
-const Header = () => {
+interface isClickProps {
+  isClick: boolean;
+}
+
+const Header = ({ isClick }: isClickProps) => {
   useGSAP(() => {
     const tl = gsap.timeline();
-
-    tl.from(["logo_box", ".logo", ".menu"], {
-      y: 100,
-      duration: 1,
-      ease: "power1.inOut",
-    });
-  }, []);
+    if (isClick) {
+      tl.to(["logo_box", ".logo", ".menu"], {
+        y: 0,
+        duration: 0.9,
+        ease: "power1.inOut",
+      });
+    }
+  }, [isClick]);
 
   return (
     <Container>

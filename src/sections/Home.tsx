@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
+import styled, { keyframes } from "styled-components";
 import Header from "../components/home/Header";
 import { BsQrCode } from "react-icons/bs";
 
@@ -29,6 +29,10 @@ const Title = styled.div`
   letter-spacing: 1px;
   margin-bottom: 100px;
   overflow: hidden;
+
+  .title {
+    transform: translateY(150%);
+  }
 `;
 
 const DateBox = styled.div`
@@ -41,11 +45,17 @@ const DateBox = styled.div`
 const Date = styled.div`
   letter-spacing: 1px;
   overflow: hidden;
+  .date {
+    transform: translateY(150%);
+  }
 `;
 
 const Category = styled.div`
   letter-spacing: 1px;
   overflow: hidden;
+  .category {
+    transform: translateY(150%);
+  }
 `;
 
 const Name = styled.div`
@@ -67,6 +77,10 @@ const NameLeft = styled.div`
   flex-direction: column;
   & > div {
     overflow: hidden;
+    .yeom,
+    .dong {
+      transform: translateY(150%);
+    }
   }
 `;
 const NameRight = styled.div`
@@ -76,6 +90,10 @@ const NameRight = styled.div`
   justify-content: flex-end;
   & > div {
     overflow: hidden;
+    .qrcode,
+    .hoon {
+      transform: translateY(150%);
+    }
   }
 
   span:first-child {
@@ -103,7 +121,7 @@ const Bar = styled.hr`
 
 const TextBox = styled.div`
   position: absolute;
-  bottom: 0;
+  bottom: 45%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -131,7 +149,21 @@ const Barcode = styled.div`
   overflow: hidden;
 `;
 
-// 레이저 스타일
+const Scanning = keyframes`
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
 const Laser = styled.div`
   position: absolute;
   top: 30%;
@@ -141,35 +173,43 @@ const Laser = styled.div`
   height: 7px;
   background: rgba(255, 17, 0, 0.7);
   box-shadow: 0 0 14px rgba(255, 0, 0, 1);
+  opacity: 0;
+
+  &.active {
+    animation: ${Scanning} 1s linear both;
+  }
 `;
 
-
 const Home = () => {
+  const [isClick, setIsClick] = useState(false);
+
+  const handleOnClick = () => {
+    setIsClick(true);
+  };
+
   useGSAP(() => {
-    const tl1 = gsap.timeline();
-
-    // 텍스트 박스를 먼저 위로 올라오게 설정
-    tl1.from(".text_box", { y: -300, duration: 1, ease: "power1.inOut" });
-
-    // 나머지 요소들에 순차적으로 stagger 적용
-    tl1.from(
-      [
-        ".title",
-        ".date",
-        ".category",
-        ".yeom",
-        ".dong",
-        ".qrcode",
-        ".hoon",
-        ".portfolio",
-      ],
-      { y: 200, duration: 1, ease: "power1.inOut", stagger: 0.2 } // stagger로 순차 애니메이션
-    );
-  }, []);
+    if (isClick) {
+      const tl1 = gsap.timeline();
+      tl1.to(".text_box", { bottom: 0, duration: 1, ease: "power1.inOut" });
+      tl1.to(
+        [
+          ".title",
+          ".date",
+          ".category",
+          ".yeom",
+          ".dong",
+          ".qrcode",
+          ".hoon",
+          ".portfolio",
+        ],
+        { y: 0, duration: 0.9, ease: "power1.inOut", stagger: 0.2 }
+      );
+    }
+  }, [isClick]);
 
   return (
     <Container>
-      <Header />
+      <Header isClick={isClick} />
       <Inner className="inner">
         <Title>
           <span className="title">FRONTEND DEVELOPER</span>
@@ -209,9 +249,11 @@ const Home = () => {
           </Text>
           <BarcodeBox>
             <Barcode>
-              <span className="barcode">donghoon</span>
+              <span className="barcode" onClick={handleOnClick}>
+                donghoon
+              </span>
             </Barcode>
-            <Laser />
+            <Laser className={isClick ? "active" : ""} />
           </BarcodeBox>
         </TextBox>
       </Inner>
