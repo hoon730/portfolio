@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-
 import gsap from "gsap";
 import { CSSPlugin } from "gsap/CSSPlugin";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger, CSSPlugin);
+
 const Container = styled.section``;
 
 const Inner = styled.div`
@@ -53,19 +53,15 @@ const TextBox = styled.div``;
 
 const TextAbout = styled.div`
   overflow: hidden;
-  position: relative;
   span {
-    position: absolute;
-    top: 100%;
+    transform: translateY(100%);
   }
 `;
 
 const TextMe = styled.div`
   overflow: hidden;
-  position: relative;
   span {
-    position: absolute;
-    top: 100%;
+    transform: translateY(100%);
   }
 `;
 
@@ -74,14 +70,12 @@ const Introduction = styled.div`
   flex-direction: column;
   gap: 60px;
   div {
-    position: relative;
     overflow: hidden;
     p {
       font-size: ${(props) => props.theme.fsExtraLarge};
       font-family: "Archivo Narrow", sans-serif;
       text-align: justify;
-      position: absolute;
-      top: 100%;
+      transform: translateY(100%);
     }
   }
 `;

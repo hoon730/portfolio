@@ -13,7 +13,7 @@ const ShowingCursor = keyframes`
   0% {
     cursor: none;
   }
-  80%{
+  95%{
     cursor: none;
   }
   100%{
