@@ -38,6 +38,7 @@ const Inner = styled.div`
 const Scanner = keyframes`
   0% {
     opacity: 1;
+    background: url("/img/pjh2.png") center/cover no-repeat;
   }
   80%{
     opacity: 1;
@@ -54,7 +55,7 @@ const Cursor = styled.div`
   left: 0;
   width: 70px;
   height: 100px;
-  background: url("/img/scanner_black1.png") center/cover no-repeat;
+  background: url("/img/pjh.png") center/cover no-repeat;
   z-index: 100;
   pointer-events: none;
   transform: translate(-50%, -50%);
@@ -75,7 +76,7 @@ const Title = styled.div`
   overflow: hidden;
 
   .title {
-    transform: translateY(150%);
+    transform: translateY(100%);
   }
 `;
 
@@ -90,7 +91,7 @@ const Date = styled.div`
   letter-spacing: 1px;
   overflow: hidden;
   .date {
-    transform: translateY(150%);
+    transform: translateY(100%);
   }
 `;
 
@@ -98,7 +99,7 @@ const Category = styled.div`
   letter-spacing: 1px;
   overflow: hidden;
   .category {
-    transform: translateY(150%);
+    transform: translateY(100%);
   }
 `;
 
@@ -123,7 +124,7 @@ const NameLeft = styled.div`
     overflow: hidden;
     .yeom,
     .dong {
-      transform: translateY(150%);
+      transform: translateY(100%);
     }
   }
 `;
@@ -136,7 +137,7 @@ const NameRight = styled.div`
     overflow: hidden;
     .qrcode,
     .hoon {
-      transform: translateY(150%);
+      transform: translateY(100%);
     }
   }
 
@@ -165,7 +166,7 @@ const Bar = styled.hr`
   width: 100%;
   height: 8px;
   background: ${(props) => props.theme.fontColor};
-  transform: translateY(150%);
+  transform: translateY(100%);
 `;
 
 const TextBox = styled.div`
@@ -189,13 +190,11 @@ const Text = styled.div`
 
 const BarcodeBox = styled.div`
   position: relative;
-  overflow: hidden;
 `;
 
 const Barcode = styled.div`
   font-size: 150px;
   font-family: "Libre Barcode 39", system-ui;
-  overflow: hidden;
 `;
 
 const Scanning = keyframes`
@@ -216,12 +215,13 @@ const Scanning = keyframes`
 const Laser = styled.div`
   position: absolute;
   top: 30%;
-  left: 0;
-  transform: translateY(-50%);
-  width: 100%;
-  height: 5px;
-  background: rgba(255, 64, 0, 0.7);
+  left: -5%;
+  transform: translate(2%, -50%);
+  width: 105%;
+  height: 4px;
+  background: rgba(255, 0, 0, 0.801);
   box-shadow: 0 0 14px rgba(255, 0, 0, 1);
+  border-radius: 20%;
   opacity: 0;
 
   &.active {
@@ -242,38 +242,88 @@ const Home = () => {
       setPosition({ x: e.clientX, y: e.clientY });
     };
 
-    // 마우스 움직임을 감지하여 위치 업데이트
     window.addEventListener("mousemove", handleMouseMove);
 
-    // 컴포넌트 언마운트 시 이벤트 리스너 제거
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, []);
+  }, [isClick]);
 
   useGSAP(() => {
     if (isClick) {
       const tl1 = gsap.timeline();
-      tl1.to(".text_box", {
-        bottom: 0,
-        duration: 1,
-        delay: 1,
-        ease: "power1.inOut",
-      });
-      tl1.to(
-        [
-          ".title",
-          ".date",
-          ".category",
-          ".yeom",
-          ".dong",
-          ".qrcode",
-          ".bar",
-          ".hoon",
-          ".portfolio",
-        ],
-        { y: 0, duration: 0.9, ease: "power1.inOut", stagger: 0.2 }
-      );
+      tl1
+        .to(".text_box", {
+          bottom: 0,
+          duration: 1,
+          delay: 1,
+          ease: "power1.inOut",
+        })
+        .to(
+          [
+            ".title",
+            ".date",
+            ".category",
+            ".yeom",
+            ".dong",
+            ".qrcode",
+            ".hoon",
+            ".bar",
+          ],
+          { y: 80, duration: 0.3, ease: "power1.inOut", delay: 0.1 }
+        )
+        .to(
+          [
+            ".title",
+            ".date",
+            ".category",
+            ".yeom",
+            ".dong",
+            ".qrcode",
+            ".hoon",
+            ".bar",
+          ],
+          { y: 60, duration: 0.3, ease: "power1.inOut", delay: 0.1 }
+        )
+        .to(
+          [
+            ".title",
+            ".date",
+            ".category",
+            ".yeom",
+            ".dong",
+            ".qrcode",
+            ".hoon",
+            ".bar",
+          ],
+          { y: 40, duration: 0.3, ease: "power1.inOut", delay: 0.1 }
+        )
+        .to(
+          [
+            ".title",
+            ".date",
+            ".category",
+            ".yeom",
+            ".dong",
+            ".qrcode",
+            ".hoon",
+            ".bar",
+          ],
+          { y: 20, duration: 0.3, ease: "power1.inOut", delay: 0.1 }
+        )
+        .to(
+          [
+            ".title",
+            ".date",
+            ".category",
+            ".yeom",
+            ".dong",
+            ".qrcode",
+            ".hoon",
+            ".bar",
+          ],
+          { y: 0, duration: 0.3, ease: "power1.inOut", delay: 0.1 }
+        );
     }
   }, [isClick]);
 
@@ -285,6 +335,19 @@ const Home = () => {
       />
       <Header isClick={isClick} />
       <Inner className="inner">
+        <TextBox className="text_box">
+          <Text>
+            <span className="portfolio">A SELF-HELP PORTFOLIO</span>
+          </Text>
+          <BarcodeBox>
+            <Barcode>
+              <span className="barcode" onClick={handleOnClick}>
+                donghoon
+              </span>
+            </Barcode>
+            <Laser className={isClick ? "active" : ""} />
+          </BarcodeBox>
+        </TextBox>
         <Title>
           <span className="title">FRONTEND DEVELOPER</span>
         </Title>
@@ -307,8 +370,8 @@ const Home = () => {
           </NameLeft>
           <NameRight>
             <div>
-              <span>
-                <BsQrCode className="qrcode" />
+              <span className="qrcode">
+                <BsQrCode />
               </span>
             </div>
             <div>
@@ -319,7 +382,7 @@ const Home = () => {
         <BarBox>
           <Bar className="bar" />
         </BarBox>
-        <TextBox className="text_box">
+        {/* <TextBox className="text_box">
           <Text>
             <span className="portfolio">A SELF-HELP PORTFOLIO</span>
           </Text>
@@ -331,7 +394,7 @@ const Home = () => {
             </Barcode>
             <Laser className={isClick ? "active" : ""} />
           </BarcodeBox>
-        </TextBox>
+        </TextBox> */}
       </Inner>
     </Container>
   );

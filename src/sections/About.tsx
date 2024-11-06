@@ -1,6 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
+import gsap from "gsap";
+import { CSSPlugin } from "gsap/CSSPlugin";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger, CSSPlugin);
 const Container = styled.section``;
 
 const Inner = styled.div`
@@ -45,20 +51,44 @@ const Desc = styled.div`
 
 const TextBox = styled.div``;
 
-const TextAbout = styled.div``;
+const TextAbout = styled.div`
+  overflow: hidden;
+  position: relative;
+  span {
+    position: absolute;
+    top: 100%;
+  }
+`;
 
-const TextMe = styled.div``;
+const TextMe = styled.div`
+  overflow: hidden;
+  position: relative;
+  span {
+    position: absolute;
+    top: 100%;
+  }
+`;
 
 const Introduction = styled.div`
   display: flex;
   flex-direction: column;
   gap: 60px;
-  p {
-    font-size: ${(props) => props.theme.fsExtraLarge};
-    font-family: "Archivo Narrow", sans-serif;
-    text-align: justify;
+  div {
+    position: relative;
+    overflow: hidden;
+    p {
+      font-size: ${(props) => props.theme.fsExtraLarge};
+      font-family: "Archivo Narrow", sans-serif;
+      text-align: justify;
+      position: absolute;
+      top: 100%;
+    }
   }
 `;
+
+const Intro1 = styled.div``;
+
+const Intro2 = styled.div``;
 
 const Photo = styled.div`
   width: 50%;
@@ -72,6 +102,25 @@ const Photo = styled.div`
 `;
 
 const About = () => {
+  useGSAP(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        markers: true,
+        trigger: ".inner",
+        start: "top 80%",
+        end: "top 20%",
+        scrub: true,
+      },
+    });
+
+    tl.to([".about", ".me", ".intro1", ".intro2"], {
+      top: "0%",
+      duration: 1,
+      ease: "power3.out",
+      stagger: 0.2,
+    });
+  }, []);
+
   return (
     <Container>
       <Inner className="inner">
@@ -80,23 +129,27 @@ const About = () => {
           <Desc>
             <TextBox>
               <TextAbout>
-                <span>ABOUT</span>
+                <span className="about">ABOUT</span>
               </TextAbout>
               <TextMe>
-                <span>ME</span>
+                <span className="me">ME</span>
               </TextMe>
             </TextBox>
             <Introduction>
-              <p>
-                Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet
-                consectetur Mi vulputateametvulputate interdum .Bibendum a
-                imperdiet tortor purus dolor id.
-              </p>
-              <p>
-                Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet
-                consectetur Mi vulputateametvulputate interdum .Bibendum a
-                imperdiet tortor purus dolor id.
-              </p>
+              <Intro1>
+                <p className="intro1">
+                  Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet
+                  consectetur Mi vulputateametvulputate interdum .Bibendum a
+                  imperdiet tortor purus dolor id.
+                </p>
+              </Intro1>
+              <Intro2>
+                <p className="intro2">
+                  Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet
+                  consectetur Mi vulputateametvulputate interdum .Bibendum a
+                  imperdiet tortor purus dolor id.
+                </p>
+              </Intro2>
             </Introduction>
           </Desc>
           <Photo>
