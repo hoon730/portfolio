@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import styled from "styled-components";
 import gsap from "gsap";
 import { CSSPlugin } from "gsap/CSSPlugin";
@@ -39,7 +38,7 @@ const Desc = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  span {
+  div {
     display: inline-block;
     padding: 0 10px;
     font: bold italic 64px/1 "Archivo Narrow", sans-serif;
@@ -53,14 +52,14 @@ const TextBox = styled.div``;
 
 const TextAbout = styled.div`
   overflow: hidden;
-  span {
+  div {
     transform: translateY(100%);
   }
 `;
 
 const TextMe = styled.div`
   overflow: hidden;
-  span {
+  div {
     transform: translateY(100%);
   }
 `;
@@ -71,18 +70,25 @@ const Introduction = styled.div`
   gap: 60px;
   div {
     overflow: hidden;
-    p {
+    div {
       font-size: ${(props) => props.theme.fsExtraLarge};
       font-family: "Archivo Narrow", sans-serif;
       text-align: justify;
-      transform: translateY(100%);
     }
   }
 `;
 
-const Intro1 = styled.div``;
+const Intro1 = styled.div`
+  p {
+    transform: translateY(100%);
+  }
+`;
 
-const Intro2 = styled.div``;
+const Intro2 = styled.div`
+  p {
+    transform: translateY(100%);
+  }
+`;
 
 const Photo = styled.div`
   width: 50%;
@@ -108,7 +114,7 @@ const About = () => {
     });
 
     tl.to([".about", ".me", ".intro1", ".intro2"], {
-      top: "0%",
+      y: "0",
       duration: 1,
       ease: "power3.out",
       stagger: 0.2,
@@ -123,26 +129,26 @@ const About = () => {
           <Desc>
             <TextBox>
               <TextAbout>
-                <span className="about">ABOUT</span>
+                <div className="about">ABOUT</div>
               </TextAbout>
               <TextMe>
-                <span className="me">ME</span>
+                <div className="me">ME</div>
               </TextMe>
             </TextBox>
             <Introduction>
               <Intro1>
-                <p className="intro1">
+                <div className="intro1">
                   Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet
                   consectetur Mi vulputateametvulputate interdum .Bibendum a
                   imperdiet tortor purus dolor id.
-                </p>
+                </div>
               </Intro1>
               <Intro2>
-                <p className="intro2">
+                <div className="intro2">
                   Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet
                   consectetur Mi vulputateametvulputate interdum .Bibendum a
                   imperdiet tortor purus dolor id.
-                </p>
+                </div>
               </Intro2>
             </Introduction>
           </Desc>

@@ -24,6 +24,8 @@ const ShowingCursor = keyframes`
 const Container = styled.section`
   position: relative;
   z-index: 1;
+  overflow: hidden;
+  scroll: no;
   cursor: none;
   &.active {
     animation: ${ShowingCursor} 1s linear both;
