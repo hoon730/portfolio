@@ -4,10 +4,10 @@ import Header from "../components/home/Header";
 import { BsQrCode } from "react-icons/bs";
 
 import gsap from "gsap";
-import { CSSPlugin } from "gsap/CSSPlugin";
+import { CSSPlugin, ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(CSSPlugin);
+gsap.registerPlugin(CSSPlugin, ScrollTrigger);
 
 const ShowingCursor = keyframes`
   0% {
@@ -25,7 +25,6 @@ const Container = styled.section`
   position: relative;
   z-index: 1;
   overflow: hidden;
-  scroll: no;
   cursor: none;
   &.active {
     animation: ${ShowingCursor} 1s linear both;
@@ -60,10 +59,9 @@ const Cursor = styled.div`
   background: url("/img/pjh.png") center/cover no-repeat;
   z-index: 100;
   pointer-events: none;
-  transform: translate(-50%, -50%);
 
   &.active {
-    animation: ${Scanner} 1s linear both;
+    animation: ${Scanner} 2s linear both;
   }
 `;
 
@@ -233,6 +231,7 @@ const Laser = styled.div`
 
 const Home = () => {
   const [isClick, setIsClick] = useState(false);
+  const [isScroll, setIsScroll] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleOnClick = () => {
@@ -249,7 +248,7 @@ const Home = () => {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [isClick]);
+  }, []);
 
   useGSAP(() => {
     if (isClick) {
@@ -327,13 +326,45 @@ const Home = () => {
           { y: 0, duration: 0.3, ease: "power1.inOut", delay: 0.1 }
         );
     }
+
+    const texts = [
+      ".title",
+      ".date",
+      ".category",
+      ".nameLeft",
+      ".nameRight",
+      ".bar",
+      ".text_box",
+    ];
+
+    window.addEventListener("scroll", () => {
+      setIsScroll(true);
+    });
+
+    if (isScroll) {
+      texts.forEach((text, index) => {
+        gsap.to(text, {
+          yPercent: -10 * (index + 1),
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: text,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
+      });
+    }
   }, [isClick]);
 
   return (
     <Container className={isClick ? "active" : ""}>
       <Cursor
         className={isClick ? "active" : ""}
-        style={{ left: `${position.x}px`, top: `${position.y}px` }}
+        style={{
+          left: `${position.x - 150}px`,
+          top: `${position.y - 50}px`,
+        }}
       />
       <Header isClick={isClick} />
       <Inner className="inner">
@@ -362,7 +393,7 @@ const Home = () => {
           </Category>
         </DateBox>
         <Name>
-          <NameLeft>
+          <NameLeft className="nameLeft">
             <div>
               <span className="yeom">YEOM</span>
             </div>
@@ -370,7 +401,7 @@ const Home = () => {
               <span className="dong">DONG</span>
             </div>
           </NameLeft>
-          <NameRight>
+          <NameRight className="nameRight">
             <div>
               <span className="qrcode">
                 <BsQrCode />
@@ -384,19 +415,6 @@ const Home = () => {
         <BarBox>
           <Bar className="bar" />
         </BarBox>
-        {/* <TextBox className="text_box">
-          <Text>
-            <span className="portfolio">A SELF-HELP PORTFOLIO</span>
-          </Text>
-          <BarcodeBox>
-            <Barcode>
-              <span className="barcode" onClick={handleOnClick}>
-                donghoon
-              </span>
-            </Barcode>
-            <Laser className={isClick ? "active" : ""} />
-          </BarcodeBox>
-        </TextBox> */}
       </Inner>
     </Container>
   );

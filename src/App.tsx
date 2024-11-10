@@ -61,6 +61,7 @@ const GlobalsStyle = createGlobalStyle`
 
     body {
       background: ${(props) => props.theme.bgColor};
+      /* background: #F0F0F0; */
       font-family: "Libre Franklin", sans-serif;
       /* font-family: "Archivo Narrow", sans-serif; */
       /* font-family: "Libre Barcode 39", system-ui; */
@@ -75,17 +76,23 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
 
-  & > section {
+  & section {
     width: 100%;
     height: 100vh;
-    margin-bottom: 200px;
+    margin-bottom: 500px;
   }
 
   .inner {
-    width: 1280px;
+    width: 100%;
     height: 100%;
-    margin: 0 auto;
   }
+`;
+
+const Receipt = styled.div`
+  width: 1280px;
+  height: 100%;
+  margin: 0 auto;
+  background: #fff;
 `;
 
 const App = () => {
@@ -94,11 +101,13 @@ const App = () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalsStyle />
         <Wrapper>
-          <Home />
-          <About />
-          <Skill />
-          <Work />
-          <Contact />
+          <Receipt>
+            <Home />
+            <About />
+            <Skill />
+            <Work />
+            <Contact />
+          </Receipt>
         </Wrapper>
       </ThemeProvider>
     </>
