@@ -38,8 +38,11 @@ const Desc = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+`;
+
+const TextBox = styled.div`
   div {
-    display: inline-block;
     padding: 0 10px;
     font: bold italic 64px/1 "Archivo Narrow", sans-serif;
     letter-spacing: 1px;
@@ -48,18 +51,16 @@ const Desc = styled.div`
   }
 `;
 
-const TextBox = styled.div``;
-
 const TextAbout = styled.div`
   overflow: hidden;
-  div {
+  span {
     transform: translateY(100%);
   }
 `;
 
 const TextMe = styled.div`
   overflow: hidden;
-  div {
+  span {
     transform: translateY(100%);
   }
 `;
@@ -70,7 +71,7 @@ const Introduction = styled.div`
   gap: 60px;
   div {
     overflow: hidden;
-    div {
+    p {
       font-size: ${(props) => props.theme.fsExtraLarge};
       font-family: "Archivo Narrow", sans-serif;
       text-align: justify;
@@ -129,26 +130,26 @@ const About = () => {
           <Desc>
             <TextBox>
               <TextAbout>
-                <div className="about">ABOUT</div>
+                <span className="about">ABOUT</span>
               </TextAbout>
               <TextMe>
-                <div className="me">ME</div>
+                <span className="me">ME</span>
               </TextMe>
             </TextBox>
             <Introduction>
               <Intro1>
-                <div className="intro1">
+                <p className="intro1">
                   Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet
                   consectetur Mi vulputateametvulputate interdum .Bibendum a
                   imperdiet tortor purus dolor id.
-                </div>
+                </p>
               </Intro1>
               <Intro2>
-                <div className="intro2">
+                <p className="intro2">
                   Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet
                   consectetur Mi vulputateametvulputate interdum .Bibendum a
                   imperdiet tortor purus dolor id.
-                </div>
+                </p>
               </Intro2>
             </Introduction>
           </Desc>
