@@ -4,67 +4,20 @@ import Header from "../components/home/Header";
 import { BsQrCode } from "react-icons/bs";
 
 import gsap from "gsap";
-import { CSSPlugin } from "gsap/CSSPlugin";
+import { CSSPlugin, ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(CSSPlugin);
-
-const ShowingCursor = keyframes`
-  0% {
-    cursor: none;
-  }
-  95%{
-    cursor: none;
-  }
-  100%{
-    cursor: auto;
-  }
-`;
+gsap.registerPlugin(CSSPlugin, ScrollTrigger);
 
 const Container = styled.section`
   position: relative;
   z-index: 1;
   overflow: hidden;
-  scroll: no;
-  cursor: none;
-  &.active {
-    animation: ${ShowingCursor} 1s linear both;
-  }
 `;
 
 const Inner = styled.div`
   position: relative;
   z-index: 1;
-`;
-
-const Scanner = keyframes`
-  0% {
-    opacity: 1;
-    background: url("/img/pjh2.png") center/cover no-repeat;
-  }
-  80%{
-    opacity: 1;
-  }
-  100%{
-    opacity: 0;
-    display: none;
-  }
-`;
-
-const Cursor = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 70px;
-  height: 100px;
-  background: url("/img/pjh.png") center/cover no-repeat;
-  z-index: 100;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-
-  &.active {
-    animation: ${Scanner} 1s linear both;
-  }
 `;
 
 const Title = styled.div`
@@ -231,25 +184,17 @@ const Laser = styled.div`
   }
 `;
 
-const Home = () => {
-  const [isClick, setIsClick] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+interface isClickProps {
+  isClick: boolean;
+  onClick: (state: boolean) => void;
+}
+
+const Home = ({ isClick, onClick }: isClickProps) => {
+  const [isScroll, setIsScroll] = useState(false);
 
   const handleOnClick = () => {
-    setIsClick(true);
+    onClick(true);
   };
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, [isClick]);
 
   useGSAP(() => {
     if (isClick) {
@@ -327,14 +272,39 @@ const Home = () => {
           { y: 0, duration: 0.3, ease: "power1.inOut", delay: 0.1 }
         );
     }
+
+    const texts = [
+      ".title",
+      ".date",
+      ".category",
+      ".nameLeft",
+      ".nameRight",
+      ".bar",
+      ".text_box",
+    ];
+
+    window.addEventListener("scroll", () => {
+      setIsScroll(true);
+    });
+
+    if (isScroll) {
+      texts.forEach((text, index) => {
+        gsap.to(text, {
+          y: -10 * (index + 1),
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: text,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
+      });
+    }
   }, [isClick]);
 
   return (
-    <Container className={isClick ? "active" : ""}>
-      <Cursor
-        className={isClick ? "active" : ""}
-        style={{ left: `${position.x}px`, top: `${position.y}px` }}
-      />
+    <Container>
       <Header isClick={isClick} />
       <Inner className="inner">
         <TextBox className="text_box">
@@ -362,7 +332,7 @@ const Home = () => {
           </Category>
         </DateBox>
         <Name>
-          <NameLeft>
+          <NameLeft className="nameLeft">
             <div>
               <span className="yeom">YEOM</span>
             </div>
@@ -370,7 +340,7 @@ const Home = () => {
               <span className="dong">DONG</span>
             </div>
           </NameLeft>
-          <NameRight>
+          <NameRight className="nameRight">
             <div>
               <span className="qrcode">
                 <BsQrCode />
@@ -384,19 +354,6 @@ const Home = () => {
         <BarBox>
           <Bar className="bar" />
         </BarBox>
-        {/* <TextBox className="text_box">
-          <Text>
-            <span className="portfolio">A SELF-HELP PORTFOLIO</span>
-          </Text>
-          <BarcodeBox>
-            <Barcode>
-              <span className="barcode" onClick={handleOnClick}>
-                donghoon
-              </span>
-            </Barcode>
-            <Laser className={isClick ? "active" : ""} />
-          </BarcodeBox>
-        </TextBox> */}
       </Inner>
     </Container>
   );

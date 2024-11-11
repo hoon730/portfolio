@@ -1,10 +1,10 @@
+import { useRef } from "react";
 import styled from "styled-components";
 import gsap from "gsap";
-import { CSSPlugin } from "gsap/CSSPlugin";
-import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(ScrollTrigger, CSSPlugin);
+gsap.registerPlugin(ScrollTrigger);
 
 const Container = styled.section``;
 
@@ -17,11 +17,11 @@ const Bar = styled.div`
   height: 3px;
   background-image: linear-gradient(
     to right,
-    black 45%,
+    black 70%,
     rgba(255, 255, 255, 0) 0%
   );
   background-position: bottom;
-  background-size: 23px 3px;
+  background-size: 15px 2px;
   background-repeat: repeat-x;
 `;
 
@@ -39,17 +39,17 @@ const Desc = styled.div`
   flex-direction: column;
   justify-content: space-between;
 
-`;
-
-const TextBox = styled.div`
-  div {
+  span {
+    display: inline-block;
     padding: 0 10px;
     font: bold italic 64px/1 "Archivo Narrow", sans-serif;
     letter-spacing: 1px;
     background: ${(props) => props.theme.fontColor};
-    color: #f1f1f1;
+    color: #fff;
   }
 `;
+
+const TextBox = styled.div``;
 
 const TextAbout = styled.div`
   overflow: hidden;
@@ -75,21 +75,14 @@ const Introduction = styled.div`
       font-size: ${(props) => props.theme.fsExtraLarge};
       font-family: "Archivo Narrow", sans-serif;
       text-align: justify;
+      transform: translateY(100%);
     }
   }
 `;
 
-const Intro1 = styled.div`
-  p {
-    transform: translateY(100%);
-  }
-`;
+const Intro1 = styled.div``;
 
-const Intro2 = styled.div`
-  p {
-    transform: translateY(100%);
-  }
-`;
+const Intro2 = styled.div``;
 
 const Photo = styled.div`
   width: 50%;
@@ -103,18 +96,20 @@ const Photo = styled.div`
 `;
 
 const About = () => {
+  const aboutRef = useRef<HTMLDivElement>(null);
+
   useGSAP(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
-        markers: true,
-        trigger: ".inner",
-        start: "top 80%",
-        end: "top 20%",
+        trigger: aboutRef.current,
+        start: "top 20%",
+        end: "top -10%",
         scrub: true,
+        markers: true,
       },
     });
 
-    tl.to([".about", ".me", ".intro1", ".intro2"], {
+    tl.to(".about, .me, .intro1, .intro2", {
       y: "0",
       duration: 1,
       ease: "power3.out",
@@ -124,7 +119,7 @@ const About = () => {
 
   return (
     <Container>
-      <Inner className="inner">
+      <Inner ref={aboutRef} className="inner">
         <Bar />
         <Contents>
           <Desc>
