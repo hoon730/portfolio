@@ -40,3 +40,29 @@ export const frontendData = [
     name: "Styled Component",
   },
 ];
+
+export const backendData = [
+  {
+    imgPath: "/img/icons/nodejs.png",
+    name: "Node.js",
+  },
+  {
+    imgPath: "/img/icons/expressjs.png",
+    name: "Express.js",
+  },
+];
+
+export const databaseData = [
+  {
+    imgPath: "/img/icons/firebase.png",
+    name: "Firebase",
+  },
+  {
+    imgPath: "/img/icons/graphql.png",
+    name: "GraphQL",
+  },
+  {
+    imgPath: "/img/icons/apolloserver.png",
+    name: "Apollo Server",
+  },
+];

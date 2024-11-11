@@ -121,10 +121,10 @@ const Cursor = styled.div`
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  cursor: none;
-  &.active {
+  /* cursor: none; */
+  /* &.active {
     animation: ${ShowingCursor} 1s linear both;
-  }
+  } */
 
   & section {
     width: 100%;

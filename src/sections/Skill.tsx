@@ -2,9 +2,9 @@ import { useRef } from "react";
 import styled from "styled-components";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-
-import { FaReact } from "react-icons/fa";
-import { frontendData } from "../utils";
+import Frontend from "../components/skill/Frontend";
+import Backend from "../components/skill/Backend";
+import Database from "../components/skill/Database";
 
 const Container = styled.section`
   overflow: hidden;
@@ -21,27 +21,7 @@ const SkillBox = styled.div`
 
 const LeftBox = styled.div``;
 
-const Title = styled.div`
-  font-weight: 900;
-  font-size: 4rem;
-  padding-bottom: 7px;
-  letter-spacing: 3px;
-  position: relative;
-  border-top: 3px solid ${(props) => props.theme.fontColor};
-  border-bottom: 3px solid ${(props) => props.theme.fontColor};
-
-  span:last-child {
-    position: absolute;
-    top: 10%;
-    right: 0%;
-    font-size: 1.9rem;
-  }
-`;
-const Stacks = styled.div``;
-const Stack = styled.div``;
-
-const StackImg = styled.img``;
-const StackName = styled.span``;
+const RightBox = styled.div``;
 
 const CenterBox = styled.div`
   display: flex;
@@ -62,26 +42,14 @@ const SkillStack = styled.div`
   }
 `;
 
-const RightBox = styled.div``;
-
 const Skill = () => {
   return (
     <Container>
       <Inner className="inner">
         <SkillBox>
           <LeftBox>
-            <Title>
-              <span>FRONTEND</span>
-              <span>®</span>
-            </Title>
-            <Stacks>
-              {frontendData.map((data, idx) => (
-                <Stack key={idx}>
-                  <StackImg src={data.imgPath} />
-                  <StackName>{data.name}</StackName>
-                </Stack>
-              ))}
-            </Stacks>
+            <Frontend />
+            <Database />
           </LeftBox>
           <CenterBox>
             <SkillStack>
@@ -89,7 +57,9 @@ const Skill = () => {
               <span>STACK</span>
             </SkillStack>
           </CenterBox>
-          <RightBox></RightBox>
+          <RightBox>
+            <Backend />
+          </RightBox>
         </SkillBox>
       </Inner>
     </Container>
