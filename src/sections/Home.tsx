@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import Header from "../components/home/Header";
 import { BsQrCode } from "react-icons/bs";
@@ -273,34 +273,34 @@ const Home = ({ isClick, onClick }: isClickProps) => {
         );
     }
 
-    const texts = [
-      ".title",
-      ".date",
-      ".category",
-      ".nameLeft",
-      ".nameRight",
-      ".bar",
-      ".text_box",
-    ];
+    // const texts = [
+    //   ".title",
+    //   ".date",
+    //   ".category",
+    //   ".nameLeft",
+    //   ".nameRight",
+    //   ".bar",
+    //   ".text_box",
+    // ];
 
-    window.addEventListener("scroll", () => {
-      setIsScroll(true);
-    });
+    // window.addEventListener("scroll", () => {
+    //   setIsScroll(true);
+    // });
 
-    if (isScroll) {
-      texts.forEach((text, index) => {
-        gsap.to(text, {
-          y: -10 * (index + 1),
-          ease: "power1.out",
-          scrollTrigger: {
-            trigger: text,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-          },
-        });
-      });
-    }
+    // if (isScroll) {
+    //   texts.forEach((text, index) => {
+    //     gsap.to(text, {
+    //       y: -10 * (index + 1),
+    //       ease: "power1.out",
+    //       scrollTrigger: {
+    //         trigger: text,
+    //         start: "top bottom",
+    //         end: "bottom top",
+    //         scrub: 1,
+    //       },
+    //     });
+    //   });
+    // }
   }, [isClick]);
 
   return (

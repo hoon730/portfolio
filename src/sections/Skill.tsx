@@ -7,12 +7,15 @@ import Backend from "../components/skill/Backend";
 import Database from "../components/skill/Database";
 
 const Container = styled.section`
-  overflow: hidden;
+  /* overflow: hidden; */
+  height: 300vh !important;
 `;
 
 const Inner = styled.div``;
 
 const SkillBox = styled.div`
+  position: relative;
+  height: 100%;
   display: flex;
   & > div {
     width: 33.33%;
@@ -26,8 +29,11 @@ const RightBox = styled.div``;
 const CenterBox = styled.div`
   display: flex;
   justify-content: center;
+  height: 100%;
 `;
 const SkillStack = styled.div`
+  position: sticky;
+  top: 0;
   width: 120px;
   height: 120px;
   display: flex;

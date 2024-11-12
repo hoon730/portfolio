@@ -142,7 +142,7 @@ const Receipt = styled.div`
   width: 1280px;
   height: 100%;
   margin: 0 auto;
-  background: #fff;
+  /* background: #fff; */
 `;
 
 const App = () => {
