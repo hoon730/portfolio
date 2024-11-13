@@ -9,6 +9,7 @@ import Database from "../components/skill/Database";
 const Container = styled.section`
   /* overflow: hidden; */
   height: 300vh !important;
+  margin-top: 300px;
 `;
 
 const Inner = styled.div``;
