@@ -2,22 +2,25 @@ import React from "react";
 import styled from "styled-components";
 import { frontendData } from "../../utils";
 
-const Container = styled.div``;
+const Container = styled.div`
+  height: 33.33%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+`;
 
 const Title = styled.div`
+  display: flex;
   font-weight: 900;
   font-size: 4rem;
   padding-bottom: 7px;
-  letter-spacing: 3px;
-  position: relative;
+  letter-spacing: 7px;
   border-top: 3px solid ${(props) => props.theme.fontColor};
   border-bottom: 3px solid ${(props) => props.theme.fontColor};
 
   span:last-child {
-    position: absolute;
-    top: 10%;
-    right: 0%;
-    font-size: 1.9rem;
+    margin-top: 6px;
+    font-size: 1.8rem;
   }
 `;
 const Stacks = styled.div`
@@ -25,7 +28,7 @@ const Stacks = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-row-gap: 13px;
-  grid-column-gap: 9px;
+  grid-column-gap: 8px;
 `;
 
 const Stack = styled.div`

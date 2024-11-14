@@ -2,22 +2,32 @@ import React from "react";
 import styled from "styled-components";
 import { backendData } from "../../utils";
 
-const Container = styled.div``;
+const Container = styled.div`
+  height: 66.66%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+  }
+`;
 
 const Title = styled.div`
+  display: flex;
   font-weight: 900;
   font-size: 4rem;
   padding-bottom: 7px;
-  letter-spacing: 3px;
+  letter-spacing: 7px;
   position: relative;
   border-top: 3px solid ${(props) => props.theme.fontColor};
   border-bottom: 3px solid ${(props) => props.theme.fontColor};
 
   span:last-child {
-    position: absolute;
-    top: 10%;
-    right: 0%;
-    font-size: 1.9rem;
+    margin-top: 6px;
+    font-size: 1.8rem;
   }
 `;
 const Stacks = styled.div`
@@ -54,20 +64,22 @@ const StackName = styled.span`
 const Backend = () => {
   return (
     <Container>
-      <Title>
-        <span>BACKEND</span>
-        <span>®</span>
-      </Title>
-      <Stacks>
-        {backendData.map((data, idx) => (
-          <Stack key={idx}>
-            <ImgBox>
-              <StackImg src={data.imgPath} />
-            </ImgBox>
-            <StackName>{data.name}</StackName>
-          </Stack>
-        ))}
-      </Stacks>
+      <div>
+        <Title>
+          <span>BACKEND</span>
+          <span>®</span>
+        </Title>
+        <Stacks>
+          {backendData.map((data, idx) => (
+            <Stack key={idx}>
+              <ImgBox>
+                <StackImg src={data.imgPath} />
+              </ImgBox>
+              <StackName>{data.name}</StackName>
+            </Stack>
+          ))}
+        </Stacks>
+      </div>
     </Container>
   );
 };

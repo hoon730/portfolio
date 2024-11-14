@@ -84,16 +84,67 @@ const Intro1 = styled.div``;
 
 const Intro2 = styled.div``;
 
-const Photo = styled.div`
+const PhotoBox = styled.div`
   width: 50%;
+  height: 100%;
   display: flex;
-  justify-content: flex-end;
-  div {
-    width: 433px;
-    height: 500px;
-    background: #fff;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Photo = styled.div`
+  width: 433px;
+  height: 500px;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  gap: 1%;
+`;
+
+const Barcode = styled.div`
+  width: ${(props) => props.width || "5%"};
+  height: 100%;
+  background: ${(props) => props.theme.fontColor};
+  margin-right: ${(props) => props.gap || "2%"};
+  background: #000;
+`;
+
+const ImgBox = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale();
+    border: 20px solid #fff;
   }
 `;
+
+const barcodes = [
+  { width: "1%", gap: "1%" },
+  { width: "5%", gap: "2%" },
+  { width: "3%", gap: "1%" },
+  { width: "2%", gap: "3%" },
+  { width: "3%", gap: "2%" },
+  { width: "4%", gap: "1%" },
+  { width: "1%", gap: "1%" },
+  { width: "2%", gap: "1%" },
+  { width: "4%", gap: "2%" },
+  { width: "2%", gap: "1%" },
+  { width: "3%", gap: "3%" },
+  { width: "1%", gap: "2%" },
+  { width: "4%", gap: "1%" },
+  { width: "1%", gap: "1%" },
+  { width: "3%", gap: "2%" },
+  { width: "3%", gap: "1%" },
+  { width: "2%", gap: "3%" },
+  { width: "2%", gap: "1%" },
+  { width: "3%", gap: "1%" },
+];
 
 const About = () => {
   const aboutRef = useRef<HTMLDivElement>(null);
@@ -148,9 +199,16 @@ const About = () => {
               </Intro2>
             </Introduction>
           </Desc>
-          <Photo>
-            <div></div>
-          </Photo>
+          <PhotoBox>
+            <Photo>
+              {barcodes.map((barcode, index) => (
+                <Barcode key={index} width={barcode.width} gap={barcode.gap} />
+              ))}
+              <ImgBox>
+                <img src="/img/about/sideeyes.png" />
+              </ImgBox>
+            </Photo>
+          </PhotoBox>
         </Contents>
         <Bar />
       </Inner>

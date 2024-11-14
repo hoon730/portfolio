@@ -8,8 +8,8 @@ import Database from "../components/skill/Database";
 
 const Container = styled.section`
   /* overflow: hidden; */
-  height: 300vh !important;
-  margin-top: 300px;
+  height: 500vh !important;
+  padding-top: 300px !important;
 `;
 
 const Inner = styled.div``;
@@ -23,7 +23,8 @@ const SkillBox = styled.div`
   }
 `;
 
-const LeftBox = styled.div``;
+const LeftBox = styled.div`
+`;
 
 const RightBox = styled.div``;
 
