@@ -9,6 +9,7 @@ const Container = styled.div`
   justify-content: flex-end;
 
   & > div {
+    width: 84%;
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -20,7 +21,7 @@ const Title = styled.div`
   font-weight: 900;
   font-size: 4rem;
   padding-bottom: 7px;
-  letter-spacing: 7px;
+  letter-spacing: 5px;
   position: relative;
   border-top: 3px solid ${(props) => props.theme.fontColor};
   border-bottom: 3px solid ${(props) => props.theme.fontColor};
@@ -65,7 +66,7 @@ const Backend = () => {
     <Container>
       <div>
         <Title>
-          <span>DATABASE</span>
+          <span>UTILITIES</span>
           <span>®</span>
         </Title>
         <Stacks>

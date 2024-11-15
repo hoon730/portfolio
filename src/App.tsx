@@ -71,9 +71,11 @@ const GlobalsStyle = createGlobalStyle`
       /* font-family: "Libre Barcode 39", system-ui; */
       /* font-family: "Fira Code", monospace; */
       /* font-family: "PT Mono", monospace; */
+      &::-webkit-scrollbar {
+    display: none;
+      }
     }
   }
-
 `;
 
 const ShowingCursor = keyframes`

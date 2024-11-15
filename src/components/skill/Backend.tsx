@@ -7,8 +7,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  align-items: flex-end;
 
   & > div {
+    width: 84%;
     display: flex;
     flex-direction: column;
     align-items: end;
@@ -20,7 +22,7 @@ const Title = styled.div`
   font-weight: 900;
   font-size: 4rem;
   padding-bottom: 7px;
-  letter-spacing: 7px;
+  letter-spacing: 4px;
   position: relative;
   border-top: 3px solid ${(props) => props.theme.fontColor};
   border-bottom: 3px solid ${(props) => props.theme.fontColor};
@@ -32,8 +34,10 @@ const Title = styled.div`
 `;
 const Stacks = styled.div`
   padding-top: 20px;
-  display: flex;
-  justify-content: flex-end;
+  /* display: flex; */
+  /* justify-content: flex-end; */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 13px;
 `;
 

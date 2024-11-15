@@ -5,10 +5,16 @@ const Container = styled.section``;
 
 const Inner = styled.div``;
 
+const Left = styled.div``;
+const Right = styled.div``;
+
 const Work = () => {
   return (
     <Container>
-      <Inner></Inner>
+      <Inner>
+        <Left></Left>
+        <Right></Right>
+      </Inner>
     </Container>
   );
 };

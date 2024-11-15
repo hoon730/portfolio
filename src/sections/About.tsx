@@ -107,11 +107,13 @@ const Barcode = styled.div`
   background: ${(props) => props.theme.fontColor};
   margin-right: ${(props) => props.gap || "2%"};
   background: #000;
+  transform: translateY(100%);
 `;
 
 const ImgBox = styled.div`
   position: absolute;
-  top: 100%;
+  /* top: 100%; */
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
@@ -120,6 +122,7 @@ const ImgBox = styled.div`
     height: 100%;
     object-fit: cover;
     filter: grayscale();
+    /* background: #ffffa0; */
     border: 20px solid #fff;
   }
 `;
@@ -154,14 +157,14 @@ const About = () => {
       scrollTrigger: {
         trigger: aboutRef.current,
         start: "+=0",
-        end: "+=500",
+        end: "+=1000",
         pin: true,
         scrub: true,
         markers: true,
       },
     });
 
-    tl.to(".about, .me, .intro1, .intro2", {
+    tl.to(".about, .me, .intro1, .intro2, .barcode", {
       y: "0",
       ease: "power3.out",
       stagger: 0.2,
@@ -202,7 +205,12 @@ const About = () => {
           <PhotoBox>
             <Photo>
               {barcodes.map((barcode, index) => (
-                <Barcode key={index} width={barcode.width} gap={barcode.gap} />
+                <Barcode
+                  className="barcode"
+                  key={index}
+                  width={barcode.width}
+                  gap={barcode.gap}
+                />
               ))}
               <ImgBox>
                 <img src="/img/about/sideeyes.png" />
