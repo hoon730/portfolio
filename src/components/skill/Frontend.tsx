@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { frontendData } from "../../utils";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -65,12 +66,14 @@ const Frontend = () => {
       scrollTrigger: {
         trigger: ".frontend",
         start: "+=0",
-        end: "+=1000",
+        end: "+=600",
         pin: true,
         scrub: true,
         markers: true,
       },
     });
+
+    tl.to(".frontend", {});
   }, []);
 
   return (

@@ -101,7 +101,7 @@ const Photo = styled.div`
   gap: 1%;
 `;
 
-const Barcode = styled.div`
+const Barcode = styled.div<BarcodeProps>`
   width: ${(props) => props.width || "5%"};
   height: 100%;
   background: ${(props) => props.theme.fontColor};
@@ -126,6 +126,11 @@ const ImgBox = styled.div`
     border: 20px solid #fff;
   }
 `;
+
+interface BarcodeProps {
+  width: string;
+  gap: string;
+}
 
 const barcodes = [
   { width: "1%", gap: "1%" },
