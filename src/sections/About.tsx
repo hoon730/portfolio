@@ -15,14 +15,15 @@ const Inner = styled.div`
 const Bar = styled.div`
   width: 100%;
   height: 3px;
-  background-image: linear-gradient(
+  background: #000;
+  /* background-image: linear-gradient(
     to right,
     black 70%,
     rgba(255, 255, 255, 0) 0%
   );
   background-position: bottom;
   background-size: 15px 2px;
-  background-repeat: repeat-x;
+  background-repeat: repeat-x; */
 `;
 
 const Contents = styled.div`
