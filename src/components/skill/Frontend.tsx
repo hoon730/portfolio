@@ -66,7 +66,7 @@ const Frontend = () => {
       scrollTrigger: {
         trigger: ".frontend",
         start: "+=0",
-        end: "+=600",
+        end: "+=0",
         pin: true,
         scrub: true,
         markers: true,

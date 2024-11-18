@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { backendData } from "../../utils";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 const Container = styled.div`
   height: 66.66%;
@@ -66,8 +69,23 @@ const StackName = styled.span`
 `;
 
 const Backend = () => {
+  useGSAP(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".backend",
+        start: "+=0",
+        end: "+=200",
+        pin: true,
+        scrub: true,
+        markers: true,
+      },
+    });
+
+    tl.to(".frontend", {});
+  }, []);
+
   return (
-    <Container>
+    <Container className="backend">
       <div>
         <Title>
           <span>BACKEND</span>
