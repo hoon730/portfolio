@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { motion } from "motion/react";
+import { projectData } from "../utils";
 
 const Container = styled.section``;
 
@@ -67,86 +68,60 @@ const TeamProject = styled.div`
 const Wrapper = styled.div`
   width: 60%;
   height: 100%;
+  position: relative;
 `;
 
 const Work = () => {
+  const [isMouseEnter, setIsMouseEnter] = useState(false);
   const [positionX, setPositionX] = useState<number>(0);
   const innerRef = useRef<HTMLDivElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setPositionX(e.clientX);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
-
-  const scannerLeft = (): number => {
-    if (!innerRef.current) return 0;
-
-    const innerRect = innerRef.current.getBoundingClientRect();
-    const scannerWidth = 510; // Scanner 크기
-
-    // Scanner의 left 값을 Inner 경계 내로 제한
-    const left = Math.max(
-      0, // Inner의 왼쪽 경계
-      Math.min(
-        innerRect.width - scannerWidth, // Inner의 오른쪽 경계
-        positionX - innerRect.left - scannerWidth / 2
-      )
-    );
-
-    return left;
+  const onMouseEnter = () => {
+    setIsMouseEnter(true);
   };
+  // useEffect(() => {
+  //   const handleMouseMove = (e: MouseEvent) => {
+  //     setPositionX(e.clientX);
+  //   };
+
+  //   window.addEventListener("mousemove", handleMouseMove);
+
+  //   return () => {
+  //     window.removeEventListener("mousemove", handleMouseMove);
+  //   };
+  // }, []);
+
+  // const scannerLeft = (): number => {
+  //   if (!innerRef.current) return 0;
+
+  //   const innerRect = innerRef.current.getBoundingClientRect();
+  //   const scannerWidth = 510; // Scanner 크기
+
+  //   // Scanner의 left 값을 Inner 경계 내로 제한
+  //   const left = Math.max(
+  //     0, // Inner의 왼쪽 경계
+  //     Math.min(
+  //       innerRect.width - scannerWidth, // Inner의 오른쪽 경계
+  //       positionX - innerRect.left - scannerWidth / 2
+  //     )
+  //   );
+
+  //   return left;
+  // };
 
   return (
     <Container>
       <Inner ref={innerRef}>
-        {/* <Scanner style={{ left: `${scannerLeft()}px` }}></Scanner> */}
+        {/* {<Scanner style={{ left: `${scannerLeft()}px` }}></Scanner>} */}
         <ProjectBox>
-          <Project>
-            <Wrapper></Wrapper>
-          </Project>
-          <Project>
-            <Wrapper></Wrapper>
-          </Project>
-          <Project>
-            <Wrapper></Wrapper>
-          </Project>
-          <TeamProject>
-            <Wrapper></Wrapper>
-          </TeamProject>
-          <Project>
-            <Wrapper></Wrapper>
-          </Project>
-          <Project>
-            <Wrapper></Wrapper>
-          </Project>
-          <Project>
-            <Wrapper></Wrapper>
-          </Project>
-          <TeamProject>
-            <Wrapper></Wrapper>
-          </TeamProject>
-          <Project>
-            <Wrapper></Wrapper>
-          </Project>
-          <Project>
-            <Wrapper></Wrapper>
-          </Project>
-          <TeamProject>
-            <Wrapper></Wrapper>
-          </TeamProject>
-          <Project>
-            <Wrapper></Wrapper>
-          </Project>
-          <Project>
-            <Wrapper></Wrapper>
-          </Project>
+          {projectData.map((project, idx) => (
+            <Project key={idx}>
+              <Wrapper ref={wrapperRef} onMouseEnter={onMouseEnter}>
+                {isMouseEnter ? <Scanner /> : null}
+              </Wrapper>
+            </Project>
+          ))}
         </ProjectBox>
       </Inner>
     </Container>

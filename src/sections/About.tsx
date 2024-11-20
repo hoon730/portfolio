@@ -180,7 +180,7 @@ const About = () => {
   return (
     <Container>
       <Inner ref={aboutRef} className="inner">
-        <Bar />
+        {/* <Bar /> */}
         <Contents>
           <Desc>
             <TextBox>
@@ -224,7 +224,7 @@ const About = () => {
             </Photo>
           </PhotoBox>
         </Contents>
-        <Bar />
+        {/* <Bar /> */}
       </Inner>
     </Container>
   );
