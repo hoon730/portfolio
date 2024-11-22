@@ -1,8 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import styled from "styled-components";
 import { projectData } from "../utils";
-import { motion } from "framer-motion";
-
 import Scanner from "../components/work/Scanner";
 
 const Container = styled.section``;
@@ -15,16 +13,6 @@ const Inner = styled.div`
   align-items: center;
   position: relative;
 `;
-
-// const Scanner = styled(motion.div)`
-//   position: absolute;
-//   top: 50%;
-//   transform: translateY(-50%);
-//   width: 510px;
-//   height: 510px;
-//   z-index: -1;
-//   border: 3px solid #d5181c;
-// `;
 
 const ProjectBox = styled.div`
   width: 100%;
@@ -42,61 +30,62 @@ const Project = styled.div`
   height: 100%;
   margin: 0 5px;
   /* overflow: hidden; */
+  position: relative;
   border-left: 10px solid ${(props) => props.theme.fontColor};
   border-right: 10px solid ${(props) => props.theme.fontColor};
   transition: flex 1s ease-out;
-  &:hover {
+  &.active {
     flex: 15;
   }
 `;
 
-const Wrapper = styled(motion.div)`
+const Wrapper = styled.div`
   height: 100%;
-  position: relative;
 `;
 
 const Work = () => {
   const [isMouseEnter, setIsMouseEnter] = useState(false);
-  const [positionX, setPositionX] = useState<number>(0);
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
+  // const [positionX, setPositionX] = useState<number>(0);
   const innerRef = useRef<HTMLDivElement | null>(null);
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
 
-  const onMouseEnter = () => {
+  const onMouseEnter = (idx: number) => {
     setIsMouseEnter(true);
+    setSelectedIdx(idx);
   };
 
   const onMouseLeave = () => {
     setIsMouseEnter(false);
   };
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setPositionX(e.clientX);
-    };
+  // useEffect(() => {
+  //   const handleMouseMove = (e: MouseEvent) => {
+  //     setPositionX(e.clientX);
+  //   };
 
-    window.addEventListener("mousemove", handleMouseMove);
+  //   window.addEventListener("mousemove", handleMouseMove);
 
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("mousemove", handleMouseMove);
+  //   };
+  // }, []);
 
-  const scannerLeft = (): number => {
-    if (!innerRef.current) return 0;
+  // const scannerLeft = (): number => {
+  //   if (!innerRef.current) return 0;
 
-    const innerRect = innerRef.current.getBoundingClientRect();
-    const scannerWidth = 510;
+  //   const innerRect = innerRef.current.getBoundingClientRect();
+  //   const scannerWidth = 510;
 
-    const left = Math.max(
-      0,
-      Math.min(
-        innerRect.width - scannerWidth,
-        positionX - innerRect.left - scannerWidth / 2
-      )
-    );
+  //   const left = Math.max(
+  //     0,
+  //     Math.min(
+  //       innerRect.width - scannerWidth,
+  //       positionX - innerRect.left - scannerWidth / 2
+  //     )
+  //   );
 
-    return left;
-  };
+  //   return left;
+  // };
 
   return (
     <Container>
@@ -104,15 +93,19 @@ const Work = () => {
         {/* {<Scanner style={{ left: `${scannerLeft()}px` }}></Scanner>} */}
         <ProjectBox>
           {projectData.map((project, idx) => (
-            <Project key={idx}>
+            <Project
+              key={idx}
+              className={selectedIdx === idx ? "active" : ""}
+              onMouseEnter={() => onMouseEnter(idx)}
+            >
+              {selectedIdx === idx ? (
+                <Scanner isMouseEnter={isMouseEnter} />
+              ) : null}
               <Wrapper
-                onMouseEnter={onMouseEnter}
-                onMouseLeave={onMouseLeave}
-                layoutId={`scanner`}
+              // onMouseLeave={onMouseLeave}
               >
                 <img src={project.imgPath} />
                 <span>{project.name}</span>
-                {isMouseEnter ? <Scanner isMouseEnter={isMouseEnter} /> : null}
               </Wrapper>
             </Project>
           ))}
