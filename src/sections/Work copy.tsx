@@ -135,3 +135,125 @@
 // };
 
 // export default Work;
+
+import { useState, useRef, useEffect } from "react";
+import styled from "styled-components";
+import { projectData } from "../utils";
+import Scanner from "../components/work/Scanner";
+
+const Container = styled.section``;
+
+const Inner = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+`;
+
+const ProjectBox = styled.div`
+  width: 100%;
+  height: 25vw;
+  display: flex;
+  justify-content: space-evenly;
+  background: black;
+`;
+
+const Project = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0 1 5vw;
+  height: 100%;
+  margin: 0 5px;
+  position: relative;
+  overflow: hidden;
+  transition: flex 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  background: ${(props) => props.theme.bgColor};
+
+  &.active {
+    flex: 1 0 25vw;
+  }
+`;
+
+const Wrapper = styled.div`
+  width: 5vw;
+  height: 100%;
+  display: flex;
+
+  &.active {
+    width: 25vw;
+  }
+`;
+
+const Title = styled.h3``;
+
+const Desc = styled.div`
+  width: 100%;
+`;
+
+const Work = () => {
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
+  const innerRef = useRef<HTMLDivElement | null>(null);
+  const projectRefs = useRef<HTMLDivElement[]>([]); // 각 Project의 DOM 저장
+  const [scannerLeft, setScannerLeft] = useState<number>(0);
+  const targetLeft = useRef<number>(0); // Scanner가 이동할 목표 위치
+  const animationFrame = useRef<number | null>(null);
+
+  const updateScannerPosition = () => {
+    if (scannerLeft !== targetLeft.current) {
+      const newLeft = scannerLeft + (targetLeft.current - scannerLeft) * 0.1; // 부드럽게 이동
+      setScannerLeft(newLeft);
+    }
+    animationFrame.current = requestAnimationFrame(updateScannerPosition);
+  };
+
+  const onMouseEnter = (idx: number) => {
+    setSelectedIdx(idx);
+    if (projectRefs.current[idx] && innerRef.current) {
+      const projectRect = projectRefs.current[idx].getBoundingClientRect();
+      const innerRect = innerRef.current.getBoundingClientRect();
+      const newLeft = projectRect.left - innerRect.left;
+      targetLeft.current = newLeft; // 목표 위치 설정
+    }
+  };
+
+  const onMouseLeave = () => {
+    setSelectedIdx(null);
+  };
+
+  useEffect(() => {
+    animationFrame.current = requestAnimationFrame(updateScannerPosition);
+    return () => {
+      if (animationFrame.current) {
+        cancelAnimationFrame(animationFrame.current);
+      }
+    };
+  }, [scannerLeft]);
+
+  return (
+    <Container>
+      <Inner ref={innerRef}>
+        <Scanner style={{ left: `${scannerLeft}px` }} />
+        <ProjectBox>
+          {projectData.map((project, idx) => (
+            <Project
+              key={idx}
+              ref={(el) => (projectRefs.current[idx] = el!)}
+              className={selectedIdx === idx ? "active" : ""}
+              onMouseEnter={() => onMouseEnter(idx)}
+              onMouseLeave={onMouseLeave}
+            >
+              <Wrapper className={selectedIdx === idx ? "active" : ""}>
+                <Title>{project.name}</Title>
+                <Desc></Desc>
+              </Wrapper>
+            </Project>
+          ))}
+        </ProjectBox>
+      </Inner>
+    </Container>
+  );
+};
+
+export default Work;
