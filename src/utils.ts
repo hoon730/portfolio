@@ -82,62 +82,50 @@ export const databaseData = [
 export const projectData = [
   {
     id: 0,
-    imgPath: "/img/icons/nextjs.png",
     name: "Next.js",
   },
   {
     id: 1,
-    imgPath: "/img/icons/typescript.png",
     name: "Typescript",
   },
   {
     id: 2,
-    imgPath: "/img/icons/react.png",
     name: "React",
   },
   {
     id: 3,
-    imgPath: "/img/icons/redux.png",
     name: "Redux",
   },
   {
     id: 4,
-    imgPath: "/img/icons/axios.png",
     name: "Axios",
   },
   {
     id: 5,
-    imgPath: "/img/icons/recoil.png",
     name: "Recoil",
   },
   {
     id: 6,
-    imgPath: "/img/icons/reactquery.png",
     name: "React Query",
   },
   {
     id: 7,
-    imgPath: "/img/icons/reactrouter.png",
     name: "React Router",
   },
   {
     id: 8,
-    imgPath: "/img/icons/styledcomponent.png",
     name: "Styled Component",
   },
   {
     id: 9,
-    imgPath: "/img/icons/javascript.png",
     name: "Javascript",
   },
   {
     id: 10,
-    imgPath: "/img/icons/apolloserver.png",
     name: "Apollo Server",
   },
   {
     id: 11,
-    imgPath: "/img/icons/netlify.png",
     name: "Netlify",
   },
 ];

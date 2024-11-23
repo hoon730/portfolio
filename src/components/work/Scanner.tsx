@@ -5,18 +5,19 @@ const Wrapper = styled(motion.div)`
   position: absolute;
   top: 0;
   left: 0;
-  width: 510px;
-  height: 510px;
-  border: 3px solid #d5181c;
+  width: 26vw;
+  height: 26vw;
+  z-index: 10;
+  border: 3px solid red;
+  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 `;
 
-const Scanner = ({ isMouseEnter }: { isMouseEnter: boolean }) => {
-  return (
-    <Wrapper
-      layoutId={"wrapper"}
-      className={isMouseEnter ? "active" : ""}
-    ></Wrapper>
-  );
+interface StyleProps {
+  left: string; // or number if you're not appending "px"
+}
+
+const Scanner = ({ style }: { style: StyleProps }) => {
+  return <Wrapper style={style} layoutId={"wrapper"}></Wrapper>;
 };
 
 export default Scanner;
