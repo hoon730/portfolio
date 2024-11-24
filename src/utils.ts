@@ -82,50 +82,50 @@ export const databaseData = [
 export const projectData = [
   {
     id: 0,
-    name: "Next.js",
+    name: "INSTAGRAM",
   },
   {
     id: 1,
-    name: "Typescript",
+    name: "AURORA",
   },
   {
     id: 2,
-    name: "React",
+    name: "JOONGONARA",
   },
   {
     id: 3,
-    name: "Redux",
+    name: "RRL",
   },
   {
     id: 4,
-    name: "Axios",
+    name: "KILL BILL",
   },
   {
     id: 5,
-    name: "Recoil",
+    name: "PROJECT",
   },
   {
     id: 6,
-    name: "React Query",
+    name: "PROJECT ",
   },
   {
     id: 7,
-    name: "React Router",
+    name: "PROJECT",
   },
   {
     id: 8,
-    name: "Styled Component",
+    name: "PROJECT",
   },
   {
     id: 9,
-    name: "Javascript",
+    name: "PROJECT",
   },
   {
     id: 10,
-    name: "Apollo Server",
+    name: "PROJECT",
   },
   {
     id: 11,
-    name: "Netlify",
+    name: "PROJECT",
   },
 ];
