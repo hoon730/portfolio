@@ -12,20 +12,6 @@ const Inner = styled.div`
   padding: 6% 0;
 `;
 
-const Bar = styled.div`
-  width: 100%;
-  height: 3px;
-  background: #000;
-  /* background-image: linear-gradient(
-    to right,
-    black 70%,
-    rgba(255, 255, 255, 0) 0%
-  );
-  background-position: bottom;
-  background-size: 15px 2px;
-  background-repeat: repeat-x; */
-`;
-
 const Contents = styled.div`
   width: 100%;
   height: 100%;
@@ -113,7 +99,6 @@ const Barcode = styled.div<BarcodeProps>`
 
 const ImgBox = styled.div`
   position: absolute;
-  /* top: 100%; */
   top: 0;
   left: 0;
   width: 100%;

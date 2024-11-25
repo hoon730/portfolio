@@ -5,7 +5,6 @@ import { projectData } from "../utils";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { span } from "motion/react-client";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,26 +23,25 @@ const Inner = styled.div`
 const ProjectBox = styled.div`
   width: 100%;
   height: 25vw;
-  padding: 0 5px;
   display: flex;
   justify-content: space-evenly;
   position: relative;
-  /* background: black; */
 `;
 
 const Project = styled.div`
+  width: 2vw;
+  height: 100%;
   display: flex;
   align-items: center;
-  flex: 0 1 5vw;
-  height: 100%;
-  margin: 0 5px;
   position: relative;
   overflow: hidden;
-  transition: flex 0.3s ease;
-  background: ${(props) => props.theme.bgColor};
+  background: #f0f0f0;
+  /* border: 1px solid ${(props) => props.theme.fontColor}; */
+  background: ${(props) => props.theme.fontColor};
+  transition: width 0.3s ease;
 
   &.active {
-    flex: 0 0 25vw;
+    width: 25vw;
   }
 `;
 
@@ -57,65 +55,36 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.div`
-  display: flex;
-  flex-direction: column;
+  width: 2vw;
+  height: 100%;
 `;
 
 const Name = styled.div`
-  display: flex;
-  flex-direction: column;
+  padding: 20px 10px;
+  transform: rotate(90deg);
+  width: 100%;
+
+  h3 {
+    color: #fff;
+    font: bold italic 24px/1 " Libre Franklin", sans-serif;
+  }
+`;
+
+const Detail = styled.div`
+  height: 100%;
+  /* border-left: 1px solid ${(props) => props.theme.fontColor}; */
+  border-left: 1px solid #fff;
 `;
 
 const Scanner = styled.div`
   position: absolute;
-  top: 0%;
+  top: 0;
   left: 0;
   width: 25vw;
   height: 25vw;
-  border: 3px solid #000;
-  transition: all 0.5s ease;
+  background: url("/img/scanner_white.png") center/cover no-repeat;
+  transition: all 0.3s ease;
   z-index: 10;
-`;
-
-const TopBar = styled.div`
-  position: absolute;
-  top: calc((100vh - 25vw) / -2);
-  left: 50%;
-  transform: translateX(-50%);
-  width: 15px;
-  height: calc((100vh - 25vw) / 2);
-  border-left: 3px solid #000;
-  border-right: 3px solid #000;
-
-  &::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: #f0f0f0;
-  }
-`;
-const BottomBar = styled.div`
-  position: absolute;
-  bottom: calc((100vh - 25vw) / -2);
-  left: 50%;
-  transform: translateX(-50%);
-  width: 15px;
-  height: calc((100vh - 25vw) / 2);
-  border-left: 3px solid #000;
-  border-right: 3px solid #000;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: #f0f0f0;
-  }
 `;
 
 const Work = () => {
@@ -137,13 +106,12 @@ const Work = () => {
 
         const scannerX = projectRect.left - projectBoxRect.left;
 
-        scanner.style.transform = `translateX(${scannerX}px)`;
+        scanner.style.left = `${scannerX}px`;
       }, 300);
     }
   };
 
   useEffect(() => {
-    // 컴포넌트가 렌더링된 후 첫 번째 Project 위치로 Scanner를 이동
     const scanner = scannerRef.current;
     const firstProject = projectRefs.current[0];
 
@@ -154,8 +122,7 @@ const Work = () => {
 
       const initialLeft = projectRect.left - projectBoxRect.left;
 
-      // 초기 left 값을 설정 (14px로 이동)
-      scanner.style.transform = `translateX(${initialLeft}px)`;
+      scanner.style.left = `${initialLeft}px`;
     }
   }, []);
 
@@ -176,10 +143,7 @@ const Work = () => {
     <Container className="container">
       <Inner>
         <ProjectBox>
-          <Scanner ref={scannerRef}>
-            <TopBar></TopBar>
-            <BottomBar></BottomBar>
-          </Scanner>
+          <Scanner ref={scannerRef}></Scanner>
           {projectData.map((project, idx) => (
             <Project
               key={idx}
@@ -190,11 +154,13 @@ const Work = () => {
               <Wrapper className={selectedIdx === idx ? "active" : ""}>
                 <Title>
                   <Name>
-                    {project.name.split("").map((char) => (
+                    {/* {project.name.split("").map((char) => (
                       <h3>{char}</h3>
-                    ))}
+                    ))} */}
+                    <h3>{project.name}</h3>
                   </Name>
                 </Title>
+                <Detail></Detail>
               </Wrapper>
             </Project>
           ))}

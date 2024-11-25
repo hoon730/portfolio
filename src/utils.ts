@@ -98,7 +98,7 @@ export const projectData = [
   },
   {
     id: 4,
-    name: "KILL BILL",
+    name: "KILLBILL",
   },
   {
     id: 5,

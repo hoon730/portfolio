@@ -174,7 +174,8 @@ const Laser = styled.div`
   transform: translate(2%, -50%);
   width: 105%;
   height: 4px;
-  background: rgba(255, 0, 0, 0.801);
+  /* background: rgba(255, 0, 0, 0.801); */
+  background: #e55050;
   box-shadow: 0 0 14px rgba(255, 0, 0, 1);
   border-radius: 20%;
   opacity: 0;
