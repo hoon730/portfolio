@@ -35,9 +35,9 @@ const Project = styled.div`
   align-items: center;
   position: relative;
   overflow: hidden;
-  background: #f0f0f0;
-  /* border: 1px solid ${(props) => props.theme.fontColor}; */
-  background: ${(props) => props.theme.fontColor};
+  /* background: #f0f0f0; */
+  border: 2px solid ${(props) => props.theme.fontColor};
+  /* background: ${(props) => props.theme.fontColor}; */
   transition: width 0.3s ease;
 
   &.active {
@@ -65,24 +65,26 @@ const Name = styled.div`
   width: 100%;
 
   h3 {
-    color: #fff;
+    /* color: #fff; */
     font: bold italic 24px/1 " Libre Franklin", sans-serif;
   }
 `;
 
 const Detail = styled.div`
+  width: 100%;
   height: 100%;
-  /* border-left: 1px solid ${(props) => props.theme.fontColor}; */
-  border-left: 1px solid #fff;
+  border-left: 2px solid ${(props) => props.theme.fontColor};
+  /* border-left: 1px solid #fff; */
 `;
 
 const Scanner = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 25vw;
-  height: 25vw;
-  background: url("/img/scanner_white.png") center/cover no-repeat;
+  top: -0.25vw;
+  left: -0.5vw;
+  transform: translate(-0.5vw, -0.25vw);
+  width: 26vw;
+  height: 26vw;
+  background: url("/img/scanner.png") center/cover no-repeat;
   transition: all 0.3s ease;
   z-index: 10;
 `;
