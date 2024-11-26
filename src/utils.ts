@@ -82,50 +82,62 @@ export const databaseData = [
 export const projectData = [
   {
     id: 0,
+    logoPath: "/img/work/instagram_logo.svg",
     name: "INSTAGRAM",
   },
   {
     id: 1,
+    logoPath: "/img/work/instagram_logo.svg",
     name: "AURORA",
   },
   {
     id: 2,
+    logoPath: "/img/work/instagram_logo.svg",
     name: "JOONGONARA",
   },
   {
     id: 3,
+    logoPath: "/img/work/instagram_logo.svg",
     name: "RRL",
   },
   {
     id: 4,
+    logoPath: "/img/work/instagram_logo.svg",
     name: "KILLBILL",
   },
   {
     id: 5,
+    logoPath: "/img/work/instagram_logo.svg",
     name: "PROJECT",
   },
   {
     id: 6,
+    logoPath: "/img/work/instagram_logo.svg",
     name: "PROJECT ",
   },
   {
     id: 7,
+    logoPath: "/img/work/instagram_logo.svg",
     name: "PROJECT",
   },
   {
     id: 8,
+    logoPath: "/img/work/instagram_logo.svg",
     name: "PROJECT",
   },
   {
     id: 9,
+    logoPath: "/img/work/instagram_logo.svg",
     name: "PROJECT",
   },
   {
     id: 10,
+    logoPath: "/img/work/instagram_logo.svg",
     name: "PROJECT",
   },
   {
     id: 11,
+    logoPath: "/img/work/instagram_logo.svg",
     name: "PROJECT",
   },
 ];

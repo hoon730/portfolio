@@ -69,6 +69,7 @@ const GlobalsStyle = createGlobalStyle`
       font-family: "Libre Franklin", sans-serif;
       /* font-family: "Archivo Narrow", sans-serif; */
       /* font-family: "Libre Barcode 39", system-ui; */
+      /* font-family: "Libre Barcode 128", system-ui; */
       /* font-family: "Fira Code", monospace; */
       /* font-family: "PT Mono", monospace; */
       &::-webkit-scrollbar {

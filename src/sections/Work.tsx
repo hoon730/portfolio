@@ -58,21 +58,22 @@ const Wrapper = styled.div`
 const Title = styled.div`
   width: 2vw;
   height: 100%;
-  transition: transform 0.3s ease;
+  transition: width 0.3s ease;
 
   &.active {
-    transform: translateX(-100%);
+    width: 0;
   }
 `;
 
-const Name = styled.div`
+const Name = styled.h3`
   padding: 20px 10px;
   transform: rotate(90deg);
   width: 100%;
+  font: bold italic 24px/1 " Libre Franklin", sans-serif;
+  transition: transform 0.3s ease;
 
-  h3 {
-    /* color: #fff; */
-    font: bold italic 24px/1 " Libre Franklin", sans-serif;
+  &.active {
+    transform: rotate(90deg) translateY(100%);
   }
 `;
 
@@ -94,18 +95,26 @@ const Scanner = styled.div`
   z-index: 10;
 `;
 
-const TopBar = styled.div`
-  position: absolute;
-  top: -100%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 15px;
-  height: calc((100vh - 25vw) );
-  border-left: 2px solid ${(props) => props.theme.fontColor};
-  border-right: 2px solid ${(props) => props.theme.fontColor};
+const ProjectLogo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 22.5%;
 `;
-
-const BottomBar = styled.div``;
+const ProjectImgBox = styled.div`
+  width: 100%;
+  height: 55%;
+  background: #dbdad9;
+`;
+const ProjectImg = styled.img``;
+const Barcode = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 22.5%;
+  font-family: "Libre Barcode 128", system-ui;
+  font-size: 64px;
+`;
 
 const Work = () => {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(0);
@@ -163,10 +172,7 @@ const Work = () => {
     <Container className="container">
       <Inner>
         <ProjectBox>
-          <Scanner ref={scannerRef}>
-            {/* <TopBar></TopBar> */}
-            <BottomBar></BottomBar>
-          </Scanner>
+          <Scanner ref={scannerRef}></Scanner>
           {projectData.map((project, idx) => (
             <Project
               key={idx}
@@ -176,14 +182,19 @@ const Work = () => {
             >
               <Wrapper className={selectedIdx === idx ? "active" : ""}>
                 <Title className={selectedIdx === idx ? "active" : ""}>
-                  <Name>
-                    {/* {project.name.split("").map((char) => (
-                      <h3>{char}</h3>
-                    ))} */}
-                    <h3>{project.name}</h3>
+                  <Name className={selectedIdx === idx ? "active" : ""}>
+                    {project.name}
                   </Name>
                 </Title>
-                <Detail></Detail>
+                <Detail>
+                  <ProjectLogo>
+                    <img src={project.logoPath} alt="" />
+                  </ProjectLogo>
+                  <ProjectImgBox>
+                    <ProjectImg />
+                  </ProjectImgBox>
+                  <Barcode>{project.name}</Barcode>
+                </Detail>
               </Wrapper>
             </Project>
           ))}
