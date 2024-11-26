@@ -38,10 +38,11 @@ const Project = styled.div`
   /* background: #f0f0f0; */
   border: 2px solid ${(props) => props.theme.fontColor};
   /* background: ${(props) => props.theme.fontColor}; */
-  transition: width 0.3s ease;
+  /* transition: width 0.3s ease; */
 
   &.active {
     width: 25vw;
+    border: 2px solid transparent;
   }
 `;
 
@@ -57,6 +58,11 @@ const Wrapper = styled.div`
 const Title = styled.div`
   width: 2vw;
   height: 100%;
+  transition: transform 0.3s ease;
+
+  &.active {
+    transform: translateX(-100%);
+  }
 `;
 
 const Name = styled.div`
@@ -73,7 +79,6 @@ const Name = styled.div`
 const Detail = styled.div`
   width: 100%;
   height: 100%;
-  border-left: 2px solid ${(props) => props.theme.fontColor};
   /* border-left: 1px solid #fff; */
 `;
 
@@ -85,9 +90,22 @@ const Scanner = styled.div`
   width: 26vw;
   height: 26vw;
   background: url("/img/scanner.png") center/cover no-repeat;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   z-index: 10;
 `;
+
+const TopBar = styled.div`
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 15px;
+  height: calc((100vh - 25vw) );
+  border-left: 2px solid ${(props) => props.theme.fontColor};
+  border-right: 2px solid ${(props) => props.theme.fontColor};
+`;
+
+const BottomBar = styled.div``;
 
 const Work = () => {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(0);
@@ -109,7 +127,7 @@ const Work = () => {
         const scannerX = projectRect.left - projectBoxRect.left;
 
         scanner.style.left = `${scannerX}px`;
-      }, 300);
+      }, 100);
     }
   };
 
@@ -145,7 +163,10 @@ const Work = () => {
     <Container className="container">
       <Inner>
         <ProjectBox>
-          <Scanner ref={scannerRef}></Scanner>
+          <Scanner ref={scannerRef}>
+            {/* <TopBar></TopBar> */}
+            <BottomBar></BottomBar>
+          </Scanner>
           {projectData.map((project, idx) => (
             <Project
               key={idx}
@@ -154,7 +175,7 @@ const Work = () => {
               onMouseEnter={() => handleMouseEnter(idx)}
             >
               <Wrapper className={selectedIdx === idx ? "active" : ""}>
-                <Title>
+                <Title className={selectedIdx === idx ? "active" : ""}>
                   <Name>
                     {/* {project.name.split("").map((char) => (
                       <h3>{char}</h3>
