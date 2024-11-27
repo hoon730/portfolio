@@ -73,7 +73,7 @@ const GlobalsStyle = createGlobalStyle`
       /* font-family: "Fira Code", monospace; */
       /* font-family: "PT Mono", monospace; */
       &::-webkit-scrollbar {
-    display: none;
+      display: none;
       }
     }
   }
@@ -91,7 +91,7 @@ const ShowingCursor = keyframes`
   }
 `;
 
-const Scanner = keyframes`
+const Scanning = keyframes`
   0% {
     opacity: 1;
     background: url("/img/pjh2.png") center/cover no-repeat;
@@ -109,7 +109,7 @@ const Cursor = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 70px;
+  width: 100px;
   height: 100px;
   background: url("/img/pjh.png") center/cover no-repeat;
   z-index: 100;
@@ -117,15 +117,16 @@ const Cursor = styled.div`
   transform: translate(-50%, -50%);
 
   &.active {
-    animation: ${Scanner} 1s linear both;
+    animation: ${Scanning} 1s linear both;
   }
 `;
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  /* cursor: none; */
-  /* &.active {
+  /* cursor: none;
+
+  &.active {
     animation: ${ShowingCursor} 1s linear both;
   } */
 

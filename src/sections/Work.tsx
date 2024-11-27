@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+import Receipt from "../components/work/receipt";
 import { projectData } from "../utils";
 
 import gsap from "gsap";
@@ -7,6 +8,15 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const Scanning = keyframes`
+  0% {
+    background-image: url("/img/pjh2.png");
+  }
+  100%{
+    background-image: url("/img/pjh.png");
+  }
+`;
 
 const Container = styled.section`
   position: relative;
@@ -26,6 +36,7 @@ const ProjectBox = styled.div`
   display: flex;
   justify-content: space-evenly;
   position: relative;
+  z-index: 1;
 `;
 
 const Project = styled.div`
@@ -39,6 +50,7 @@ const Project = styled.div`
   border: 2px solid ${(props) => props.theme.fontColor};
   /* background: ${(props) => props.theme.fontColor}; */
   /* transition: width 0.3s ease; */
+  z-index: 1;
 
   &.active {
     width: 25vw;
@@ -80,7 +92,6 @@ const Name = styled.h3`
 const Detail = styled.div`
   width: 100%;
   height: 100%;
-  /* border-left: 1px solid #fff; */
 `;
 
 const Scanner = styled.div`
@@ -92,21 +103,48 @@ const Scanner = styled.div`
   height: 26vw;
   background: url("/img/scanner.png") center/cover no-repeat;
   transition: all 0.2s ease;
-  z-index: 10;
+  z-index: 0;
 `;
 
 const ProjectLogo = styled.div`
+  height: 22.5%;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 22.5%;
+
+  /* div {
+    overflow: hidden;
+
+    img {
+      transform: translateY(120%);
+      transition: transform 0.3s 0.3s ease;
+    }
+  }
+
+  &.active img {
+    transform: translateY(0);
+  } */
 `;
 const ProjectImgBox = styled.div`
   width: 100%;
   height: 55%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: #dbdad9;
+  overflow: hidden;
+
+  /* img {
+    transform: translateY(200%);
+    transition: transform 0.6s 0.3s ease;
+  }
+
+  &.active img {
+    transform: translateY(0);
+  } */
 `;
 const ProjectImg = styled.img``;
+
 const Barcode = styled.div`
   display: flex;
   justify-content: center;
@@ -114,12 +152,46 @@ const Barcode = styled.div`
   height: 22.5%;
   font-family: "Libre Barcode 128", system-ui;
   font-size: 64px;
+  transform: translateY(20%);
+`;
+
+const Cursor = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  background-image: url("/img/pjh.png");
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+
+  &.active {
+    animation: ${Scanning} 1s linear both;
+  }
 `;
 
 const Work = () => {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(0);
+  const [isClick, setIsClick] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   const scannerRef = useRef<HTMLDivElement | null>(null);
   const projectRefs = useRef<HTMLDivElement[]>([]);
+
+  console.log(isClick);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setPosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
 
   const handleMouseEnter = (idx: number) => {
     setSelectedIdx(idx);
@@ -155,6 +227,10 @@ const Work = () => {
     }
   }, []);
 
+  const onClick = () => {
+    setIsClick(true);
+  };
+
   useGSAP(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -172,6 +248,13 @@ const Work = () => {
     <Container className="container">
       <Inner>
         <ProjectBox>
+          <Cursor
+            className={isClick ? "active" : ""}
+            style={{
+              left: `${position.x - 325}px`,
+              top: `${position.y - 230}px`,
+            }}
+          />
           <Scanner ref={scannerRef}></Scanner>
           {projectData.map((project, idx) => (
             <Project
@@ -187,19 +270,31 @@ const Work = () => {
                   </Name>
                 </Title>
                 <Detail>
-                  <ProjectLogo>
-                    <img src={project.logoPath} alt="" />
+                  <ProjectLogo className={selectedIdx === idx ? "active" : ""}>
+                    <div>
+                      <img src={project.logoPath} alt={project.name} />
+                    </div>
                   </ProjectLogo>
-                  <ProjectImgBox>
+                  <ProjectImgBox
+                    className={selectedIdx === idx ? "active" : ""}
+                  >
                     <ProjectImg />
                   </ProjectImgBox>
-                  <Barcode>{project.name}</Barcode>
+                  <Barcode
+                    className={selectedIdx === idx ? "active" : ""}
+                    onClick={onClick}
+                  >
+                    <div>
+                      <span>{project.name}</span>
+                    </div>
+                  </Barcode>
                 </Detail>
               </Wrapper>
             </Project>
           ))}
         </ProjectBox>
       </Inner>
+      <Receipt isclick={isClick} selectedIdx={selectedIdx} />
     </Container>
   );
 };
