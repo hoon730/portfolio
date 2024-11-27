@@ -285,7 +285,7 @@ const Work = () => {
                     onClick={onClick}
                   >
                     <div>
-                      <span>{project.name}</span>
+                      <span>{project.barcode}</span>
                     </div>
                   </Barcode>
                 </Detail>
