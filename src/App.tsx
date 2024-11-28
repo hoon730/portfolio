@@ -150,7 +150,7 @@ const Receipt = styled.div`
 `;
 
 const App = () => {
-  const [isClick, setIsClick] = useState(false);
+  const [barcodeClick, setBarcodeClick] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -163,22 +163,22 @@ const App = () => {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, []);
+  }, [position]);
 
   return (
     <>
       <ThemeProvider theme={lightTheme}>
         <GlobalsStyle />
-        <Wrapper className={isClick ? "active" : ""}>
+        <Wrapper className={barcodeClick ? "active" : ""}>
           <Cursor
-            className={isClick ? "active" : ""}
+            className={barcodeClick ? "active" : ""}
             style={{
               left: `${position.x}px`,
               top: `${position.y}px`,
             }}
           />
           <Receipt>
-            <Home isClick={isClick} onClick={setIsClick} />
+            <Home barcodeClick={barcodeClick} onClick={setBarcodeClick} />
             <About />
             <Skill />
             <Work />

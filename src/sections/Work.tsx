@@ -19,7 +19,7 @@ const Scanning = keyframes`
 `;
 
 const Container = styled.section`
-  position: relative;
+  overflow: hidden;
 `;
 
 const Inner = styled.div`
@@ -36,7 +36,7 @@ const ProjectBox = styled.div`
   display: flex;
   justify-content: space-evenly;
   position: relative;
-  z-index: 1;
+  z-index: 0;
 `;
 
 const Project = styled.div`
@@ -46,11 +46,9 @@ const Project = styled.div`
   align-items: center;
   position: relative;
   overflow: hidden;
-  /* background: #f0f0f0; */
   border: 2px solid ${(props) => props.theme.fontColor};
-  /* background: ${(props) => props.theme.fontColor}; */
-  /* transition: width 0.3s ease; */
-  z-index: 1;
+
+  z-index: 0;
 
   &.active {
     width: 25vw;
@@ -104,6 +102,9 @@ const Scanner = styled.div`
   background: url("/img/scanner.png") center/cover no-repeat;
   transition: all 0.2s ease;
   z-index: 0;
+
+  &.active {
+  }
 `;
 
 const ProjectLogo = styled.div`
@@ -111,19 +112,6 @@ const ProjectLogo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  /* div {
-    overflow: hidden;
-
-    img {
-      transform: translateY(120%);
-      transition: transform 0.3s 0.3s ease;
-    }
-  }
-
-  &.active img {
-    transform: translateY(0);
-  } */
 `;
 const ProjectImgBox = styled.div`
   width: 100%;
@@ -133,15 +121,6 @@ const ProjectImgBox = styled.div`
   align-items: center;
   background: #dbdad9;
   overflow: hidden;
-
-  /* img {
-    transform: translateY(200%);
-    transition: transform 0.6s 0.3s ease;
-  }
-
-  &.active img {
-    transform: translateY(0);
-  } */
 `;
 const ProjectImg = styled.img``;
 
@@ -168,18 +147,17 @@ const Cursor = styled.div`
   transform: translate(-50%, -50%);
 
   &.active {
-    animation: ${Scanning} 1s linear both;
+    animation: ${Scanning} 0.6s linear both;
   }
 `;
 
 const Work = () => {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(0);
   const [isClick, setIsClick] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const scannerRef = useRef<HTMLDivElement | null>(null);
   const projectRefs = useRef<HTMLDivElement[]>([]);
-
-  console.log(isClick);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -191,7 +169,9 @@ const Work = () => {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, []);
+  }, [position]);
+
+  console.log(isClick);
 
   const handleMouseEnter = (idx: number) => {
     setSelectedIdx(idx);
@@ -229,6 +209,10 @@ const Work = () => {
 
   const onClick = () => {
     setIsClick(true);
+    setIsOpen(true);
+    setTimeout(() => {
+      setIsClick(false);
+    }, 600);
   };
 
   useGSAP(() => {
@@ -255,7 +239,13 @@ const Work = () => {
               top: `${position.y - 230}px`,
             }}
           />
-          <Scanner ref={scannerRef}></Scanner>
+          <Scanner ref={scannerRef} className={isClick ? "active" : ""}>
+            <Receipt
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              selectedIdx={selectedIdx}
+            />
+          </Scanner>
           {projectData.map((project, idx) => (
             <Project
               key={idx}
@@ -270,20 +260,15 @@ const Work = () => {
                   </Name>
                 </Title>
                 <Detail>
-                  <ProjectLogo className={selectedIdx === idx ? "active" : ""}>
+                  <ProjectLogo>
                     <div>
                       <img src={project.logoPath} alt={project.name} />
                     </div>
                   </ProjectLogo>
-                  <ProjectImgBox
-                    className={selectedIdx === idx ? "active" : ""}
-                  >
+                  <ProjectImgBox>
                     <ProjectImg />
                   </ProjectImgBox>
-                  <Barcode
-                    className={selectedIdx === idx ? "active" : ""}
-                    onClick={onClick}
-                  >
+                  <Barcode onClick={onClick}>
                     <div>
                       <span>{project.barcode}</span>
                     </div>
@@ -294,7 +279,6 @@ const Work = () => {
           ))}
         </ProjectBox>
       </Inner>
-      <Receipt isclick={isClick} selectedIdx={selectedIdx} />
     </Container>
   );
 };

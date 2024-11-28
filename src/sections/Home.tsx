@@ -185,12 +185,12 @@ const Laser = styled.div`
   }
 `;
 
-interface isClickProps {
-  isClick: boolean;
+interface barcodeClickProps {
+  barcodeClick: boolean;
   onClick: (state: boolean) => void;
 }
 
-const Home = ({ isClick, onClick }: isClickProps) => {
+const Home = ({ barcodeClick, onClick }: barcodeClickProps) => {
   const [isScroll, setIsScroll] = useState(false);
 
   const handleOnClick = () => {
@@ -198,115 +198,40 @@ const Home = ({ isClick, onClick }: isClickProps) => {
   };
 
   useGSAP(() => {
-    if (isClick) {
+    if (barcodeClick) {
       const tl1 = gsap.timeline();
-      tl1
-        .to(".text_box", {
-          bottom: 0,
-          duration: 1,
-          delay: 1,
+      const targetArr = [
+        ".title",
+        ".date",
+        ".category",
+        ".yeom",
+        ".dong",
+        ".qrcode",
+        ".hoon",
+        ".bar",
+      ];
+      const yArr = [80, 60, 40, 20, 0];
+
+      tl1.to(".text_box", {
+        bottom: 0,
+        duration: 1,
+        delay: 1,
+        ease: "power1.inOut",
+      });
+      yArr.forEach((y, index) => {
+        tl1.to(targetArr, {
+          y,
+          duration: 0.3,
           ease: "power1.inOut",
-        })
-        .to(
-          [
-            ".title",
-            ".date",
-            ".category",
-            ".yeom",
-            ".dong",
-            ".qrcode",
-            ".hoon",
-            ".bar",
-          ],
-          { y: 80, duration: 0.3, ease: "power1.inOut", delay: 0.1 }
-        )
-        .to(
-          [
-            ".title",
-            ".date",
-            ".category",
-            ".yeom",
-            ".dong",
-            ".qrcode",
-            ".hoon",
-            ".bar",
-          ],
-          { y: 60, duration: 0.3, ease: "power1.inOut", delay: 0.1 }
-        )
-        .to(
-          [
-            ".title",
-            ".date",
-            ".category",
-            ".yeom",
-            ".dong",
-            ".qrcode",
-            ".hoon",
-            ".bar",
-          ],
-          { y: 40, duration: 0.3, ease: "power1.inOut", delay: 0.1 }
-        )
-        .to(
-          [
-            ".title",
-            ".date",
-            ".category",
-            ".yeom",
-            ".dong",
-            ".qrcode",
-            ".hoon",
-            ".bar",
-          ],
-          { y: 20, duration: 0.3, ease: "power1.inOut", delay: 0.1 }
-        )
-        .to(
-          [
-            ".title",
-            ".date",
-            ".category",
-            ".yeom",
-            ".dong",
-            ".qrcode",
-            ".hoon",
-            ".bar",
-          ],
-          { y: 0, duration: 0.3, ease: "power1.inOut", delay: 0.1 }
-        );
+          delay: index === 0 ? 0.2 : 0,
+        });
+      });
     }
-
-    // const texts = [
-    //   ".title",
-    //   ".date",
-    //   ".category",
-    //   ".nameLeft",
-    //   ".nameRight",
-    //   ".bar",
-    //   ".text_box",
-    // ];
-
-    // window.addEventListener("scroll", () => {
-    //   setIsScroll(true);
-    // });
-
-    // if (isScroll) {
-    //   texts.forEach((text, index) => {
-    //     gsap.to(text, {
-    //       y: -10 * (index + 1),
-    //       ease: "power1.out",
-    //       scrollTrigger: {
-    //         trigger: text,
-    //         start: "top bottom",
-    //         end: "bottom top",
-    //         scrub: 1,
-    //       },
-    //     });
-    //   });
-    // }
-  }, [isClick]);
+  }, [barcodeClick]);
 
   return (
     <Container>
-      <Header isClick={isClick} />
+      <Header isClick={barcodeClick} />
       <Inner className="inner">
         <TextBox className="text_box">
           <Text>
@@ -318,7 +243,7 @@ const Home = ({ isClick, onClick }: isClickProps) => {
                 donghoon
               </span>
             </Barcode>
-            <Laser className={isClick ? "active" : ""} />
+            <Laser className={barcodeClick ? "active" : ""} />
           </BarcodeBox>
         </TextBox>
         <Title>

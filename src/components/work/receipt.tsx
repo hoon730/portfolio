@@ -1,22 +1,38 @@
 import React from "react";
+import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import { projectData } from "../../utils";
-import { span } from "motion/react-client";
 
-const Background = styled.div`
+import gsap from "gsap";
+import { CSSPlugin, ScrollTrigger } from "gsap/all";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(CSSPlugin, ScrollTrigger);
+
+const Background = styled.div<{ $isclick: boolean }>`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  justify-content: center;
+  align-items: center;
+  /* background: rgba(0, 0, 0, 0.3); */
+  display: ${({ $isclick }) => ($isclick ? "flex" : "none")};
+  z-index: 10;
 `;
 
 const Container = styled.div`
   width: 430px;
-  height: 100%;
+  height: 100vh;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  background: #fff;
   font-size: ${(props) => props.theme.fsSmall};
+  background: #fff;
+  transform: translateY(100%);
+  border-top: 1px dashed #000;
 
   h3 {
     font-weight: bold;
@@ -28,6 +44,7 @@ const ProjectLogo = styled.div`
 `;
 const Info = styled.div`
   width: 100%;
+  padding-bottom: 30px;
 `;
 
 const Article = styled.div`
@@ -42,10 +59,9 @@ const Items = styled.div`
   border-bottom: 2px dashed #000;
 `;
 const ProjectImgBox = styled.div`
-  width: 236.5px;
-  height: 236.5px;
   background: #f0f0f0;
-  margin: 30px 0;
+  width: 16vw;
+  height: 16vw;
 `;
 const ProjectImg = styled.img``;
 
@@ -54,7 +70,7 @@ const Desc = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding-bottom: 20px;
+  padding: 30px 0 20px 0;
   margin-bottom: 20px;
   border-bottom: 2px dashed #000;
 `;
@@ -99,29 +115,50 @@ const Barcode = styled.div`
 `;
 
 const Receipt = ({
-  isclick,
+  isOpen,
+  setIsOpen,
   selectedIdx,
 }: {
-  isclick: boolean;
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   selectedIdx: number | null;
 }) => {
+  useGSAP(() => {
+    if (isOpen) {
+      const tl = gsap.timeline();
+      const yArr = [80, 60, 40, 20, 0];
+
+      yArr.forEach((y, index) => {
+        tl.to(".container", {
+          y,
+          duration: 0.3,
+          ease: "power1.inOut",
+          delay: index === 0 ? 0.2 : 0,
+        });
+      });
+    }
+  }, [isOpen]);
+
   return (
-    <Background>
+    <Background
+      $isclick={isOpen}
+      onClick={() => setIsOpen(false)}
+    >
       {projectData
         .filter((project) => project.id === selectedIdx)
         .map((project) => (
-          <Container key={project.id}>
+          <Container key={project.id} className="container">
             <ProjectLogo>
               <img src={project.logoPath} alt={project.name} />
             </ProjectLogo>
             <Info>
               <Article>
                 <h3>CATEGORY:</h3>
-                <span>TEAM PROJECT</span>
+                <span>Team Project</span>
               </Article>
               <Items>
                 <h3>PAGE:</h3>
-                <span>PROFILE, DETAIL</span>
+                <span>Profile, Detail</span>
               </Items>
             </Info>
             <ProjectImgBox>
@@ -137,8 +174,8 @@ const Receipt = ({
             <SkillStack>
               <h3>SKILL STACK</h3>
               <StackBox>
-                {project.skillStack.map((skill) => (
-                  <div>
+                {project.skillStack.map((skill, idx) => (
+                  <div key={idx}>
                     <span>{skill}</span>
                     <span>x 1</span>
                   </div>
