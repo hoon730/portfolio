@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import styled, { keyframes } from "styled-components";
 import Receipt from "../components/work/receipt";
 import { projectData } from "../utils";
@@ -44,11 +44,8 @@ const Project = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  position: relative;
   overflow: hidden;
   border: 2px solid ${(props) => props.theme.fontColor};
-
-  z-index: 0;
 
   &.active {
     width: 25vw;
@@ -125,13 +122,18 @@ const ProjectImgBox = styled.div`
 const ProjectImg = styled.img``;
 
 const Barcode = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   height: 22.5%;
   font-family: "Libre Barcode 128", system-ui;
   font-size: 64px;
-  transform: translateY(20%);
+  z-index: 2;
+
+  &.active {
+    z-index: -1;
+  }
 `;
 
 const Cursor = styled.div`
@@ -143,6 +145,7 @@ const Cursor = styled.div`
   background-image: url("/img/pjh.png");
   background-size: cover;
   background-position: center;
+  pointer-events: none;
   z-index: 1;
   transform: translate(-50%, -50%);
 
@@ -152,9 +155,10 @@ const Cursor = styled.div`
 `;
 
 const Work = () => {
-  const [selectedIdx, setSelectedIdx] = useState<number | null>(0);
+  const [isMouseEnter, setIsMouseEnter] = useState(false);
   const [isClick, setIsClick] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(0);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const scannerRef = useRef<HTMLDivElement | null>(null);
   const projectRefs = useRef<HTMLDivElement[]>([]);
@@ -169,11 +173,11 @@ const Work = () => {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [position]);
+  }, []);
 
   console.log(isClick);
 
-  const handleMouseEnter = (idx: number) => {
+  const handleMouseEnter = useCallback((idx: number) => {
     setSelectedIdx(idx);
 
     const scanner = scannerRef.current;
@@ -190,7 +194,7 @@ const Work = () => {
         scanner.style.left = `${scannerX}px`;
       }, 100);
     }
-  };
+  }, []);
 
   useEffect(() => {
     const scanner = scannerRef.current;
@@ -210,6 +214,7 @@ const Work = () => {
   const onClick = () => {
     setIsClick(true);
     setIsOpen(true);
+    console.log("click");
     setTimeout(() => {
       setIsClick(false);
     }, 600);
@@ -228,9 +233,15 @@ const Work = () => {
     });
   }, []);
 
+  console.log(isOpen);
+
   return (
-    <Container className="container">
-      <Inner>
+    <Container
+      onMouseEnter={() => setIsMouseEnter(true)}
+      onMouseLeave={() => setIsMouseEnter(false)}
+      className={isMouseEnter ? "active container" : "container"}
+    >
+      <Inner className="inner">
         <ProjectBox>
           <Cursor
             className={isClick ? "active" : ""}
@@ -239,13 +250,10 @@ const Work = () => {
               top: `${position.y - 230}px`,
             }}
           />
-          <Scanner ref={scannerRef} className={isClick ? "active" : ""}>
-            <Receipt
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-              selectedIdx={selectedIdx}
-            />
-          </Scanner>
+          <Scanner
+            ref={scannerRef}
+            className={isClick ? "active" : ""}
+          ></Scanner>
           {projectData.map((project, idx) => (
             <Project
               key={idx}
@@ -269,9 +277,7 @@ const Work = () => {
                     <ProjectImg />
                   </ProjectImgBox>
                   <Barcode onClick={onClick}>
-                    <div>
-                      <span>{project.barcode}</span>
-                    </div>
+                    <span>{project.barcode}</span>
                   </Barcode>
                 </Detail>
               </Wrapper>
@@ -279,6 +285,13 @@ const Work = () => {
           ))}
         </ProjectBox>
       </Inner>
+      {isOpen ? (
+        <Receipt
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          selectedIdx={selectedIdx}
+        />
+      ) : null}
     </Container>
   );
 };

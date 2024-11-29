@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled, {
   createGlobalStyle,
   ThemeProvider,
@@ -137,53 +137,48 @@ const Wrapper = styled.div`
   }
 
   .inner {
-    width: 100%;
+    width: 1280px;
     height: 100%;
+    margin: 0 auto;
   }
 `;
 
-const Receipt = styled.div`
-  width: 1280px;
-  height: 100%;
-  margin: 0 auto;
-  /* background: #fff; */
-`;
+// const Receipt = styled.div`
+//   width: 1280px;
+//   height: 100%;
+//   margin: 0 auto;
+// `;
 
 const App = () => {
   const [barcodeClick, setBarcodeClick] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const position = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      position.current = { x: e.clientX, y: e.clientY };
+
+      const cursor = document.getElementById("cursor");
+      if (cursor) {
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
+      }
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, [position]);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   return (
     <>
       <ThemeProvider theme={lightTheme}>
         <GlobalsStyle />
         <Wrapper className={barcodeClick ? "active" : ""}>
-          <Cursor
-            className={barcodeClick ? "active" : ""}
-            style={{
-              left: `${position.x}px`,
-              top: `${position.y}px`,
-            }}
-          />
-          <Receipt>
-            <Home barcodeClick={barcodeClick} onClick={setBarcodeClick} />
-            <About />
-            <Skill />
-            <Work />
-            <Contact />
-          </Receipt>
+          <Cursor id="cursor" />
+          <Home barcodeClick={barcodeClick} onClick={setBarcodeClick} />
+          <About />
+          <Skill />
+          <Work />
+          <Contact />
         </Wrapper>
       </ThemeProvider>
     </>

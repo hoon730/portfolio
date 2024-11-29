@@ -17,30 +17,32 @@ const Background = styled.div<{ $isclick: boolean }>`
   height: 100%;
   justify-content: center;
   align-items: center;
-  /* background: rgba(0, 0, 0, 0.3); */
+  background: rgba(0, 0, 0, 0.2);
   display: ${({ $isclick }) => ($isclick ? "flex" : "none")};
   z-index: 10;
 `;
 
 const Container = styled.div`
-  width: 430px;
-  height: 100vh;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: ${(props) => props.theme.fsSmall};
-  background: #fff;
-  transform: translateY(100%);
-  border-top: 1px dashed #000;
-
-  h3 {
-    font-weight: bold;
+  .woojin {
+    width: 430px;
+    height: 100vh;
+    padding: 20px;
+    font-size: ${(props) => props.theme.fsSmall};
+    border-top: 1px dashed #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    transform: translateY(100%);
+    h3 {
+      font-weight: bold;
+    }
   }
 `;
 
 const ProjectLogo = styled.div`
-  padding: 20px 0;
+  padding: 30px 0;
 `;
 const Info = styled.div`
   width: 100%;
@@ -129,7 +131,7 @@ const Receipt = ({
       const yArr = [80, 60, 40, 20, 0];
 
       yArr.forEach((y, index) => {
-        tl.to(".container", {
+        tl.to(".woojin", {
           y,
           duration: 0.3,
           ease: "power1.inOut",
@@ -140,52 +142,51 @@ const Receipt = ({
   }, [isOpen]);
 
   return (
-    <Background
-      $isclick={isOpen}
-      onClick={() => setIsOpen(false)}
-    >
+    <Background $isclick={isOpen} onClick={() => setIsOpen(false)}>
       {projectData
         .filter((project) => project.id === selectedIdx)
         .map((project) => (
           <Container key={project.id} className="container">
-            <ProjectLogo>
-              <img src={project.logoPath} alt={project.name} />
-            </ProjectLogo>
-            <Info>
-              <Article>
-                <h3>CATEGORY:</h3>
-                <span>Team Project</span>
-              </Article>
-              <Items>
-                <h3>PAGE:</h3>
-                <span>Profile, Detail</span>
-              </Items>
-            </Info>
-            <ProjectImgBox>
-              <ProjectImg />
-            </ProjectImgBox>
-            <Desc>
-              <h3>DESCRIPTION</h3>
-              <p>
-                Lorem ipsum dolor sit amet consectetur. Cras sed ligula
-                consequat malesuada neque ut cras.
-              </p>
-            </Desc>
-            <SkillStack>
-              <h3>SKILL STACK</h3>
-              <StackBox>
-                {project.skillStack.map((skill, idx) => (
-                  <div key={idx}>
-                    <span>{skill}</span>
-                    <span>x 1</span>
-                  </div>
-                ))}
-              </StackBox>
-            </SkillStack>
-            <Barcode>
-              <h3>** VISIT WEBSITE **</h3>
-              <span>{project.barcode}</span>
-            </Barcode>
+            <div className="woojin">
+              <ProjectLogo>
+                <img src={project.logoPath} alt={project.name} />
+              </ProjectLogo>
+              <Info className="info">
+                <Article>
+                  <h3>CATEGORY:</h3>
+                  <span>Team Project</span>
+                </Article>
+                <Items>
+                  <h3>PAGE:</h3>
+                  <span>Profile, Detail</span>
+                </Items>
+              </Info>
+              <ProjectImgBox>
+                <ProjectImg />
+              </ProjectImgBox>
+              <Desc>
+                <h3>DESCRIPTION</h3>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur. Cras sed ligula
+                  consequat malesuada neque ut cras.
+                </p>
+              </Desc>
+              <SkillStack>
+                <h3>SKILL STACK</h3>
+                <StackBox>
+                  {project.skillStack.map((skill, idx) => (
+                    <div key={idx}>
+                      <span>{skill}</span>
+                      <span>x 1</span>
+                    </div>
+                  ))}
+                </StackBox>
+              </SkillStack>
+              <Barcode>
+                <h3>** VISIT WEBSITE **</h3>
+                <span>{project.barcode}</span>
+              </Barcode>
+            </div>
           </Container>
         ))}
     </Background>
