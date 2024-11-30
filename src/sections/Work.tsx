@@ -223,7 +223,7 @@ const Work = () => {
   useGSAP(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: ".container",
+        trigger: ".work",
         start: "center center",
         end: "bottom",
         pin: true,
@@ -239,7 +239,7 @@ const Work = () => {
     <Container
       onMouseEnter={() => setIsMouseEnter(true)}
       onMouseLeave={() => setIsMouseEnter(false)}
-      className={isMouseEnter ? "active container" : "container"}
+      className={isMouseEnter ? "active work" : "work"}
     >
       <Inner className="inner">
         <ProjectBox>

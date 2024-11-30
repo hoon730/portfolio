@@ -23,7 +23,7 @@ const Background = styled.div<{ $isclick: boolean }>`
 `;
 
 const Container = styled.div`
-  .woojin {
+  .wrapper {
     width: 430px;
     height: 100vh;
     padding: 20px;
@@ -131,7 +131,7 @@ const Receipt = ({
       const yArr = [80, 60, 40, 20, 0];
 
       yArr.forEach((y, index) => {
-        tl.to(".woojin", {
+        tl.to(".wrapper", {
           y,
           duration: 0.3,
           ease: "power1.inOut",
@@ -146,8 +146,8 @@ const Receipt = ({
       {projectData
         .filter((project) => project.id === selectedIdx)
         .map((project) => (
-          <Container key={project.id} className="container">
-            <div className="woojin">
+          <Container key={project.id}>
+            <div className="wrapper">
               <ProjectLogo>
                 <img src={project.logoPath} alt={project.name} />
               </ProjectLogo>

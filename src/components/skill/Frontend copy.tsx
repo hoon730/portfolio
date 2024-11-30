@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { frontendData } from "../../utils";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Container = styled.div`
-  position: absolute;
-  width: 430px;
+  height: 33.33%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -59,8 +61,23 @@ const StackName = styled.span`
 `;
 
 const Frontend = () => {
+  useGSAP(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".frontend",
+        start: "+=0",
+        end: "+=0",
+        pin: true,
+        scrub: true,
+        markers: true,
+      },
+    });
+
+    tl.to(".frontend", {});
+  }, []);
+
   return (
-    <Container className="face">
+    <Container className="frontend">
       <Title>
         <span>FRONTEND</span>
         <span>®</span>

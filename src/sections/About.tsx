@@ -147,10 +147,10 @@ const About = () => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: aboutRef.current,
-        start: "+=0",
-        end: "+=1000",
+        start: "center center",
+        end: "bottom",
         pin: true,
-        scrub: true,
+        scrub: 2,
         markers: true,
       },
     });
