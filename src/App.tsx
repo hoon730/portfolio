@@ -8,7 +8,7 @@ import reset from "styled-reset";
 import { lightTheme } from "./theme";
 import Home from "./sections/Home";
 import About from "./sections/About";
-import Skill from "./sections/Skill";
+import Skill from "./sections/Skill copy";
 import Work from "./sections/Work";
 import Contact from "./sections/Contact";
 
@@ -70,6 +70,7 @@ const GlobalsStyle = createGlobalStyle`
       /* font-family: "Archivo Narrow", sans-serif; */
       /* font-family: "Libre Barcode 39", system-ui; */
       /* font-family: "Libre Barcode 128", system-ui; */
+      /* font-family: "Libre Barcode 128 Text", system-ui;/ */
       /* font-family: "Fira Code", monospace; */
       /* font-family: "PT Mono", monospace; */
       &::-webkit-scrollbar {
@@ -134,6 +135,10 @@ const Wrapper = styled.div`
     width: 100%;
     height: 100vh;
     margin-bottom: 500px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   .inner {

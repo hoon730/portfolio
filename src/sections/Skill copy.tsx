@@ -2,7 +2,7 @@ import { useRef } from "react";
 import styled from "styled-components";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import Frontend from "../components/skill/Frontend";
+import Frontend from "../components/skill/Frontend copy";
 import Backend from "../components/skill/Backend";
 import Database from "../components/skill/Database";
 

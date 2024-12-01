@@ -9,7 +9,7 @@ import { useGSAP } from "@gsap/react";
 gsap.registerPlugin(ScrollTrigger);
 
 const Container = styled.section`
-  padding-top: 500px !important;
+  height: 300vh !important;
 `;
 
 const Inner = styled.div`
@@ -33,9 +33,10 @@ const SkillBox = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  transform-style: preserve-3d; /* 3D 공간 유지 */
-  perspective: 5000px; /* 입체감을 위한 원근 */
-  transition: transform 0.2s ease-out; /* 부드러운 회전 애니메이션 */
+  transform-style: preserve-3d;
+  perspective: 8000px;
+  transition: transform 0.3s ease-out;
+
 `;
 
 const LeftText = styled.div`
@@ -131,11 +132,11 @@ const Skill = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-
       if (boxRef.current) {
-        const rotationX = scrollY * 0.1;
-        boxRef.current.style.transform = `rotateY(${rotationX}deg) `;
+        // 스크롤에 따라 정육면체를 부드럽게 회전
+        const scrollY = window.scrollY;
+        const rotationY = scrollY * 0.2; // Y축 회전 각도
+        boxRef.current.style.transform = `rotateY(${rotationY}deg)`;
       }
     };
 
