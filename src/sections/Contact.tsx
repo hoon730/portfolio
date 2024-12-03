@@ -35,7 +35,7 @@ const Contact = () => {
     <Container>
       <Inner className="inner">
         <GoodbyeWords>
-          **THANK YOU**
+          THANK YOU
           <br /> FOR VISITING
         </GoodbyeWords>
         <Barcode>YEOM DONG HOON</Barcode>

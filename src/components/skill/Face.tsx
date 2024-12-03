@@ -1,15 +1,26 @@
-import React from "react";
 import styled from "styled-components";
 import { frontendData } from "../../utils";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const Container = styled.div`
+const Container = styled.div<{ rotate: string }>`
   position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #000;
+  transform: ${(props) => props.rotate};
+  background: ${(props) => props.theme.bgColor};
+  backface-visibility: hidden;
+`;
+
+const Wrapper = styled.div`
   width: 430px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Title = styled.div`
@@ -58,25 +69,40 @@ const StackName = styled.span`
   text-align: center;
 `;
 
-const Frontend = () => {
+export interface skillstackProps {
+  imgPath: string;
+  name: string;
+}
+
+const Face = ({
+  rotate,
+  skills,
+  title,
+}: {
+  rotate: string;
+  skills: skillstackProps[];
+  title: string;
+}) => {
   return (
-    <Container className="face">
-      <Title>
-        <span>FRONTEND</span>
-        <span>®</span>
-      </Title>
-      <Stacks>
-        {frontendData.map((data, idx) => (
-          <Stack key={idx}>
-            <ImgBox>
-              <StackImg src={data.imgPath} />
-            </ImgBox>
-            <StackName>{data.name}</StackName>
-          </Stack>
-        ))}
-      </Stacks>
+    <Container className="face" rotate={rotate}>
+      <Wrapper>
+        <Title>
+          <span>{title}</span>
+          <span>®</span>
+        </Title>
+        <Stacks>
+          {skills.map((skill, idx) => (
+            <Stack key={idx}>
+              <ImgBox>
+                <StackImg src={skill.imgPath} />
+              </ImgBox>
+              <StackName>{skill.name}</StackName>
+            </Stack>
+          ))}
+        </Stacks>
+      </Wrapper>
     </Container>
   );
 };
 
-export default Frontend;
+export default Face;

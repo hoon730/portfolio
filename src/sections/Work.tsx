@@ -155,17 +155,22 @@ const Cursor = styled.div`
 `;
 
 const Work = () => {
-  const [isMouseEnter, setIsMouseEnter] = useState(false);
   const [isClick, setIsClick] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(0);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const workRef = useRef<HTMLDivElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
   const scannerRef = useRef<HTMLDivElement | null>(null);
   const projectRefs = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      if (cursorRef.current) {
+        // cursorRef.current.style.left = `${e.clientX}px`;
+        // cursorRef.current.style.top = `${e.clientY}px`;
+        cursorRef.current.style.left = `${e.clientX - 325}px`;
+        cursorRef.current.style.top = `${e.clientY - 230}px`;
+      }
     };
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -221,35 +226,29 @@ const Work = () => {
   };
 
   useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".work",
-        start: "center center",
-        end: "bottom",
-        pin: true,
-        scrub: true,
-        markers: true,
-      },
-    });
+    const workCtx = gsap.context(() => {
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: workRef.current,
+          start: "center center",
+          end: "bottom",
+          pin: true,
+          scrub: true,
+          markers: true,
+        },
+      });
+    }, workRef);
+
+    return () => workCtx.revert();
   }, []);
 
   console.log(isOpen);
 
   return (
-    <Container
-      onMouseEnter={() => setIsMouseEnter(true)}
-      onMouseLeave={() => setIsMouseEnter(false)}
-      className={isMouseEnter ? "active work" : "work"}
-    >
+    <Container ref={workRef}>
       <Inner className="inner">
         <ProjectBox>
-          <Cursor
-            className={isClick ? "active" : ""}
-            style={{
-              left: `${position.x - 325}px`,
-              top: `${position.y - 230}px`,
-            }}
-          />
+          <Cursor className={isClick ? "active" : ""} ref={cursorRef} />
           <Scanner
             ref={scannerRef}
             className={isClick ? "active" : ""}

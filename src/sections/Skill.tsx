@@ -1,6 +1,9 @@
 import { useRef, useEffect } from "react";
 import styled from "styled-components";
 import { frontendData } from "../utils";
+import { backendData } from "../utils";
+import { databaseData } from "../utils";
+import Face from "../components/skill/Face";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -9,7 +12,7 @@ import { useGSAP } from "@gsap/react";
 gsap.registerPlugin(ScrollTrigger);
 
 const Container = styled.section`
-  height: 300vh !important;
+  height: 150vh !important;
 `;
 
 const Inner = styled.div`
@@ -17,6 +20,8 @@ const Inner = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  transform-style: preserve-3d;
+  perspective: 3000px;
 
   .text {
     position: absolute;
@@ -34,9 +39,7 @@ const SkillBox = styled.div`
   align-items: center;
   position: relative;
   transform-style: preserve-3d;
-  perspective: 8000px;
   transition: transform 0.3s ease-out;
-
 `;
 
 const LeftText = styled.div`
@@ -46,96 +49,31 @@ const RightText = styled.div`
   right: 0;
 `;
 
-const Frontend = styled.div<{ rotate: string }>`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #000;
-  transform: ${(props) => props.rotate};
-  background: ${(props) => props.theme.bgColor};
-  backface-visibility: hidden;
-`;
-
-const Wrapper = styled.div`
-  width: 430px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Title = styled.div`
-  display: flex;
-  font-weight: 900;
-  font-size: 4rem;
-  padding-bottom: 7px;
-  letter-spacing: 7px;
-  border-top: 3px solid ${(props) => props.theme.fontColor};
-  border-bottom: 3px solid ${(props) => props.theme.fontColor};
-
-  span:last-child {
-    margin-top: 6px;
-    font-size: 1.8rem;
-  }
-`;
-const Stacks = styled.div`
-  padding-top: 20px;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-row-gap: 13px;
-  grid-column-gap: 8px;
-`;
-
-const Stack = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`;
-
-const ImgBox = styled.div`
-  width: 79px;
-  height: 79px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid ${(props) => props.theme.fontColor};
-  border-radius: 5px;
-`;
-
-const StackImg = styled.img``;
-
-const StackName = styled.span`
-  font-size: ${(props) => props.theme.fsSmall};
-  font-weight: 550;
-  text-align: center;
-`;
-
 const Skill = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".skill",
-        start: "center center",
-        end: "bottom",
-        pin: true,
-        scrub: 1.5,
-        markers: true,
-      },
-    });
+    const containerCtx = gsap.context(() => {
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "center center",
+          end: "bottom",
+          pin: true,
+          scrub: 1.5,
+          markers: true,
+        },
+      });
+    }, containerRef);
+    return () => containerCtx.revert();
   }, []);
 
   useEffect(() => {
     const handleScroll = () => {
       if (boxRef.current) {
-        // 스크롤에 따라 정육면체를 부드럽게 회전
         const scrollY = window.scrollY;
-        const rotationY = scrollY * 0.2; // Y축 회전 각도
+        const rotationY = scrollY * 0.2;
         boxRef.current.style.transform = `rotateY(${rotationY}deg)`;
       }
     };
@@ -148,82 +86,30 @@ const Skill = () => {
   }, []);
 
   return (
-    <Container className="skill">
+    <Container ref={containerRef}>
       <Inner className="inner">
         <LeftText className="text">SKILLSTACK</LeftText>
         <SkillBox ref={boxRef}>
-          <Frontend rotate="rotateY(0deg) translateZ(250px)">
-            <Wrapper>
-              <Title>
-                <span>FRONTEND</span>
-                <span>®</span>
-              </Title>
-              <Stacks>
-                {frontendData.map((data, idx) => (
-                  <Stack key={idx}>
-                    <ImgBox>
-                      <StackImg src={data.imgPath} />
-                    </ImgBox>
-                    <StackName>{data.name}</StackName>
-                  </Stack>
-                ))}
-              </Stacks>
-            </Wrapper>
-          </Frontend>
-          <Frontend rotate="rotateY(90deg) translateZ(250px)">
-            <Wrapper>
-              <Title>
-                <span>FRONTEND</span>
-                <span>®</span>
-              </Title>
-              <Stacks>
-                {frontendData.map((data, idx) => (
-                  <Stack key={idx}>
-                    <ImgBox>
-                      <StackImg src={data.imgPath} />
-                    </ImgBox>
-                    <StackName>{data.name}</StackName>
-                  </Stack>
-                ))}
-              </Stacks>
-            </Wrapper>
-          </Frontend>
-          <Frontend rotate="rotateY(180deg) translateZ(250px)">
-            <Wrapper>
-              <Title>
-                <span>FRONTEND</span>
-                <span>®</span>
-              </Title>
-              <Stacks>
-                {frontendData.map((data, idx) => (
-                  <Stack key={idx}>
-                    <ImgBox>
-                      <StackImg src={data.imgPath} />
-                    </ImgBox>
-                    <StackName>{data.name}</StackName>
-                  </Stack>
-                ))}
-              </Stacks>
-            </Wrapper>
-          </Frontend>
-          <Frontend rotate="rotateY(-90deg) translateZ(250px)">
-            <Wrapper>
-              <Title>
-                <span>FRONTEND</span>
-                <span>®</span>
-              </Title>
-              <Stacks>
-                {frontendData.map((data, idx) => (
-                  <Stack key={idx}>
-                    <ImgBox>
-                      <StackImg src={data.imgPath} />
-                    </ImgBox>
-                    <StackName>{data.name}</StackName>
-                  </Stack>
-                ))}
-              </Stacks>
-            </Wrapper>
-          </Frontend>
+          <Face
+            rotate="rotateY(0deg) translateZ(250px)"
+            skills={frontendData}
+            title="FRONTEND"
+          />
+          <Face
+            rotate="rotateY(90deg) translateZ(250px)"
+            skills={backendData}
+            title="BACKEND"
+          />
+          <Face
+            rotate="rotateY(180deg) translateZ(250px)"
+            skills={databaseData}
+            title="DATABASE"
+          />
+          <Face
+            rotate="rotateY(-90deg) translateZ(250px)"
+            skills={frontendData}
+            title="FRONTEND"
+          />
         </SkillBox>
         <RightText className="text">FRONTEND</RightText>
       </Inner>

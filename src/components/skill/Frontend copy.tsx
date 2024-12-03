@@ -60,7 +60,12 @@ const StackName = styled.span`
   text-align: center;
 `;
 
-const Frontend = () => {
+interface FrontendProps {
+  rotate: string;
+  children?: React.ReactNode;
+}
+
+const Frontend: React.FC<FrontendProps> = ({ rotate, children }) => {
   useGSAP(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -77,22 +82,9 @@ const Frontend = () => {
   }, []);
 
   return (
-    <Container className="frontend">
-      <Title>
-        <span>FRONTEND</span>
-        <span>®</span>
-      </Title>
-      <Stacks>
-        {frontendData.map((data, idx) => (
-          <Stack key={idx}>
-            <ImgBox>
-              <StackImg src={data.imgPath} />
-            </ImgBox>
-            <StackName>{data.name}</StackName>
-          </Stack>
-        ))}
-      </Stacks>
-    </Container>
+    <div style={{ transform: rotate }}>
+      {children}
+    </div>
   );
 };
 

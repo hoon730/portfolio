@@ -144,22 +144,26 @@ const About = () => {
   const aboutRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: aboutRef.current,
-        start: "center center",
-        end: "bottom",
-        pin: true,
-        scrub: 2,
-        markers: true,
-      },
-    });
+    const aboutCtx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: aboutRef.current,
+          start: "center center",
+          end: "bottom",
+          pin: true,
+          scrub: 2,
+          markers: true,
+        },
+      });
 
-    tl.to(".about, .me, .intro1, .intro2, .barcode", {
-      y: "0",
-      ease: "power3.out",
-      stagger: 0.2,
-    });
+      tl.to(".about, .me, .intro1, .intro2, .barcode", {
+        y: "0",
+        ease: "power3.out",
+        stagger: 0.2,
+      });
+    }, aboutRef);
+
+    return () => aboutCtx.revert();
   }, []);
 
   return (

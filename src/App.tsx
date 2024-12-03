@@ -8,7 +8,7 @@ import reset from "styled-reset";
 import { lightTheme } from "./theme";
 import Home from "./sections/Home";
 import About from "./sections/About";
-import Skill from "./sections/Skill copy";
+import Skill from "./sections/Skill";
 import Work from "./sections/Work";
 import Contact from "./sections/Contact";
 
