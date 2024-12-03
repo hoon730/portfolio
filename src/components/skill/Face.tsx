@@ -7,7 +7,7 @@ const Container = styled.div<{ rotate: string }>`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   border: 1px solid #000;
   transform: ${(props) => props.rotate};
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 const Title = styled.div`
