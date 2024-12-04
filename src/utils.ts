@@ -1,3 +1,14 @@
+export const getFormattedDate = (targetDate: Date): string => {
+  const year = targetDate.getFullYear();
+  let month = targetDate.getMonth() + 1;
+  let date = targetDate.getDate();
+
+  const paddedMonth = month < 10 ? `0${month}` : String(month);
+  const paddedDate = date < 10 ? `0${date}` : String(date);
+
+  return `${year}-${paddedMonth}-${paddedDate}`;
+};
+
 export const frontendData = [
   {
     imgPath: "/img/icons/nextjs.png",

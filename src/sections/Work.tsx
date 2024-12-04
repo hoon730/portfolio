@@ -166,10 +166,8 @@ const Work = () => {
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (cursorRef.current) {
-        // cursorRef.current.style.left = `${e.clientX}px`;
-        // cursorRef.current.style.top = `${e.clientY}px`;
-        cursorRef.current.style.left = `${e.clientX - 325}px`;
-        cursorRef.current.style.top = `${e.clientY - 230}px`;
+        cursorRef.current.style.left = `${e.clientX}px`;
+        cursorRef.current.style.top = `${e.clientY}px`;
       }
     };
 
@@ -246,9 +244,9 @@ const Work = () => {
 
   return (
     <Container ref={workRef}>
+      <Cursor className={isClick ? "active" : ""} ref={cursorRef} />
       <Inner className="inner">
         <ProjectBox>
-          <Cursor className={isClick ? "active" : ""} ref={cursorRef} />
           <Scanner
             ref={scannerRef}
             className={isClick ? "active" : ""}

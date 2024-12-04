@@ -16,11 +16,12 @@ const Container = styled.div<{ rotate: string }>`
 `;
 
 const Wrapper = styled.div`
-  width: 430px;
+  /* width: 430px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  padding: 35px;
 `;
 
 const Title = styled.div`

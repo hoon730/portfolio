@@ -10,6 +10,8 @@ const Container = styled.section``;
 
 const Inner = styled.div`
   padding: 6% 0;
+  transform-style: preserve-3d;
+  perspective: 3000px;
 `;
 
 const Contents = styled.div`
@@ -77,6 +79,7 @@ const PhotoBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  transform-style: preserve-3d;
 `;
 
 const Photo = styled.div`

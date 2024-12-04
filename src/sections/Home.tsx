@@ -1,7 +1,8 @@
 import { useState } from "react";
 import styled, { keyframes } from "styled-components";
-import Header from "../components/home/Header";
+import Header from "../components/common/Header";
 import { BsQrCode } from "react-icons/bs";
+import { getFormattedDate } from "../utils";
 
 import gsap from "gsap";
 import { CSSPlugin, ScrollTrigger } from "gsap/all";
@@ -42,7 +43,7 @@ const DateBox = styled.div`
   margin-bottom: 70px;
 `;
 
-const Date = styled.div`
+const DateNow = styled.div`
   letter-spacing: 1px;
   overflow: hidden;
   .date {
@@ -191,8 +192,6 @@ interface barcodeClickProps {
 }
 
 const Home = ({ barcodeClick, onClick }: barcodeClickProps) => {
-  const [isScroll, setIsScroll] = useState(false);
-
   const handleOnClick = () => {
     onClick(true);
   };
@@ -250,9 +249,9 @@ const Home = ({ barcodeClick, onClick }: barcodeClickProps) => {
           <span className="title">FRONTEND DEVELOPER</span>
         </Title>
         <DateBox>
-          <Date>
-            <div className="date">DATE : 2024-12-09</div>
-          </Date>
+          <DateNow>
+            <div className="date">DATE : {getFormattedDate(new Date())} </div>
+          </DateNow>
           <Category>
             <div className="category">CATEGORY : PORTFOLIO</div>
           </Category>

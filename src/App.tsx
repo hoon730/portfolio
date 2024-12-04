@@ -6,6 +6,7 @@ import styled, {
 } from "styled-components";
 import reset from "styled-reset";
 import { lightTheme } from "./theme";
+import Menu from "./components/common/Menu";
 import Home from "./sections/Home";
 import About from "./sections/About";
 import Skill from "./sections/Skill";
@@ -178,6 +179,7 @@ const App = () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalsStyle />
         <Wrapper className={barcodeClick ? "active" : ""}>
+          {/* <Menu /> */}
           <Cursor id="cursor" />
           <Home barcodeClick={barcodeClick} onClick={setBarcodeClick} />
           <About />

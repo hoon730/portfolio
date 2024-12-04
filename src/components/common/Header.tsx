@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { BiMenuAltLeft } from "react-icons/bi";
 
@@ -19,6 +19,11 @@ const Container = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: all 0.3s ease;
+
+  &.active {
+    opacity: 0;
+  }
 `;
 
 const LogoBox = styled.div`
@@ -37,7 +42,8 @@ const Menu = styled.button`
   overflow: hidden;
   svg {
     transform: translateY(150%);
-    font-size: ${(props) => props.theme.fsExtraLarge};
+    /* font-size: ${(props) => props.theme.fsExtraLarge}; */
+    font-size: 32px;
   }
 `;
 
@@ -46,6 +52,9 @@ interface isClickProps {
 }
 
 const Header = ({ isClick }: isClickProps) => {
+  const [isHidden, setIsHidden] = useState(false);
+  const [scrollValue, setScrollValue] = useState(0);
+
   useGSAP(() => {
     const tl = gsap.timeline();
     if (isClick) {
@@ -58,8 +67,31 @@ const Header = ({ isClick }: isClickProps) => {
     }
   }, [isClick]);
 
+  useEffect(() => {
+    let lastScrollY = 0;
+
+    const updateScrollValue = () => {
+      const currentScrollY = window.scrollY;
+      setScrollValue(currentScrollY);
+
+      if (currentScrollY > lastScrollY && currentScrollY > 70) {
+        setIsHidden(true);
+      } else {
+        setIsHidden(false);
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener("scroll", updateScrollValue);
+
+    return () => {
+      window.removeEventListener("scroll", updateScrollValue);
+    };
+  }, []);
+
   return (
-    <Container>
+    <Container className={isHidden ? "active" : ""}>
       <LogoBox className="logo_box">
         <Logo className="logo">YDH</Logo>
       </LogoBox>
