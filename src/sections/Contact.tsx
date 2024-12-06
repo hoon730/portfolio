@@ -54,7 +54,7 @@ const ContactMethod = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  font: bold 2.5rem "Archivo Narrow", sans-serif;
+  font: bold 2rem "Archivo Narrow", sans-serif;
 
   & > div {
     width: 66.66%;
