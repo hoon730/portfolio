@@ -65,8 +65,8 @@ const GlobalsStyle = createGlobalStyle`
   }
 
     body {
-      background: ${(props) => props.theme.bgColor};
-      /* background: #F0F0F0; */
+      /* background: ${(props) => props.theme.bgColor}; */
+      background: #F0F0F0;
       font-family: "Libre Franklin", sans-serif;
       /* font-family: "Archivo Narrow", sans-serif; */
       /* font-family: "Libre Barcode 39", system-ui; */

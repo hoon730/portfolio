@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import styled, { keyframes } from "styled-components";
-import Receipt from "../components/work/receipt";
+import Receipt from "../components/work/receipt copy";
 import { projectData } from "../utils";
 
 import gsap from "gsap";
@@ -15,6 +15,24 @@ const Scanning = keyframes`
   }
   100%{
     background-image: url("/img/pjh.png");
+  }
+`;
+
+const blink = keyframes`
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
   }
 `;
 
@@ -100,7 +118,13 @@ const Scanner = styled.div`
   transition: all 0.2s ease;
   z-index: 0;
 
-  &.active {
+  &.on {
+    width: 24vw;
+    height: 24vw;
+    top: 0.25vw;
+    left: 0.5vw;
+    transform: translate(0.5vw, 0.25vw);
+    animation: ${blink} 0.5s ease-in-out both;
   }
 `;
 
@@ -119,7 +143,8 @@ const ProjectImgBox = styled.div`
   background: #dbdad9;
   overflow: hidden;
 `;
-const ProjectImg = styled.img``;
+const ProjectImg = styled.img`
+`;
 
 const Barcode = styled.div`
   position: relative;
@@ -158,6 +183,7 @@ const Work = () => {
   const [isClick, setIsClick] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(0);
+  const [isOn, setIsOn] = useState(false);
   const workRef = useRef<HTMLDivElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
   const scannerRef = useRef<HTMLDivElement | null>(null);
@@ -217,10 +243,13 @@ const Work = () => {
   const onClick = () => {
     setIsClick(true);
     setIsOpen(true);
-    console.log("click");
     setTimeout(() => {
       setIsClick(false);
     }, 600);
+  };
+
+  const onMouseEnter = () => {
+    setIsOn(true);
   };
 
   useGSAP(() => {
@@ -240,17 +269,12 @@ const Work = () => {
     return () => workCtx.revert();
   }, []);
 
-  console.log(isOpen);
-
   return (
     <Container ref={workRef}>
-      <Cursor className={isClick ? "active" : ""} ref={cursorRef} />
+      <Cursor ref={cursorRef} className={isClick ? "active" : ""} />
       <Inner className="inner">
         <ProjectBox>
-          <Scanner
-            ref={scannerRef}
-            className={isClick ? "active" : ""}
-          ></Scanner>
+          <Scanner ref={scannerRef} className={isOn ? "on" : ""}></Scanner>
           {projectData.map((project, idx) => (
             <Project
               key={idx}
@@ -273,7 +297,11 @@ const Work = () => {
                   <ProjectImgBox>
                     <ProjectImg />
                   </ProjectImgBox>
-                  <Barcode onClick={onClick}>
+                  <Barcode
+                    onClick={onClick}
+                    onMouseEnter={() => setIsOn(true)}
+                    onMouseLeave={() => setIsOn(false)}
+                  >
                     <span>{project.barcode}</span>
                   </Barcode>
                 </Detail>
