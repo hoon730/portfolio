@@ -143,8 +143,7 @@ const ProjectImgBox = styled.div`
   background: #dbdad9;
   overflow: hidden;
 `;
-const ProjectImg = styled.img`
-`;
+const ProjectImg = styled.img``;
 
 const Barcode = styled.div`
   position: relative;
@@ -297,12 +296,13 @@ const Work = () => {
                   <ProjectImgBox>
                     <ProjectImg />
                   </ProjectImgBox>
-                  <Barcode
-                    onClick={onClick}
-                    onMouseEnter={() => setIsOn(true)}
-                    onMouseLeave={() => setIsOn(false)}
-                  >
-                    <span>{project.barcode}</span>
+                  <Barcode onClick={onClick}>
+                    <span
+                      onMouseEnter={() => setIsOn(true)}
+                      onMouseLeave={() => setIsOn(false)}
+                    >
+                      {project.barcode}
+                    </span>
                   </Barcode>
                 </Detail>
               </Wrapper>

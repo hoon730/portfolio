@@ -18,6 +18,17 @@ const roll = keyframes`
   }
 `;
 
+const show = keyframes`
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  100% {
+    height: 100%;
+    opacity: 1;
+  }
+`;
+
 const Background = styled.div<{ $isclick: boolean }>`
   position: fixed;
   bottom: 0;
@@ -25,7 +36,7 @@ const Background = styled.div<{ $isclick: boolean }>`
   width: 100%;
   height: 0;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   background: #f0f0f0;
   transform-origin: top top;
   z-index: 10;
@@ -37,14 +48,14 @@ const Background = styled.div<{ $isclick: boolean }>`
 
 const Container = styled.div`
   width: 100%;
-  height: 0;
+  height: 0%;
   padding: 12vh 50px;
   display: flex;
   justify-content: space-between;
   transform-origin: top top;
-  
+
   &.active {
-    animation: ${roll} 0.5s 0.8s ease-out both;
+    animation: ${show} 0.5s 1s ease-out both;
   }
 `;
 
@@ -64,7 +75,7 @@ const ProjectName = styled.div`
   letter-spacing: 7px;
   border-top: 3px solid ${(props) => props.theme.fontColor};
   border-bottom: 3px solid ${(props) => props.theme.fontColor};
-  margin-bottom: 45px;
+  margin-bottom: 35px;
 
   span:last-child {
     margin-top: 6px;
