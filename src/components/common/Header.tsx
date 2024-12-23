@@ -1,12 +1,40 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { BiMenuAltLeft } from "react-icons/bi";
 
 import gsap from "gsap";
 import { CSSPlugin } from "gsap/CSSPlugin";
 import { useGSAP } from "@gsap/react";
+import Menu from "./Menu";
 
 gsap.registerPlugin(CSSPlugin);
+
+const FirstBar = keyframes`
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+`;
+
+const SecondBar = keyframes`
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 70%;
+  }
+`;
+
+const ThirdBar = keyframes`
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 40%;
+  }
+`;
 
 const Container = styled.header`
   position: fixed;
@@ -38,12 +66,39 @@ const Logo = styled.div`
   transform: translateY(150%);
 `;
 
-const Menu = styled.button`
+const MenuIcon = styled.button`
   overflow: hidden;
-  svg {
-    transform: translateY(150%);
-    /* font-size: ${(props) => props.theme.fsExtraLarge}; */
-    font-size: 32px;
+`;
+
+const BarBox = styled.div`
+  width: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transform: translateY(150%);
+`;
+
+const Bar = styled.span`
+  height: 3px;
+  background: ${(props) => props.theme.fontColor};
+
+  &:nth-child(1) {
+    width: 100%;
+    &.active {
+      animation: ${FirstBar} 0.3s ease-in-out both;
+    }
+  }
+  &:nth-child(2) {
+    width: 70%;
+    &.active {
+      animation: ${SecondBar} 0.3s ease-out both;
+    }
+  }
+  &:nth-child(3) {
+    width: 40%;
+    &.active {
+      animation: ${ThirdBar} 0.3s ease-out both;
+    }
   }
 `;
 
@@ -54,11 +109,13 @@ interface isClickProps {
 const Header = ({ isClick }: isClickProps) => {
   const [isHidden, setIsHidden] = useState(false);
   const [scrollValue, setScrollValue] = useState(0);
+  const [isMouseOn, setIsMouseOn] = useState(false);
+  const [menuClick, setMenuClick] = useState(false);
 
   useGSAP(() => {
     const tl = gsap.timeline();
     if (isClick) {
-      tl.to(["logo_box", ".logo", ".menu"], {
+      tl.to(["logo_box", ".logo", ".barBox"], {
         y: 0,
         duration: 0.9,
         delay: 2,
@@ -95,9 +152,18 @@ const Header = ({ isClick }: isClickProps) => {
       <LogoBox className="logo_box">
         <Logo className="logo">YDH</Logo>
       </LogoBox>
-      <Menu>
-        <BiMenuAltLeft className="menu" />
-      </Menu>
+      <MenuIcon
+        onMouseEnter={() => setIsMouseOn(true)}
+        onMouseLeave={() => setIsMouseOn(false)}
+        onClick={() => setMenuClick(true)}
+      >
+        <BarBox className="barBox">
+          <Bar className={isMouseOn ? "active" : ""} />
+          <Bar className={isMouseOn ? "active" : ""} />
+          <Bar className={isMouseOn ? "active" : ""} />
+        </BarBox>
+      </MenuIcon>
+      <Menu menuClick={menuClick}/>
     </Container>
   );
 };

@@ -203,8 +203,6 @@ const Work = () => {
     };
   }, []);
 
-  console.log(isClick);
-
   const handleMouseEnter = useCallback((idx: number) => {
     setSelectedIdx(idx);
 
@@ -245,10 +243,6 @@ const Work = () => {
     setTimeout(() => {
       setIsClick(false);
     }, 600);
-  };
-
-  const onMouseEnter = () => {
-    setIsOn(true);
   };
 
   useGSAP(() => {

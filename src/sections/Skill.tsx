@@ -11,9 +11,7 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Container = styled.section`
-  height: 150vh !important;
-`;
+const Container = styled.section``;
 
 const Inner = styled.div`
   position: relative;
@@ -88,7 +86,7 @@ const Skill = () => {
   return (
     <Container ref={containerRef}>
       <Inner className="inner">
-        <LeftText className="text">SKILLSTACK</LeftText>
+        <LeftText className="text">DEVELOPER</LeftText>
         <SkillBox ref={boxRef}>
           <Face
             rotate="rotateY(0deg) translateZ(250px)"
@@ -111,7 +109,7 @@ const Skill = () => {
             title="FRONTEND"
           />
         </SkillBox>
-        <RightText className="text">FRONTEND</RightText>
+        <RightText className="text">SKILL STACK</RightText>
       </Inner>
     </Container>
   );

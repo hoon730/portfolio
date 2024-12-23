@@ -6,7 +6,6 @@ import styled, {
 } from "styled-components";
 import reset from "styled-reset";
 import { lightTheme } from "./theme";
-import Menu from "./components/common/Menu";
 import Home from "./sections/Home";
 import About from "./sections/About";
 import Skill from "./sections/Skill";
@@ -135,7 +134,12 @@ const Wrapper = styled.div`
   & section {
     width: 100%;
     height: 100vh;
-    margin-bottom: 500px;
+    margin-bottom: 300px;
+
+    &:nth-child(3),
+    &:nth-child(4) {
+      height: auto;
+    }
 
     &:last-child {
       margin-bottom: 0;
@@ -148,12 +152,6 @@ const Wrapper = styled.div`
     margin: 0 auto;
   }
 `;
-
-// const Receipt = styled.div`
-//   width: 1280px;
-//   height: 100%;
-//   margin: 0 auto;
-// `;
 
 const App = () => {
   const [barcodeClick, setBarcodeClick] = useState(false);
@@ -179,7 +177,6 @@ const App = () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalsStyle />
         <Wrapper className={barcodeClick ? "active" : ""}>
-          {/* <Menu /> */}
           <Cursor id="cursor" />
           <Home barcodeClick={barcodeClick} onClick={setBarcodeClick} />
           <About />
