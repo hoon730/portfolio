@@ -52,6 +52,10 @@ const Container = styled.header`
   &.active {
     opacity: 0;
   }
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
 `;
 
 const LogoBox = styled.div`
@@ -104,13 +108,13 @@ const Bar = styled.span`
 
 interface isClickProps {
   isClick: boolean;
+  setMenuClick: (value: boolean) => void;
 }
 
-const Header = ({ isClick }: isClickProps) => {
+const Header = ({ isClick, setMenuClick }: isClickProps) => {
   const [isHidden, setIsHidden] = useState(false);
   const [scrollValue, setScrollValue] = useState(0);
   const [isMouseOn, setIsMouseOn] = useState(false);
-  const [menuClick, setMenuClick] = useState(false);
 
   useGSAP(() => {
     const tl = gsap.timeline();
@@ -163,7 +167,6 @@ const Header = ({ isClick }: isClickProps) => {
           <Bar className={isMouseOn ? "active" : ""} />
         </BarBox>
       </MenuIcon>
-      <Menu menuClick={menuClick}/>
     </Container>
   );
 };

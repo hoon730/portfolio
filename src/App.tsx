@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled, {
   createGlobalStyle,
   ThemeProvider,
@@ -6,6 +6,8 @@ import styled, {
 } from "styled-components";
 import reset from "styled-reset";
 import { lightTheme } from "./theme";
+import Header from "./components/common/Header";
+import Menu from "./components/common/Menu";
 import Home from "./sections/Home";
 import About from "./sections/About";
 import Skill from "./sections/Skill";
@@ -136,8 +138,8 @@ const Wrapper = styled.div`
     height: 100vh;
     margin-bottom: 300px;
 
-    &:nth-child(3),
-    &:nth-child(4) {
+    &:nth-child(5),
+    &:nth-child(6) {
       height: auto;
     }
 
@@ -150,11 +152,21 @@ const Wrapper = styled.div`
     width: 1280px;
     height: 100%;
     margin: 0 auto;
+
+    @media (max-width: 1280px) {
+      width: 100%;
+      padding: 0 30px;
+    }
+
+    @media (max-width: 768px) {
+      padding: 0 20px;
+    }
   }
 `;
 
 const App = () => {
   const [barcodeClick, setBarcodeClick] = useState(false);
+  const [menuClick, setMenuClick] = useState(false);
   const position = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -178,6 +190,8 @@ const App = () => {
         <GlobalsStyle />
         <Wrapper className={barcodeClick ? "active" : ""}>
           <Cursor id="cursor" />
+          <Header isClick={barcodeClick} setMenuClick={setMenuClick} />
+          <Menu menuClick={menuClick} setMenuClick={setMenuClick} />
           <Home barcodeClick={barcodeClick} onClick={setBarcodeClick} />
           <About />
           <Skill />

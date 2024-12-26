@@ -10,8 +10,6 @@ const Container = styled.section``;
 
 const Inner = styled.div`
   padding: 6% 0;
-  transform-style: preserve-3d;
-  perspective: 3000px;
 `;
 
 const Contents = styled.div`
@@ -19,6 +17,17 @@ const Contents = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    gap: 50px;
+
+    & > div {
+      width: 100%;
+      height: auto;
+      gap: 30px;
+    }
+  }
 `;
 
 const Desc = styled.div`
@@ -38,7 +47,12 @@ const Desc = styled.div`
   }
 `;
 
-const TextBox = styled.div``;
+const TextBox = styled.div`
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: center;
+  }
+`;
 
 const TextAbout = styled.div`
   overflow: hidden;
@@ -67,6 +81,10 @@ const Introduction = styled.div`
       transform: translateY(100%);
     }
   }
+
+  @media (max-width: 768px) {
+    padding: 0 115px;
+  }
 `;
 
 const Intro1 = styled.div``;
@@ -79,7 +97,6 @@ const PhotoBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  transform-style: preserve-3d;
 `;
 
 const Photo = styled.div`
@@ -89,6 +106,11 @@ const Photo = styled.div`
   display: flex;
   overflow: hidden;
   gap: 1%;
+
+  @media (max-width: 768px) {
+    width: 320px;
+    height: 368px;
+  }
 `;
 
 const Barcode = styled.div<BarcodeProps>`
@@ -172,7 +194,6 @@ const About = () => {
   return (
     <Container>
       <Inner ref={aboutRef} className="inner">
-        {/* <Bar /> */}
         <Contents>
           <Desc>
             <TextBox>
@@ -216,7 +237,6 @@ const About = () => {
             </Photo>
           </PhotoBox>
         </Contents>
-        {/* <Bar /> */}
       </Inner>
     </Container>
   );

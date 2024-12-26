@@ -1,6 +1,5 @@
 import { useState } from "react";
 import styled, { keyframes } from "styled-components";
-import Header from "../components/common/Header";
 import { BsQrCode } from "react-icons/bs";
 import { getFormattedDate } from "../utils";
 
@@ -34,17 +33,29 @@ const Title = styled.div`
   .title {
     transform: translateY(100%);
   }
+
+  @media (max-width: 768px) {
+    margin-bottom: 70px;
+  }
 `;
 
 const DateBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  font: 500 18px/1 "PT Mono", monospace;
+  letter-spacing: 1.5px;
   margin-bottom: 70px;
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    font: 500 16px/1 "PT Mono", monospace;
+  }
 `;
 
 const DateNow = styled.div`
-  letter-spacing: 1px;
   overflow: hidden;
   .date {
     transform: translateY(100%);
@@ -52,7 +63,6 @@ const DateNow = styled.div`
 `;
 
 const Category = styled.div`
-  letter-spacing: 1px;
   overflow: hidden;
   .category {
     transform: translateY(100%);
@@ -69,6 +79,20 @@ const Name = styled.div`
     display: flex;
     align-items: center;
     font: 500 248px/210px "Archivo Narrow", sans-serif;
+    /* font: 500 12.9167vw/10.9375vw "Archivo Narrow", sans-serif; */
+  }
+
+  @media (max-width: 1280px) {
+    span {
+      font: 500 19.375vw/16.4063vw "Archivo Narrow", sans-serif;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    span {
+      font: 500 25.7813vw/20.8333vw "Archivo Narrow", sans-serif;
+    }
   }
 `;
 
@@ -83,7 +107,16 @@ const NameLeft = styled.div`
       transform: translateY(100%);
     }
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+  & > div:last-child {
+    display: flex;
+    justify-content: center;
+  }
 `;
+
 const NameRight = styled.div`
   width: 50%;
   display: flex;
@@ -97,7 +130,7 @@ const NameRight = styled.div`
     }
   }
 
-  span:first-child {
+  & > div:first-child span {
     position: relative;
     height: 210px;
     svg {
@@ -108,9 +141,34 @@ const NameRight = styled.div`
     }
   }
 
-  span:last-child {
+  span {
     display: flex;
     justify-content: flex-end;
+  }
+
+  @media (max-width: 1280px) {
+    & > div:first-child span {
+      height: 16.4063vw;
+      svg {
+        font-size: 10.1563vw;
+        top: 12px;
+        right: 8px;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    flex-direction: column-reverse;
+    & > div:first-child span {
+      display: none;
+      /* height: 20.8333vw;
+      svg {
+        font-size: 16.9271vw;
+        top: 12px;
+        right: 8px;
+      } */
+    }
   }
 `;
 
@@ -142,6 +200,11 @@ const Text = styled.div`
   font-weight: 300;
   letter-spacing: 1px;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    font-size: ${(props) => props.theme.fsLarge};
+    letter-spacing: 1.5px;
+  }
 `;
 
 const BarcodeBox = styled.div`
@@ -151,6 +214,10 @@ const BarcodeBox = styled.div`
 const Barcode = styled.div`
   font-size: 150px;
   font-family: "Libre Barcode 39", system-ui;
+
+  @media (max-width: 768px) {
+    font-size: 19.5313vw;
+  }
 `;
 
 const Scanning = keyframes`
@@ -230,7 +297,6 @@ const Home = ({ barcodeClick, onClick }: barcodeClickProps) => {
 
   return (
     <Container>
-      <Header isClick={barcodeClick} />
       <Inner className="inner">
         <TextBox className="text_box">
           <Text>

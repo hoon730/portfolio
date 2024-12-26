@@ -19,10 +19,6 @@ const Container = styled.div`
   &.active {
     top: 0;
   }
-
-  &.inActive {
-    top: -100%;
-  }
 `;
 
 const Item = styled.div`
@@ -40,6 +36,7 @@ const Close = styled.div`
   right: 2rem;
   width: 1.8rem;
   height: 1.8rem;
+  z-index: 16;
   cursor: pointer;
 `;
 
@@ -60,15 +57,14 @@ const Bar = styled.div`
   }
 `;
 
-interface menuClickProps {
+interface menuProps {
   menuClick: boolean;
+  setMenuClick: (value: boolean) => void;
 }
 
-const Menu = ({ menuClick }: menuClickProps) => {
-  const [isClose, setIsClose] = useState(false);
-
+const Menu = ({ menuClick, setMenuClick }: menuProps) => {
   return (
-    <Container className={menuClick ? "active" : isClose ? "inActive" : ""}>
+    <Container className={menuClick ? "active" : ""}>
       <Item>
         <div>ABOUT</div>
       </Item>
@@ -81,7 +77,7 @@ const Menu = ({ menuClick }: menuClickProps) => {
       <Item>
         <div>CONTACT</div>
       </Item>
-      <Close onClick={() => setIsClose(true)}>
+      <Close onClick={() => setMenuClick(false)}>
         <Bar />
         <Bar />
       </Close>

@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { frontendData } from "../utils";
 import { backendData } from "../utils";
@@ -51,6 +51,8 @@ const Skill = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
 
+  const [calcTranslateZ, setClacTranslateZ] = useState("");
+
   useGSAP(() => {
     const containerCtx = gsap.context(() => {
       gsap.timeline({
@@ -74,6 +76,12 @@ const Skill = () => {
         const rotationY = scrollY * 0.2;
         boxRef.current.style.transform = `rotateY(${rotationY}deg)`;
       }
+
+      if (window.innerWidth > 768) {
+        setClacTranslateZ("translateZ(250px)");
+      } else {
+        setClacTranslateZ("translateZ(180px)");
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -89,22 +97,22 @@ const Skill = () => {
         <LeftText className="text">DEVELOPER</LeftText>
         <SkillBox ref={boxRef}>
           <Face
-            rotate="rotateY(0deg) translateZ(250px)"
+            rotate={`rotateY(0deg) ${calcTranslateZ}`}
             skills={frontendData}
             title="FRONTEND"
           />
           <Face
-            rotate="rotateY(90deg) translateZ(250px)"
+            rotate={`rotateY(90deg) ${calcTranslateZ}`}
             skills={backendData}
             title="BACKEND"
           />
           <Face
-            rotate="rotateY(180deg) translateZ(250px)"
+            rotate={`rotateY(180deg) ${calcTranslateZ}`}
             skills={databaseData}
             title="DATABASE"
           />
           <Face
-            rotate="rotateY(-90deg) translateZ(250px)"
+            rotate={`rotateY(-90deg) ${calcTranslateZ}`}
             skills={frontendData}
             title="FRONTEND"
           />

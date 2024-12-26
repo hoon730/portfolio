@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { frontendData } from "../../utils";
 
 const Container = styled.div<{ rotate: string }>`
   position: absolute;
@@ -16,7 +15,6 @@ const Container = styled.div<{ rotate: string }>`
 `;
 
 const Wrapper = styled.div`
-  /* width: 430px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -84,6 +82,7 @@ const Face = ({
   skills: skillstackProps[];
   title: string;
 }) => {
+
   return (
     <Container className="face" rotate={rotate}>
       <Wrapper>
