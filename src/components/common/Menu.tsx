@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -18,6 +18,10 @@ const Container = styled.div`
 
   &.active {
     top: 0;
+  }
+
+  &.inActive {
+    top: -100%;
   }
 `;
 
@@ -61,8 +65,10 @@ interface menuClickProps {
 }
 
 const Menu = ({ menuClick }: menuClickProps) => {
+  const [isClose, setIsClose] = useState(false);
+
   return (
-    <Container className={menuClick ? "active" : ""}>
+    <Container className={menuClick ? "active" : isClose ? "inActive" : ""}>
       <Item>
         <div>ABOUT</div>
       </Item>
@@ -75,7 +81,7 @@ const Menu = ({ menuClick }: menuClickProps) => {
       <Item>
         <div>CONTACT</div>
       </Item>
-      <Close>
+      <Close onClick={() => setIsClose(true)}>
         <Bar />
         <Bar />
       </Close>
