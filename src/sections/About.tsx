@@ -16,6 +16,7 @@ const Contents = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
 
   @media (max-width: 768px) {
@@ -25,7 +26,19 @@ const Contents = styled.div`
     & > div {
       width: 100%;
       height: auto;
-      gap: 30px;
+      gap: 60px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    gap: 25px;
+  }
+
+  @media (max-width: 430px) {
+    gap: 35px;
+
+    & > div {
+      gap: 45px;
     }
   }
 `;
@@ -44,6 +57,18 @@ const Desc = styled.div`
     letter-spacing: 1px;
     background: ${(props) => props.theme.fontColor};
     color: #fff;
+  }
+
+  @media (max-width: 768px) {
+    span {
+      font: bold italic 4rem/1 "Archivo Narrow", sans-serif;
+    }
+  }
+
+  @media (max-width: 430px) {
+    span {
+      font: bold italic 3rem/1 "Archivo Narrow", sans-serif;
+    }
   }
 `;
 
@@ -71,7 +96,7 @@ const TextMe = styled.div`
 const Introduction = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 50px;
   div {
     overflow: hidden;
     p {
@@ -83,7 +108,22 @@ const Introduction = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 0 115px;
+    align-items: center;
+    gap: 35px;
+    div {
+      width: 80%;
+      p {
+        font-size: ${(props) => props.theme.fsLarge};
+      }
+    }
+  }
+
+  @media (max-width: 430px) {
+    div {
+      p {
+        font-size: ${(props) => props.theme.fsMedium};
+      }
+    }
   }
 `;
 
@@ -110,6 +150,11 @@ const Photo = styled.div`
   @media (max-width: 768px) {
     width: 320px;
     height: 368px;
+  }
+
+  @media (max-width: 430px) {
+    width: 280px;
+    height: 300px;
   }
 `;
 

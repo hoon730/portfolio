@@ -24,8 +24,32 @@ const Inner = styled.div`
   .text {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translate(0, -50%);
     font: bold italic 36px "Archivo Narrow", sans-serif;
+
+    &.left_text {
+      left: 0;
+    }
+
+    &.right_text {
+      right: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .text {
+      &.left_text {
+        top: -35%;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+
+      &.right_text {
+        top: 120%;
+        right: 50%;
+        transform: translate(50%, 0);
+      }
+    }
   }
 `;
 
@@ -38,13 +62,11 @@ const SkillBox = styled.div`
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.3s ease-out;
-`;
 
-const LeftText = styled.div`
-  left: 0;
-`;
-const RightText = styled.div`
-  right: 0;
+  @media (max-width: 768px) {
+    width: 65.1042vw;
+    height: 65.1042vw;
+  }
 `;
 
 const Skill = () => {
@@ -74,13 +96,9 @@ const Skill = () => {
       if (boxRef.current) {
         const scrollY = window.scrollY;
         const rotationY = scrollY * 0.2;
+        const skillBoxWidth = boxRef.current.offsetWidth;
         boxRef.current.style.transform = `rotateY(${rotationY}deg)`;
-      }
-
-      if (window.innerWidth > 768) {
-        setClacTranslateZ("translateZ(250px)");
-      } else {
-        setClacTranslateZ("translateZ(180px)");
+        setClacTranslateZ(String(skillBoxWidth / 2));
       }
     };
 
@@ -94,30 +112,30 @@ const Skill = () => {
   return (
     <Container ref={containerRef}>
       <Inner className="inner">
-        <LeftText className="text">DEVELOPER</LeftText>
+        <div className="text left_text">DEVELOPER</div>
         <SkillBox ref={boxRef}>
           <Face
-            rotate={`rotateY(0deg) ${calcTranslateZ}`}
+            rotate={`rotateY(0deg) translateZ(${calcTranslateZ}px)`}
             skills={frontendData}
             title="FRONTEND"
           />
           <Face
-            rotate={`rotateY(90deg) ${calcTranslateZ}`}
+            rotate={`rotateY(90deg)  translateZ(${calcTranslateZ}px)`}
             skills={backendData}
             title="BACKEND"
           />
           <Face
-            rotate={`rotateY(180deg) ${calcTranslateZ}`}
+            rotate={`rotateY(180deg)  translateZ(${calcTranslateZ}px)`}
             skills={databaseData}
             title="DATABASE"
           />
           <Face
-            rotate={`rotateY(-90deg) ${calcTranslateZ}`}
+            rotate={`rotateY(-90deg)  translateZ(${calcTranslateZ}px)`}
             skills={frontendData}
             title="FRONTEND"
           />
         </SkillBox>
-        <RightText className="text">SKILL STACK</RightText>
+        <div className="text right_text">SKILL STACK</div>
       </Inner>
     </Container>
   );

@@ -55,6 +55,13 @@ const ProjectBox = styled.div`
   justify-content: space-evenly;
   position: relative;
   z-index: 0;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    width: 30vw;
+    height: 100%;
+  }
 `;
 
 const Project = styled.div`
@@ -68,6 +75,15 @@ const Project = styled.div`
   &.active {
     width: 25vw;
     border: 2px solid transparent;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 3vw;
+
+    &.active {
+      height: 30vw;
+    }
   }
 `;
 
@@ -99,6 +115,13 @@ const Name = styled.h3`
 
   &.active {
     transform: rotate(90deg) translateY(100%);
+  }
+
+  @media (max-width: 768px) {
+    transform: rotate(0deg);
+    &.active {
+      transform: rotate(0deg) translateY(100%);
+    }
   }
 `;
 
@@ -232,8 +255,13 @@ const Work = () => {
       const projectRect = firstProject.getBoundingClientRect();
 
       const initialLeft = projectRect.left - projectBoxRect.left;
+      const initialTop = projectRect.top - projectBoxRect.top;
 
-      scanner.style.left = `${initialLeft}px`;
+      if (window.innerWidth > 768) {
+        scanner.style.left = `${initialLeft}px`;
+      } else {
+        scanner.style.top = `${initialTop}px`;
+      }
     }
   }, []);
 

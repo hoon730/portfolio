@@ -180,7 +180,7 @@ const Bar = styled.hr`
   width: 100%;
   height: 8px;
   background: ${(props) => props.theme.fontColor};
-  transform: translateY(100%);
+  transform: translateY(110%);
 `;
 
 const TextBox = styled.div`
@@ -278,12 +278,21 @@ const Home = ({ barcodeClick, onClick }: barcodeClickProps) => {
       ];
       const yArr = [80, 60, 40, 20, 0];
 
-      tl1.to(".text_box", {
-        bottom: 0,
-        duration: 1,
-        delay: 1,
-        ease: "power1.inOut",
-      });
+      if (window.innerWidth > 430) {
+        tl1.to(".text_box", {
+          bottom: 0,
+          duration: 1,
+          delay: 1,
+          ease: "power1.inOut",
+        });
+      } else {
+        tl1.to(".text_box", {
+          bottom: 35,
+          duration: 1,
+          delay: 1,
+          ease: "power1.inOut",
+        });
+      }
       yArr.forEach((y, index) => {
         tl1.to(targetArr, {
           y,

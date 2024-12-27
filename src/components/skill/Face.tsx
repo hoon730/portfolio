@@ -35,6 +35,19 @@ const Title = styled.div`
     margin-top: 6px;
     font-size: 1.8rem;
   }
+
+  @media (max-width: 768px) {
+    font-size: 8.3333vw;
+    span:last-child {
+      margin-top: 0.7813vw;
+      font-size: 3.6458vw;
+    }
+  }
+
+  @media (max-width: 430px) {
+    letter-spacing: 5px;
+    padding-bottom: 5px;
+  }
 `;
 const Stacks = styled.div`
   padding-top: 20px;
@@ -58,14 +71,29 @@ const ImgBox = styled.div`
   align-items: center;
   border: 2px solid ${(props) => props.theme.fontColor};
   border-radius: 5px;
+
+  @media (max-width: 768px) {
+    width: 10.2865vw;
+    height: 10.2865vw;
+  }
 `;
 
-const StackImg = styled.img``;
+const StackImg = styled.img`
+  @media (max-width: 768px) {
+    width: 7.8125vw;
+    height: 7.8125vw;
+  }
+`;
 
 const StackName = styled.span`
   font-size: ${(props) => props.theme.fsSmall};
   font-weight: 550;
   text-align: center;
+
+  @media (max-width: 768px) {
+    /* display: none; */
+    font-size: 1.8229vw;
+  }
 `;
 
 export interface skillstackProps {
@@ -82,7 +110,6 @@ const Face = ({
   skills: skillstackProps[];
   title: string;
 }) => {
-
   return (
     <Container className="face" rotate={rotate}>
       <Wrapper>
