@@ -1,6 +1,6 @@
 import React from "react";
 import { Dispatch, SetStateAction } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { projectData } from "../../utils";
 
 import gsap from "gsap";
@@ -9,112 +9,175 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(CSSPlugin, ScrollTrigger);
 
+const roll = keyframes`
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 100%;
+  }
+`;
+
+const show = keyframes`
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  100% {
+    height: 100%;
+    opacity: 1;
+  }
+`;
+
 const Background = styled.div<{ $isclick: boolean }>`
-  position: absolute;
-  top: 0;
+  position: fixed;
+  bottom: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.2);
-  display: ${({ $isclick }) => ($isclick ? "flex" : "none")};
+  height: 0;
+  display: flex;
+  /* align-items: center; */
+  background: #f0f0f0;
+  transform-origin: top top;
   z-index: 10;
+
+  &.active {
+    animation: ${roll} 0.5s 0.3s ease-out both;
+  }
 `;
 
 const Container = styled.div`
-  .wrapper {
-    width: 430px;
-    height: 100vh;
-    padding: 20px;
-    font-size: ${(props) => props.theme.fsSmall};
-    border-top: 1px dashed #000;
-    display: flex;
+  width: 100%;
+  height: 0%;
+  padding: 12vh 50px;
+  display: flex;
+  justify-content: space-between;
+  transform-origin: top top;
+
+  &.active {
+    animation: ${show} 0.5s 1s ease-out both;
+  }
+
+  @media (max-width: 768px) {
+    padding: 10vh 20px;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: #fff;
-    transform: translateY(100%);
-    h3 {
-      font-weight: bold;
+    gap: 30px;
+  }
+`;
+
+const LeftBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @media (max-width: 768px) {
+    gap: 20px;
+  }
+`;
+
+const Title = styled.div``;
+
+const ProjectName = styled.div`
+  display: flex;
+  font-weight: 900;
+  font-size: 4rem;
+  padding-bottom: 7px;
+  letter-spacing: 7px;
+  border-top: 3px solid ${(props) => props.theme.fontColor};
+  border-bottom: 3px solid ${(props) => props.theme.fontColor};
+  margin-bottom: 35px;
+
+  span:last-child {
+    margin-top: 6px;
+    font-size: 1.8rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 8.3333vw;
+    padding-bottom: 5px;
+    letter-spacing: 5px;
+
+    span:last-child {
+      margin-top: 0.7813vw;
+      font-size: 3.6458vw;
     }
   }
 `;
+const Category = styled.div`
+  font-size: ${(props) => props.theme.fsExtraLarge};
+  font-weight: bold;
 
-const ProjectLogo = styled.div`
-  padding: 30px 0;
-`;
-const Info = styled.div`
-  width: 100%;
-  padding-bottom: 30px;
+  @media (max-width: 768px) {
+    font-size: ${(props) => props.theme.fsMedium};
+  }
 `;
 
-const Article = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 5px;
-`;
-const Items = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 20px;
-  border-bottom: 2px dashed #000;
-`;
-const ProjectImgBox = styled.div`
-  background: #f0f0f0;
-  width: 16vw;
-  height: 16vw;
-`;
-const ProjectImg = styled.img``;
+const Contents = styled.div``;
 
 const Desc = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  padding: 30px 0 20px 0;
-  margin-bottom: 20px;
-  border-bottom: 2px dashed #000;
-`;
-
-const SkillStack = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding-bottom: 20px;
-  border-bottom: 2px dashed #000;
-`;
-
-const StackBox = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-
-  div {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-`;
-
-const Barcode = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding: 30px 0;
-
-  h3 {
-    font-size: ${(props) => props.theme.fsLarge};
-  }
+  gap: 10px;
+  margin-bottom: 65px;
 
   span {
-    text-align: center;
-    font-size: 64px;
-    font-family: "Libre Barcode 128", system-ui;
+    font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+    gap: 5px;
+    margin-bottom: 40px;
   }
 `;
+
+const Date = styled.div``;
+const Platform = styled.div``;
+const Assignment = styled.div``;
+
+const SkillStack = styled.div`
+  h3 {
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+`;
+
+const Skills = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+
+const RightBox = styled.div`
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    flex-direction: column-reverse;
+    gap: 20px;
+  }
+`;
+
+const Summary = styled.div`
+  font-size: ${(props) => props.theme.fsExtraLarge};
+
+  @media (max-width: 768px) {
+    font-size: ${(props) => props.theme.fsMedium};
+  }
+
+  @media (max-width: 430px) {
+    font-size: ${(props) => props.theme.fsRegular};
+  }
+`;
+const ProjectImgBox = styled.div`
+  width: 100%;
+  height: 70%;
+  background: #fff;
+`;
+const ProjectImg = styled.img``;
 
 const Receipt = ({
   isOpen,
@@ -142,51 +205,54 @@ const Receipt = ({
   }, [isOpen]);
 
   return (
-    <Background $isclick={isOpen} onClick={() => setIsOpen(false)}>
+    <Background
+      $isclick={isOpen}
+      onClick={() => setIsOpen(false)}
+      className={isOpen ? "active" : ""}
+    >
       {projectData
         .filter((project) => project.id === selectedIdx)
         .map((project) => (
-          <Container key={project.id}>
-            <div className="wrapper">
-              <ProjectLogo>
-                <img src={project.logoPath} alt={project.name} />
-              </ProjectLogo>
-              <Info className="info">
-                <Article>
-                  <h3>CATEGORY:</h3>
-                  <span>Team Project</span>
-                </Article>
-                <Items>
-                  <h3>PAGE:</h3>
-                  <span>Profile, Detail</span>
-                </Items>
-              </Info>
+          <Container key={project.id} className={isOpen ? "active" : ""}>
+            <LeftBox>
+              <Title>
+                <ProjectName>
+                  <span>{project.name}</span>
+                  <span>®</span>
+                </ProjectName>
+                <Category>{project.category}</Category>
+              </Title>
+              <Contents>
+                <Desc>
+                  <Date>
+                    <span>기간: </span>
+                    {project.date}
+                  </Date>
+                  <Platform>
+                    <span>유형: </span>
+                    {project.platform}
+                  </Platform>
+                  <Assignment>
+                    <span>담당 페이지: </span>
+                    {project.assignment}
+                  </Assignment>
+                </Desc>
+                <SkillStack>
+                  <h3>SKILL STACK</h3>
+                  <Skills>
+                    {project.skillStack.map((skill) => (
+                      <span>{skill}</span>
+                    ))}
+                  </Skills>
+                </SkillStack>
+              </Contents>
+            </LeftBox>
+            <RightBox>
+              <Summary>{project.summary}</Summary>
               <ProjectImgBox>
                 <ProjectImg />
               </ProjectImgBox>
-              <Desc>
-                <h3>DESCRIPTION</h3>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur. Cras sed ligula
-                  consequat malesuada neque ut cras.
-                </p>
-              </Desc>
-              <SkillStack>
-                <h3>SKILL STACK</h3>
-                <StackBox>
-                  {project.skillStack.map((skill, idx) => (
-                    <div key={idx}>
-                      <span>{skill}</span>
-                      <span>x 1</span>
-                    </div>
-                  ))}
-                </StackBox>
-              </SkillStack>
-              <Barcode>
-                <h3>** VISIT WEBSITE **</h3>
-                <span>{project.barcode}</span>
-              </Barcode>
-            </div>
+            </RightBox>
           </Container>
         ))}
     </Background>

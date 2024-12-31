@@ -31,6 +31,10 @@ const SmallBar = styled.div`
   height: 5px;
   background: ${(props) => props.theme.fontColor};
   transition: width 0.5s ease-out;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const ContactBox = styled.div`
@@ -39,6 +43,14 @@ const ContactBox = styled.div`
 
   & > div {
     width: 50%;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+
+    & > div {
+      width: 100%;
+    }
   }
 `;
 
@@ -51,10 +63,19 @@ const Title = styled.span`
   letter-spacing: 1px;
   color: #f0f0f0;
   background: ${(props) => props.theme.fontColor};
+
+  @media (max-width: 430px) {
+    padding: 3px 8px;
+    font: 400 ${(props) => props.theme.fsMedium} "Fira Code", monospace;
+  }
 `;
 const Goobyewords = styled.div`
   padding-top: 60px;
   font: bold 8rem/110px "Archivo Narrow", sans-serif;
+
+  @media (max-width: 768px) {
+    font: bold 16.6667vw/14.3229vw "Archivo Narrow", sans-serif;
+  }
 `;
 const TopWords = styled.div``;
 const BottomWords = styled.div`
@@ -65,6 +86,10 @@ const Barcode = styled.div`
   padding: 60px 0;
   font: normal 5rem "Libre Barcode 128 Text", system-ui;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    font: normal 10.4167vw "Libre Barcode 128 Text", system-ui;
+  }
 `;
 
 const ContactMethod = styled.div`
@@ -82,6 +107,25 @@ const ContactMethod = styled.div`
     flex-direction: column;
     justify-content: flex-end;
     padding-bottom: 5px;
+  }
+
+  @media (max-width: 768px) {
+    padding-right: 0;
+    flex-direction: row;
+    font: bold 1.5rem "Archivo Narrow", sans-serif;
+
+    & > div {
+      width: 100%;
+      height: auto;
+
+      &:nth-child(2) > span {
+        text-align: center;
+      }
+
+      &:nth-child(3) > span {
+        text-align: right;
+      }
+    }
   }
 `;
 const Email = styled.div``;

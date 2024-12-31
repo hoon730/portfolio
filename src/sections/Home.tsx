@@ -53,6 +53,11 @@ const DateBox = styled.div`
     margin-bottom: 50px;
     font: 500 16px/1 "PT Mono", monospace;
   }
+
+  @media (max-width: 430px) {
+    font: 500 14px/1 "PT Mono", monospace;
+    flex-direction: column;
+  }
 `;
 
 const DateNow = styled.div`
