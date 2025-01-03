@@ -59,7 +59,7 @@ const ProjectBox = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: center;
-    width: 30vw;
+    width: 40vw;
     height: 100%;
   }
 `;
@@ -78,11 +78,11 @@ const Project = styled.div`
   }
 
   @media (max-width: 768px) {
-    width: 100%;
+    width: 40vw;
     height: 3vw;
 
     &.active {
-      height: 30vw;
+      height: 40vw;
     }
   }
 `;
@@ -93,6 +93,15 @@ const Wrapper = styled.div`
 
   &.active {
     width: 25vw;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+
+    &.active {
+      width: 40vw;
+    }
   }
 `;
 
@@ -148,6 +157,11 @@ const Scanner = styled.div`
     left: 0.5vw;
     transform: translate(0.5vw, 0.25vw);
     animation: ${blink} 0.5s ease-in-out both;
+  }
+  
+  @media (max-width: 768px) {
+    width: 40vw;
+    height: 40vw;
   }
 `;
 

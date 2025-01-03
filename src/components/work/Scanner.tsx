@@ -13,7 +13,7 @@ const Wrapper = styled(motion.div)`
 `;
 
 interface StyleProps {
-  left: string; // or number if you're not appending "px"
+  left: string;
 }
 
 const Scanner = ({ style }: { style: StyleProps }) => {
