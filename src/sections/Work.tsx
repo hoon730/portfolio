@@ -44,6 +44,7 @@ const Inner = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
@@ -190,7 +191,7 @@ const Scanner = styled.div`
     top: 0.25vw;
     left: 0.5vw;
     transform: translate(0.5vw, 0.25vw);
-    animation: ${blink} 0.5s ease-in-out both;
+    animation: ${blink} 0.3s ease-in-out both;
   }
 
   @media (max-width: 768px) {
@@ -212,6 +213,10 @@ const ProjectLogo = styled.div`
   height: 22.5%;
   display: flex;
   justify-content: center;
+
+  &.on {
+    animation: ${blink} 0.3s ease-in-out both;
+  }
 
   @media (max-width: 430px) {
     & > div {
@@ -243,9 +248,13 @@ const Barcode = styled.div`
   height: 22.5%;
   z-index: 2;
   font: normal 4rem/1.1 "Libre Barcode 128", system-ui;
-  
+
   &.active {
     font: normal 4rem "Libre Barcode 128", system-ui;
+  }
+
+  &.on {
+    animation: ${blink} 0.3s ease-in-out both;
   }
 
   @media (max-width: 430px) {
@@ -389,7 +398,7 @@ const Work = () => {
                   </Name>
                 </Title>
                 <Detail className={selectedIdx === idx ? "active" : ""}>
-                  <ProjectLogo>
+                  <ProjectLogo className={isOn ? "on" : ""}>
                     <div>
                       <img src={project.logoPath} alt={project.name} />
                     </div>
@@ -398,7 +407,9 @@ const Work = () => {
                     <ProjectImg />
                   </ProjectImgBox>
                   <Barcode
-                    className={selectedIdx === idx ? "active" : ""}
+                    className={
+                      selectedIdx === idx ? (isOn ? "on active" : "") : ""
+                    }
                     onClick={onClick}
                   >
                     <span

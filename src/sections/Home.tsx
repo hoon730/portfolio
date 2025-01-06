@@ -115,10 +115,10 @@ const NameLeft = styled.div`
 
   @media (max-width: 768px) {
     width: 100%;
-  }
-  & > div:last-child {
-    display: flex;
-    justify-content: center;
+    & > div:last-child {
+      display: flex;
+      justify-content: center;
+    }
   }
 `;
 
