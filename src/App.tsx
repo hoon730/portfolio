@@ -31,7 +31,6 @@ const GlobalsStyle = createGlobalStyle`
 
     input {
     border: none;
-    /* padding-left: 10px; */
     transition: all 0.3s;
   }
 
@@ -127,11 +126,11 @@ const Cursor = styled.div`
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  /* cursor: none;
+  cursor: none;
 
   &.active {
     animation: ${ShowingCursor} 1s linear both;
-  } */
+  }
 
   & section {
     width: 100%;
@@ -189,7 +188,7 @@ const App = () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalsStyle />
         <Wrapper className={barcodeClick ? "active" : ""}>
-          <Cursor id="cursor" />
+          <Cursor id="cursor" className={barcodeClick ? "active" : ""} />
           <Header isClick={barcodeClick} setMenuClick={setMenuClick} />
           <Menu menuClick={menuClick} setMenuClick={setMenuClick} />
           <Home barcodeClick={barcodeClick} onClick={setBarcodeClick} />

@@ -12,6 +12,7 @@ const Container = styled.div<{ rotate: string }>`
   transform: ${(props) => props.rotate};
   background: ${(props) => props.theme.bgColor};
   backface-visibility: hidden;
+  overflow: hidden;
 `;
 
 const Wrapper = styled.div`

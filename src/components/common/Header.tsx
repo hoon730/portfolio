@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-import { BiMenuAltLeft } from "react-icons/bi";
 
 import gsap from "gsap";
 import { CSSPlugin } from "gsap/CSSPlugin";
 import { useGSAP } from "@gsap/react";
-import Menu from "./Menu";
 
 gsap.registerPlugin(CSSPlugin);
 
@@ -115,6 +113,10 @@ const Header = ({ isClick, setMenuClick }: isClickProps) => {
   const [isHidden, setIsHidden] = useState(false);
   const [scrollValue, setScrollValue] = useState(0);
   const [isMouseOn, setIsMouseOn] = useState(false);
+
+  useEffect(() => {
+    scrollValue;
+  }, []);
 
   useGSAP(() => {
     const tl = gsap.timeline();

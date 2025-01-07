@@ -370,7 +370,6 @@ const Work = () => {
           end: "bottom",
           pin: true,
           scrub: true,
-          markers: true,
         },
       });
     }, workRef);

@@ -147,7 +147,6 @@ const Contact = () => {
         trigger: containerRef.current,
         start: "top center",
         end: "bottom",
-        markers: true,
       },
     });
 

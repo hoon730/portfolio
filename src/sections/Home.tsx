@@ -1,6 +1,4 @@
-import { useState } from "react";
 import styled, { keyframes } from "styled-components";
-import { BsQrCode } from "react-icons/bs";
 import { getFormattedDate } from "../utils";
 
 import gsap from "gsap";
@@ -84,7 +82,6 @@ const Name = styled.div`
     display: flex;
     align-items: center;
     font: 500 248px/210px "Archivo Narrow", sans-serif;
-    /* font: 500 12.9167vw/10.9375vw "Archivo Narrow", sans-serif; */
   }
 
   @media (max-width: 1280px) {
@@ -138,11 +135,13 @@ const NameRight = styled.div`
   & > div:first-child span {
     position: relative;
     height: 210px;
-    svg {
+
+    img {
       position: absolute;
-      top: 22px;
-      right: 15px;
-      font-size: 130px;
+      top: 15px;
+      right: 0;
+      width: 190px;
+      height: 190px;
     }
   }
 
@@ -154,10 +153,13 @@ const NameRight = styled.div`
   @media (max-width: 1280px) {
     & > div:first-child span {
       height: 16.4063vw;
-      svg {
-        font-size: 10.1563vw;
-        top: 12px;
-        right: 8px;
+
+      img {
+        position: absolute;
+        top: 15px;
+        right: 0;
+        width: 14.8438vw;
+        height: 14.8438vw;
       }
     }
   }
@@ -167,12 +169,6 @@ const NameRight = styled.div`
     flex-direction: column-reverse;
     & > div:first-child span {
       display: none;
-      /* height: 20.8333vw;
-      svg {
-        font-size: 16.9271vw;
-        top: 12px;
-        right: 8px;
-      } */
     }
   }
 `;
@@ -348,7 +344,7 @@ const Home = ({ barcodeClick, onClick }: barcodeClickProps) => {
           <NameRight className="nameRight">
             <div>
               <span className="qrcode">
-                <BsQrCode />
+                <img src="/img/qr.jpeg" alt="qrcode" />
               </span>
             </div>
             <div>

@@ -1,5 +1,3 @@
-import { summary } from "motion/react-client";
-
 export const getFormattedDate = (targetDate: Date): string => {
   const year = targetDate.getFullYear();
   let month = targetDate.getMonth() + 1;
