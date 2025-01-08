@@ -187,26 +187,25 @@ const Filter = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.4);
 `;
 
 const Scanner = styled.div`
   position: absolute;
-  top: -0.25vw;
-  left: -0.5vw;
-  transform: translate(-0.5vw, -0.25vw);
-  width: 26vw;
-  height: 26vw;
-  background: url("/img/scanner_white.png") center/cover no-repeat;
+  top: -1vw;
+  left: 0;
+  transform: translate(-1vw, 0);
+  width: 27vw;
+  height: 27vw;
+  background: url("/img/scanner.png") center/cover no-repeat;
   transition: all 0.2s ease;
   z-index: 0;
 
   &.on {
-    width: 24vw;
-    height: 24vw;
-    top: 0.25vw;
-    left: 0.5vw;
-    transform: translate(0.5vw, 0.25vw);
+    top: -0.25vw;
+    transform: translate(-0.43vw, -0.16vw);
+    width: 25.85vw;
+    height: 25.85vw;
     animation: ${blink} 0.3s ease-in-out both;
   }
 
@@ -271,14 +270,14 @@ const ProjectDesc = styled.div`
 `;
 
 const Box = styled.div`
-  border: 1px solid #fff;
+  border: 2px solid #fff;
   width: 60%;
   height: 85px;
 `;
 
 const BoxTop = styled.div`
   display: flex;
-  border-bottom: 1px solid #fff;
+  border-bottom: 2px solid #fff;
   height: 30%;
 
   & > div {
@@ -290,7 +289,7 @@ const BoxTop = styled.div`
 
 const ProjectNum = styled.div`
   width: 10%;
-  border-right: 1px solid #fff;
+  border-right: 2px solid #fff;
 `;
 
 const ProjectLogo = styled.div`
