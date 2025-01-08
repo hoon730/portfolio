@@ -11,7 +11,7 @@ import Menu from "./components/common/Menu";
 import Home from "./sections/Home";
 import About from "./sections/About";
 import Skill from "./sections/Skill";
-import Work from "./sections/Work";
+import Work from "./sections/Work copy";
 import Contact from "./sections/Contact";
 
 const GlobalsStyle = createGlobalStyle`
@@ -27,6 +27,7 @@ const GlobalsStyle = createGlobalStyle`
 
     a {
       text-decoration: none;
+      color: inherit;
     }
 
     input {
@@ -74,6 +75,7 @@ const GlobalsStyle = createGlobalStyle`
       /* font-family: "Libre Barcode 128 Text", system-ui;/ */
       /* font-family: "Fira Code", monospace; */
       /* font-family: "PT Mono", monospace; */
+      /* font-family: "Libre Barcode 39 Text", serif; */
       &::-webkit-scrollbar {
       display: none;
       }

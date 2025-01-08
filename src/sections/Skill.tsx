@@ -88,8 +88,8 @@ const Skill = () => {
           start: "center center",
           end: "bottom",
           pin: true,
-          scrub: 1.5,
-          markers: true,
+          scrub: 2,
+          // markers: true,
         },
       });
 
@@ -113,23 +113,15 @@ const Skill = () => {
         overflow: "visible",
         width: window.innerWidth > 768 ? "500px" : "65.1042vw",
         height: window.innerWidth > 768 ? "500px" : "65.1042vw",
-        onComplete: () => {
-          // 크기 변경 후 스크롤에 따라 회전 적용
-          ScrollTrigger.create({
-            trigger: containerRef.current,
-            start: "top center",
-            end: "bottom center",
-            scrub: true,
-            markers: true,
-            onUpdate: (self) => {
-              if (boxRef.current) {
-                const rotationY = self.progress * 360; // 스크롤 진행도에 따라 회전 계산
-                const skillBoxWidth = boxRef.current.offsetWidth;
-                setClacTranslateZ(String(skillBoxWidth / 2));
-                boxRef.current.style.transform = `rotateY(${rotationY}deg)`;
-              }
-            },
-          });
+      }).to(boxRef, {
+        onUpdate: () => {
+          if (boxRef.current) {
+            const rotationY = window.scrollY * 0.2;
+            const skillBoxWidth = boxRef.current.offsetWidth;
+            setClacTranslateZ(String(skillBoxWidth / 2));
+            boxRef.current.style.transform = `rotateY(${rotationY}deg)`;
+            console.log(rotationY);
+          }
         },
       });
 

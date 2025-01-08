@@ -94,6 +94,7 @@ export const projectData = [
   {
     id: 0,
     logoPath: "/img/work/logo/instagram_logo.svg",
+    pagePath: "/img/work/page/joonggonara.png",
     name: "INSTAGRAM",
     category: "TEAM PROJECT",
     date: "2024/09 - 2024/10",
@@ -107,6 +108,7 @@ export const projectData = [
   {
     id: 1,
     logoPath: "/img/work/logo/aurora_logo.svg",
+    pagePath: "/img/work/page/joonggonara.png",
     name: "AURORA",
     category: "TEAM PROJECT",
     date: "2024/09 - 2024/10",
@@ -120,6 +122,7 @@ export const projectData = [
   {
     id: 2,
     logoPath: "/img/work/logo/joongonara_logo.svg",
+    pagePath: "/img/work/page/joonggonara.png",
     name: "JOONGONARA",
     category: "TEAM PROJECT",
     date: "2024/09 - 2024/10",
@@ -133,6 +136,7 @@ export const projectData = [
   {
     id: 3,
     logoPath: "/img/work/logo/rrl_logo.svg",
+    pagePath: "/img/work/page/joonggonara.png",
     name: "RRL",
     category: "PERSONAL PROJECT",
     date: "2024/09 - 2024/10",
@@ -146,6 +150,7 @@ export const projectData = [
   {
     id: 4,
     logoPath: "/img/work/logo/instagram_logo.svg",
+    pagePath: "/img/work/page/joonggonara.png",
     name: "KILLBILL",
     category: "PERSONAL PROJECT",
     date: "2024/09 - 2024/10",
@@ -159,6 +164,7 @@ export const projectData = [
   {
     id: 5,
     logoPath: "/img/work/logo/instagram_logo.svg",
+    pagePath: "/img/work/page/joonggonara.png",
     name: "PROJECT",
     category: "PERSONAL PROJECT",
     date: "2024/09 - 2024/10",
@@ -172,6 +178,7 @@ export const projectData = [
   {
     id: 6,
     logoPath: "/img/work/logo/instagram_logo.svg",
+    pagePath: "/img/work/page/joonggonara.png",
     name: "PROJECT ",
     category: "PERSONAL PROJECT",
     date: "2024/09 - 2024/10",
@@ -185,6 +192,7 @@ export const projectData = [
   {
     id: 7,
     logoPath: "/img/work/logo/instagram_logo.svg",
+    pagePath: "/img/work/page/joonggonara.png",
     name: "PROJECT",
     category: "PERSONAL PROJECT",
     date: "2024/09 - 2024/10",
@@ -198,6 +206,7 @@ export const projectData = [
   {
     id: 8,
     logoPath: "/img/work/logo/instagram_logo.svg",
+    pagePath: "/img/work/page/joonggonara.png",
     name: "PROJECT",
     category: "PERSONAL PROJECT",
     date: "2024/09 - 2024/10",
@@ -211,6 +220,7 @@ export const projectData = [
   {
     id: 9,
     logoPath: "/img/work/logo/instagram_logo.svg",
+    pagePath: "/img/work/page/joonggonara.png",
     name: "PROJECT",
     category: "PERSONAL PROJECT",
     date: "2024/09 - 2024/10",
@@ -224,6 +234,7 @@ export const projectData = [
   {
     id: 10,
     logoPath: "/img/work/logo/instagram_logo.svg",
+    pagePath: "/img/work/page/joonggonara.png",
     name: "PROJECT",
     category: "PERSONAL PROJECT",
     date: "2024/09 - 2024/10",
@@ -237,6 +248,7 @@ export const projectData = [
   {
     id: 11,
     logoPath: "/img/work/logo/instagram_logo.svg",
+    pagePath: "/img/work/page/joonggonara.png",
     name: "PROJECT",
     category: "PERSONAL PROJECT",
     date: "2024/09 - 2024/10",

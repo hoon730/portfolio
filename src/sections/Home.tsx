@@ -186,9 +186,9 @@ const Bar = styled.hr`
 
 const TextBox = styled.div`
   position: absolute;
-  bottom: 45%;
+  bottom: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, 50%);
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -282,6 +282,7 @@ const Home = ({ barcodeClick, onClick }: barcodeClickProps) => {
       if (window.innerWidth > 430) {
         tl1.to(".text_box", {
           bottom: 0,
+          translateY: 0,
           duration: 1,
           delay: 1,
           ease: "power1.inOut",
@@ -310,7 +311,7 @@ const Home = ({ barcodeClick, onClick }: barcodeClickProps) => {
       <Inner className="inner">
         <TextBox className="text_box">
           <Text>
-            <span className="portfolio">A SELF-HELP PORTFOLIO</span>
+            <span className="portfolio">FRONTEND DEVELOPER</span>
           </Text>
           <BarcodeBox>
             <Barcode>
@@ -322,7 +323,7 @@ const Home = ({ barcodeClick, onClick }: barcodeClickProps) => {
           </BarcodeBox>
         </TextBox>
         <Title>
-          <span className="title">FRONTEND DEVELOPER</span>
+          {/* <span className="title">FRONTEND DEVELOPER</span> */}
         </Title>
         <DateBox>
           <DateNow>
