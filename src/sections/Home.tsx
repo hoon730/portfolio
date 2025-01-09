@@ -1,6 +1,4 @@
-import { useState } from "react";
 import styled, { keyframes } from "styled-components";
-import { BsQrCode } from "react-icons/bs";
 import { getFormattedDate } from "../utils";
 
 import gsap from "gsap";
@@ -84,7 +82,6 @@ const Name = styled.div`
     display: flex;
     align-items: center;
     font: 500 248px/210px "Archivo Narrow", sans-serif;
-    /* font: 500 12.9167vw/10.9375vw "Archivo Narrow", sans-serif; */
   }
 
   @media (max-width: 1280px) {
@@ -115,10 +112,10 @@ const NameLeft = styled.div`
 
   @media (max-width: 768px) {
     width: 100%;
-  }
-  & > div:last-child {
-    display: flex;
-    justify-content: center;
+    & > div:last-child {
+      display: flex;
+      justify-content: center;
+    }
   }
 `;
 
@@ -138,11 +135,13 @@ const NameRight = styled.div`
   & > div:first-child span {
     position: relative;
     height: 210px;
-    svg {
+
+    img {
       position: absolute;
-      top: 22px;
-      right: 15px;
-      font-size: 130px;
+      top: 15px;
+      right: 0;
+      width: 190px;
+      height: 190px;
     }
   }
 
@@ -154,10 +153,13 @@ const NameRight = styled.div`
   @media (max-width: 1280px) {
     & > div:first-child span {
       height: 16.4063vw;
-      svg {
-        font-size: 10.1563vw;
-        top: 12px;
-        right: 8px;
+
+      img {
+        position: absolute;
+        top: 15px;
+        right: 0;
+        width: 14.8438vw;
+        height: 14.8438vw;
       }
     }
   }
@@ -167,12 +169,6 @@ const NameRight = styled.div`
     flex-direction: column-reverse;
     & > div:first-child span {
       display: none;
-      /* height: 20.8333vw;
-      svg {
-        font-size: 16.9271vw;
-        top: 12px;
-        right: 8px;
-      } */
     }
   }
 `;
@@ -190,9 +186,9 @@ const Bar = styled.hr`
 
 const TextBox = styled.div`
   position: absolute;
-  bottom: 45%;
+  bottom: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, 50%);
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -286,6 +282,7 @@ const Home = ({ barcodeClick, onClick }: barcodeClickProps) => {
       if (window.innerWidth > 430) {
         tl1.to(".text_box", {
           bottom: 0,
+          translateY: 0,
           duration: 1,
           delay: 1,
           ease: "power1.inOut",
@@ -314,7 +311,7 @@ const Home = ({ barcodeClick, onClick }: barcodeClickProps) => {
       <Inner className="inner">
         <TextBox className="text_box">
           <Text>
-            <span className="portfolio">A SELF-HELP PORTFOLIO</span>
+            <span className="portfolio">FRONTEND DEVELOPER</span>
           </Text>
           <BarcodeBox>
             <Barcode>
@@ -326,7 +323,7 @@ const Home = ({ barcodeClick, onClick }: barcodeClickProps) => {
           </BarcodeBox>
         </TextBox>
         <Title>
-          <span className="title">FRONTEND DEVELOPER</span>
+          {/* <span className="title">FRONTEND DEVELOPER</span> */}
         </Title>
         <DateBox>
           <DateNow>
@@ -348,7 +345,7 @@ const Home = ({ barcodeClick, onClick }: barcodeClickProps) => {
           <NameRight className="nameRight">
             <div>
               <span className="qrcode">
-                <BsQrCode />
+                <img src="/img/qr.jpeg" alt="qrcode" />
               </span>
             </div>
             <div>

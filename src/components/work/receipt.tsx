@@ -1,4 +1,3 @@
-import React from "react";
 import { Dispatch, SetStateAction } from "react";
 import styled, { keyframes } from "styled-components";
 import { projectData } from "../../utils";

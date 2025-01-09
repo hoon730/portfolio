@@ -11,7 +11,7 @@ import Menu from "./components/common/Menu";
 import Home from "./sections/Home";
 import About from "./sections/About";
 import Skill from "./sections/Skill";
-import Work from "./sections/Work";
+import Work from "./sections/Work copy";
 import Contact from "./sections/Contact";
 
 const GlobalsStyle = createGlobalStyle`
@@ -27,11 +27,11 @@ const GlobalsStyle = createGlobalStyle`
 
     a {
       text-decoration: none;
+      color: inherit;
     }
 
     input {
     border: none;
-    /* padding-left: 10px; */
     transition: all 0.3s;
   }
 
@@ -75,6 +75,7 @@ const GlobalsStyle = createGlobalStyle`
       /* font-family: "Libre Barcode 128 Text", system-ui;/ */
       /* font-family: "Fira Code", monospace; */
       /* font-family: "PT Mono", monospace; */
+      /* font-family: "Libre Barcode 39 Text", serif; */
       &::-webkit-scrollbar {
       display: none;
       }
@@ -127,11 +128,11 @@ const Cursor = styled.div`
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  /* cursor: none;
+  cursor: none;
 
   &.active {
     animation: ${ShowingCursor} 1s linear both;
-  } */
+  }
 
   & section {
     width: 100%;
@@ -189,7 +190,7 @@ const App = () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalsStyle />
         <Wrapper className={barcodeClick ? "active" : ""}>
-          <Cursor id="cursor" />
+          <Cursor id="cursor" className={barcodeClick ? "active" : ""} />
           <Header isClick={barcodeClick} setMenuClick={setMenuClick} />
           <Menu menuClick={menuClick} setMenuClick={setMenuClick} />
           <Home barcodeClick={barcodeClick} onClick={setBarcodeClick} />

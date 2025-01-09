@@ -222,7 +222,6 @@ const About = () => {
           end: "bottom",
           pin: true,
           scrub: 2,
-          markers: true,
         },
       });
 

@@ -28,11 +28,13 @@ const Inner = styled.div`
     font: bold italic 36px "Archivo Narrow", sans-serif;
 
     &.left_text {
-      left: 0;
+      left: 50%;
+      transform: translateX(-100%);
     }
 
     &.right_text {
-      right: 0;
+      right: 50%;
+      transform: translateX(100%);
     }
   }
 
@@ -54,65 +56,103 @@ const Inner = styled.div`
 `;
 
 const SkillBox = styled.div`
-  width: 500px;
-  height: 500px;
+  width: 0;
+  height: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.3s ease-out;
+  overflow: hidden;
 
-  @media (max-width: 768px) {
+  /* @media (max-width: 768px) {
     width: 65.1042vw;
     height: 65.1042vw;
-  }
+  } */
 `;
 
 const Skill = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const textLeftRef = useRef<HTMLDivElement>(null);
+  const textRightRef = useRef<HTMLDivElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
 
   const [calcTranslateZ, setClacTranslateZ] = useState("");
 
   useGSAP(() => {
     const containerCtx = gsap.context(() => {
-      gsap.timeline({
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "center center",
           end: "bottom",
           pin: true,
-          scrub: 1.5,
-          markers: true,
+          scrub: 2,
+          // markers: true,
         },
       });
-    }, containerRef);
-    return () => containerCtx.revert();
+
+      tl.to(
+        textLeftRef.current,
+        {
+          left: 0,
+          x: 0,
+        },
+        0
+      ).to(
+        textRightRef.current,
+        {
+          right: 0,
+          x: 0,
+        },
+        0
+      );
+
+      tl.to(boxRef.current, {
+        overflow: "visible",
+        width: window.innerWidth > 768 ? "500px" : "65.1042vw",
+        height: window.innerWidth > 768 ? "500px" : "65.1042vw",
+      }).to(boxRef, {
+        onUpdate: () => {
+          if (boxRef.current) {
+            const rotationY = window.scrollY * 0.2;
+            const skillBoxWidth = boxRef.current.offsetWidth;
+            setClacTranslateZ(String(skillBoxWidth / 2));
+            boxRef.current.style.transform = `rotateY(${rotationY}deg)`;
+            console.log(rotationY);
+          }
+        },
+      });
+
+      return () => containerCtx.revert();
+    });
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (boxRef.current) {
-        const scrollY = window.scrollY;
-        const rotationY = scrollY * 0.2;
-        const skillBoxWidth = boxRef.current.offsetWidth;
-        boxRef.current.style.transform = `rotateY(${rotationY}deg)`;
-        setClacTranslateZ(String(skillBoxWidth / 2));
-      }
-    };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (boxRef.current) {
+  //       const scrollY = window.scrollY;
+  //       const rotationY = scrollY * 0.2;
+  //       const skillBoxWidth = boxRef.current.offsetWidth;
+  //       boxRef.current.style.transform = `rotateY(${rotationY}deg)`;
+  //       setClacTranslateZ(String(skillBoxWidth / 2));
+  //     }
+  //   };
 
-    window.addEventListener("scroll", handleScroll);
+  //   window.addEventListener("scroll", handleScroll);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
 
   return (
     <Container ref={containerRef}>
       <Inner className="inner">
-        <div className="text left_text">DEVELOPER</div>
+        <div ref={textLeftRef} className="text left_text">
+          DEVELOPER
+        </div>
         <SkillBox ref={boxRef}>
           <Face
             rotate={`rotateY(0deg) translateZ(${calcTranslateZ}px)`}
@@ -135,7 +175,9 @@ const Skill = () => {
             title="FRONTEND"
           />
         </SkillBox>
-        <div className="text right_text">SKILL STACK</div>
+        <div ref={textRightRef} className="text right_text">
+          SKILL STACK
+        </div>
       </Inner>
     </Container>
   );

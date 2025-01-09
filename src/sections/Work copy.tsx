@@ -161,9 +161,16 @@ const Name = styled.h3`
   }
 `;
 
-const Detail = styled.div`
+interface DetailProps {
+  background: string;
+}
+
+const Detail = styled.div<DetailProps>`
   width: 100%;
   height: 100%;
+  position: relative;
+  z-index: 2;
+  background: url(${(props) => props.$background}) center/cover no-repeat;
 
   @media (max-width: 768px) {
     height: 0;
@@ -174,23 +181,31 @@ const Detail = styled.div`
   }
 `;
 
+const Filter = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+`;
+
 const Scanner = styled.div`
   position: absolute;
-  top: -0.25vw;
-  left: -0.5vw;
-  transform: translate(-0.5vw, -0.25vw);
-  width: 26vw;
-  height: 26vw;
+  top: -1vw;
+  left: 0;
+  transform: translate(-1vw, 0);
+  width: 27vw;
+  height: 27vw;
   background: url("/img/scanner.png") center/cover no-repeat;
   transition: all 0.2s ease;
   z-index: 0;
 
   &.on {
-    width: 24vw;
-    height: 24vw;
-    top: 0.25vw;
-    left: 0.5vw;
-    transform: translate(0.5vw, 0.25vw);
+    top: -0.25vw;
+    transform: translate(-0.43vw, -0.16vw);
+    width: 25.85vw;
+    height: 25.85vw;
     animation: ${blink} 0.3s ease-in-out both;
   }
 
@@ -209,10 +224,14 @@ const Scanner = styled.div`
   }
 `;
 
-const ProjectLogo = styled.div`
-  height: 22.5%;
+const ProjectName = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+
+  padding-right: 5%;
+  padding-top: 5%;
+  color: #fff;
+  font: normal 3.3rem "Libre Barcode 39 Text", serif;
 
   &.on {
     animation: ${blink} 0.3s ease-in-out both;
@@ -229,28 +248,15 @@ const ProjectLogo = styled.div`
     }
   }
 `;
-const ProjectImgBox = styled.div`
-  width: 100%;
-  height: 55%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #dbdad9;
-  overflow: hidden;
-`;
-const ProjectImg = styled.img``;
 
-const Barcode = styled.div`
-  position: relative;
+const ProjectDesc = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  height: 22.5%;
-  z-index: 2;
-  font: normal 4rem/1.1 "Libre Barcode 128", system-ui;
+  justify-content: flex-start;
+  padding-left: 5%;
+  padding-bottom: 5%;
+  color: #fff;
 
   &.active {
-    font: normal 4rem "Libre Barcode 128", system-ui;
   }
 
   &.on {
@@ -258,12 +264,45 @@ const Barcode = styled.div`
   }
 
   @media (max-width: 430px) {
-    font: normal 8.3333vw/1.7 "Libre Barcode 128", system-ui;
-
     &.active {
-      font: normal 8.3333vw "Libre Barcode 128", system-ui;
     }
   }
+`;
+
+const Box = styled.div`
+  border: 2px solid #fff;
+  width: 60%;
+  height: 85px;
+`;
+
+const BoxTop = styled.div`
+  display: flex;
+  border-bottom: 2px solid #fff;
+  height: 30%;
+
+  & > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+const ProjectNum = styled.div`
+  width: 10%;
+  border-right: 2px solid #fff;
+`;
+
+const ProjectLogo = styled.div`
+  width: 90%;
+  letter-spacing: 1px;
+`;
+
+const BoxBottom = styled.div`
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 `;
 
 const Cursor = styled.div`
@@ -396,28 +435,36 @@ const Work = () => {
                     {project.name}
                   </Name>
                 </Title>
-                <Detail className={selectedIdx === idx ? "active" : ""}>
-                  <ProjectLogo className={isOn ? "on" : ""}>
-                    <div>
-                      <img src={project.logoPath} alt={project.name} />
-                    </div>
-                  </ProjectLogo>
-                  <ProjectImgBox>
-                    <ProjectImg />
-                  </ProjectImgBox>
-                  <Barcode
-                    className={
-                      selectedIdx === idx ? (isOn ? "on active" : "") : ""
-                    }
-                    onClick={onClick}
-                  >
-                    <span
-                      onMouseEnter={() => setIsOn(true)}
-                      onMouseLeave={() => setIsOn(false)}
+                <Detail
+                  className={selectedIdx === idx ? "active" : ""}
+                  $background={project.pagePath}
+                  onMouseEnter={() => setIsOn(true)}
+                  onMouseLeave={() => setIsOn(false)}
+                  onClick={onClick}
+                >
+                  <Filter>
+                    <ProjectName
+                      className={
+                        selectedIdx === idx ? (isOn ? "on active" : "") : ""
+                      }
                     >
-                      {project.barcode}
-                    </span>
-                  </Barcode>
+                      {project.name}
+                    </ProjectName>
+
+                    <ProjectDesc className={isOn ? "on" : ""} onClick={onClick}>
+                      <Box>
+                        <BoxTop>
+                          <ProjectNum>{idx + 1}</ProjectNum>
+                          <ProjectLogo>{project.name}</ProjectLogo>
+                        </BoxTop>
+                        <BoxBottom>
+                          {project.skillStack.map((skill) => (
+                            <span>{skill}</span>
+                          ))}
+                        </BoxBottom>
+                      </Box>
+                    </ProjectDesc>
+                  </Filter>
                 </Detail>
               </Wrapper>
             </Project>
