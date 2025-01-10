@@ -18,37 +18,20 @@ const Inner = styled.div`
   z-index: 1;
 `;
 
-const Title = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 27px 0;
-  font-family: "PT Mono", monospace;
-  letter-spacing: 1px;
-  margin-bottom: 100px;
-  overflow: hidden;
-
-  .title {
-    transform: translateY(100%);
-  }
-
-  @media (max-width: 768px) {
-    margin-bottom: 70px;
-  }
-`;
-
 const DateBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
   font: 500 18px/1 "PT Mono", monospace;
   letter-spacing: 1.5px;
-  margin-bottom: 70px;
+  padding-top: 100px;
+  padding-bottom: 55px;
 
   @media (max-width: 768px) {
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 50px;
+    padding-top: 95px;
+    padding-bottom: 60px;
     font: 500 16px/1 "PT Mono", monospace;
   }
 
@@ -268,7 +251,6 @@ const Home = ({ barcodeClick, onClick }: barcodeClickProps) => {
     if (barcodeClick) {
       const tl1 = gsap.timeline();
       const targetArr = [
-        ".title",
         ".date",
         ".category",
         ".yeom",
@@ -322,9 +304,6 @@ const Home = ({ barcodeClick, onClick }: barcodeClickProps) => {
             <Laser className={barcodeClick ? "active" : ""} />
           </BarcodeBox>
         </TextBox>
-        <Title>
-          {/* <span className="title">FRONTEND DEVELOPER</span> */}
-        </Title>
         <DateBox>
           <DateNow>
             <div className="date">DATE : {getFormattedDate(new Date())} </div>

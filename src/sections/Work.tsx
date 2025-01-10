@@ -61,7 +61,7 @@ const ProjectBox = styled.div`
     flex-direction: column;
     align-items: center;
     width: 50vw;
-    height: 85%;
+    height: 90%;
   }
 `;
 
@@ -161,109 +161,147 @@ const Name = styled.h3`
   }
 `;
 
-const Detail = styled.div`
+interface DetailProps {
+  $background: string;
+}
+
+const Detail = styled.div<DetailProps>`
+  width: 100%;
+  height: 0;
+  position: relative;
+  z-index: 2;
+  background: url(${(props) => props.$background}) center/cover no-repeat;
+  overflow: hidden;
+
+  &.active {
+    height: 100%;
+  }
+`;
+
+const Filter = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
   height: 100%;
+  background: rgba(0, 0, 0, 0.4);
 
-  @media (max-width: 768px) {
-    height: 0;
-
-    &.active {
-      height: 100%;
-    }
+  @media (max-width: 430px) {
+    align-items: center;
+    justify-content: center;
   }
 `;
 
 const Scanner = styled.div`
   position: absolute;
-  top: -0.25vw;
-  left: -0.5vw;
-  transform: translate(-0.5vw, -0.25vw);
-  width: 26vw;
-  height: 26vw;
+  top: -1vw;
+  left: 0;
+  transform: translate(-1vw, 0);
+  width: 27vw;
+  height: 27vw;
   background: url("/img/scanner.png") center/cover no-repeat;
   transition: all 0.2s ease;
   z-index: 0;
 
   &.on {
-    width: 24vw;
-    height: 24vw;
-    top: 0.25vw;
-    left: 0.5vw;
-    transform: translate(0.5vw, 0.25vw);
+    top: -0.25vw;
+    transform: translate(-0.43vw, -0.16vw);
+    width: 25.85vw;
+    height: 25.85vw;
     animation: ${blink} 0.3s ease-in-out both;
   }
 
   @media (max-width: 768px) {
-    width: 50.5vw;
-    height: 50.5vw;
+    width: 52.5vw;
+    height: 52.5vw;
     left: 0.5vw;
+    transform: translate(-1.75vw, -1.25vw);
 
     &.on {
-      width: 47vw;
-      height: 47vw;
-      top: 1.4vw;
-      left: 0.75vw;
-      transform: translate(0.75vw, 1.4vw);
+      width: 51.5vw;
+      height: 51.5vw;
+      left: -0.7vw;
+      transform: translate(0vw, -0.75vw);
     }
   }
+`;
+
+const ProjectName = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 5%;
+  padding-top: 5%;
+  color: #fff;
+  font: normal 3.3rem "Libre Barcode 39 Text", serif;
+
+  &.on {
+    animation: ${blink} 0.3s ease-in-out both;
+  }
+
+  @media (max-width: 768px) {
+    font: normal 6.875vw "Libre Barcode 39 Text", serif;
+  }
+
+  @media (max-width: 430px) {
+    padding: 0;
+    justify-content: center;
+    font: normal 9vw "Libre Barcode 39 Text", serif;
+  }
+`;
+
+const ProjectDesc = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 5%;
+  padding-bottom: 5%;
+  color: #fff;
+
+  &.on {
+    animation: ${blink} 0.3s ease-in-out both;
+  }
+
+  @media (max-width: 430px) {
+    display: none;
+  }
+`;
+
+const Box = styled.div`
+  border: 2px solid #fff;
+  width: 60%;
+  height: 85px;
+`;
+
+const BoxTop = styled.div`
+  display: flex;
+  border-bottom: 2px solid #fff;
+  height: 30%;
+
+  & > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+const ProjectNum = styled.div`
+  width: 10%;
+  border-right: 2px solid #fff;
 `;
 
 const ProjectLogo = styled.div`
-  height: 22.5%;
-  display: flex;
-  justify-content: center;
-
-  &.on {
-    animation: ${blink} 0.3s ease-in-out both;
-  }
-
-  @media (max-width: 430px) {
-    & > div {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      img {
-        height: 60%;
-      }
-    }
-  }
+  width: 90%;
+  letter-spacing: 1px;
 `;
-const ProjectImgBox = styled.div`
-  width: 100%;
-  height: 55%;
+
+const BoxBottom = styled.div`
+  height: 70%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #dbdad9;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   overflow: hidden;
-`;
-const ProjectImg = styled.img``;
-
-const Barcode = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  height: 22.5%;
-  z-index: 2;
-  font: normal 4rem/1.1 "Libre Barcode 128", system-ui;
-
-  &.active {
-    font: normal 4rem "Libre Barcode 128", system-ui;
-  }
-
-  &.on {
-    animation: ${blink} 0.3s ease-in-out both;
-  }
-
-  @media (max-width: 430px) {
-    font: normal 8.3333vw/1.7 "Libre Barcode 128", system-ui;
-
-    &.active {
-      font: normal 8.3333vw "Libre Barcode 128", system-ui;
-    }
-  }
+  gap: 5px;
 `;
 
 const Cursor = styled.div`
@@ -396,28 +434,32 @@ const Work = () => {
                     {project.name}
                   </Name>
                 </Title>
-                <Detail className={selectedIdx === idx ? "active" : ""}>
-                  <ProjectLogo className={isOn ? "on" : ""}>
-                    <div>
-                      <img src={project.logoPath} alt={project.name} />
-                    </div>
-                  </ProjectLogo>
-                  <ProjectImgBox>
-                    <ProjectImg />
-                  </ProjectImgBox>
-                  <Barcode
-                    className={
-                      selectedIdx === idx ? (isOn ? "on active" : "") : ""
-                    }
-                    onClick={onClick}
-                  >
-                    <span
-                      onMouseEnter={() => setIsOn(true)}
-                      onMouseLeave={() => setIsOn(false)}
+                <Detail
+                  className={selectedIdx === idx ? "active" : ""}
+                  $background={project.pagePath}
+                  onMouseEnter={() => setIsOn(true)}
+                  onMouseLeave={() => setIsOn(false)}
+                  onClick={onClick}
+                >
+                  <Filter>
+                    <ProjectName
+                      className={
+                        selectedIdx === idx ? (isOn ? "on active" : "") : ""
+                      }
                     >
-                      {project.barcode}
-                    </span>
-                  </Barcode>
+                      {project.name}
+                    </ProjectName>
+
+                    <ProjectDesc className={isOn ? "on" : ""} onClick={onClick}>
+                      <Box>
+                        <BoxTop>
+                          <ProjectNum>{idx + 1}</ProjectNum>
+                          <ProjectLogo>{project.name}</ProjectLogo>
+                        </BoxTop>
+                        <BoxBottom>{project.summary}</BoxBottom>
+                      </Box>
+                    </ProjectDesc>
+                  </Filter>
                 </Detail>
               </Wrapper>
             </Project>

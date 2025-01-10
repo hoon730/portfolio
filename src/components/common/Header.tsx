@@ -64,6 +64,7 @@ const Container = styled.header`
   }
 
   @media (max-width: 768px) {
+    height: 57px;
     padding: 0 20px;
   }
 `;
@@ -78,6 +79,10 @@ const Logo = styled.div`
   background: ${(props) => props.theme.fontColor};
   color: #f1f1f1;
   transform: translateY(150%);
+
+  @media (max-width: 430px) {
+    display: none;
+  }
 `;
 
 const Nav = styled.nav`
@@ -113,6 +118,10 @@ const BarBox = styled.div`
   flex-direction: column;
   gap: 4px;
   transform: translateY(150%);
+
+  @media (max-width: 430px) {
+    display: none;
+  }
 `;
 
 const Bar = styled.span`
@@ -141,10 +150,9 @@ const Bar = styled.span`
 
 interface isClickProps {
   isClick: boolean;
-  setMenuClick: (value: boolean) => void;
 }
 
-const Header = ({ isClick, setMenuClick }: isClickProps) => {
+const Header = ({ isClick }: isClickProps) => {
   const [isHidden, setIsHidden] = useState(false);
   const [scrollValue, setScrollValue] = useState(0);
   const [isMouseOn, setIsMouseOn] = useState(false);
@@ -234,7 +242,6 @@ const Header = ({ isClick, setMenuClick }: isClickProps) => {
       <MenuIcon
         onMouseEnter={() => setIsMouseOn(true)}
         onMouseLeave={() => setIsMouseOn(false)}
-        onClick={() => setMenuClick(true)}
       >
         <BarBox className="barBox">
           <Bar className={isMouseOn ? "active" : ""} />
