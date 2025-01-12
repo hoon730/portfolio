@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import { frontendData } from "../utils";
 import { backendData } from "../utils";
@@ -24,32 +24,27 @@ const Inner = styled.div`
   .text {
     position: absolute;
     top: 50%;
-    transform: translate(0, -50%);
     font: bold italic 36px "Archivo Narrow", sans-serif;
 
     &.left_text {
       left: 50%;
-      transform: translateX(-100%);
+      transform: translate(-100%, -50%);
     }
 
     &.right_text {
       right: 50%;
-      transform: translateX(100%);
+      transform: translate(100%, -50%);
     }
   }
 
   @media (max-width: 768px) {
     .text {
       &.left_text {
-        top: -35%;
-        left: 50%;
-        transform: translate(-50%, 0);
+        transform: translate(-50%, -50%);
       }
 
       &.right_text {
-        top: 120%;
-        right: 50%;
-        transform: translate(50%, 0);
+        transform: translate(50%, 50%);
       }
     }
   }
@@ -65,11 +60,6 @@ const SkillBox = styled.div`
   transform-style: preserve-3d;
   transition: transform 0.3s ease-out;
   overflow: hidden;
-
-  /* @media (max-width: 768px) {
-    width: 65.1042vw;
-    height: 65.1042vw;
-  } */
 `;
 
 const Skill = () => {
@@ -93,21 +83,51 @@ const Skill = () => {
         },
       });
 
-      tl.to(
-        textLeftRef.current,
-        {
-          left: 0,
-          x: 0,
-        },
-        0
-      ).to(
-        textRightRef.current,
-        {
-          right: 0,
-          x: 0,
-        },
-        0
-      );
+      if (window.innerWidth > 768) {
+        tl.to(
+          textLeftRef.current,
+          {
+            left: 0,
+            x: 0,
+          },
+          0
+        ).to(
+          textRightRef.current,
+          {
+            right: 0,
+            x: 0,
+          },
+          0
+        );
+      } else if (window.innerWidth > 430) {
+        tl.to(
+          textLeftRef.current,
+          {
+            top: "15%",
+          },
+          0
+        ).to(
+          textRightRef.current,
+          {
+            top: "85%",
+          },
+          0
+        );
+      } else {
+        tl.to(
+          textLeftRef.current,
+          {
+            top: "20%",
+          },
+          0
+        ).to(
+          textRightRef.current,
+          {
+            top: "80%",
+          },
+          0
+        );
+      }
 
       tl.to(boxRef.current, {
         overflow: "visible",
@@ -120,7 +140,6 @@ const Skill = () => {
             const skillBoxWidth = boxRef.current.offsetWidth;
             setClacTranslateZ(String(skillBoxWidth / 2));
             boxRef.current.style.transform = `rotateY(${rotationY}deg)`;
-            console.log(rotationY);
           }
         },
       });

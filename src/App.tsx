@@ -7,11 +7,10 @@ import styled, {
 import reset from "styled-reset";
 import { lightTheme } from "./theme";
 import Header from "./components/common/Header";
-import Menu from "./components/common/Menu";
 import Home from "./sections/Home";
 import About from "./sections/About";
 import Skill from "./sections/Skill";
-import Work from "./sections/Work copy";
+import Work from "./sections/Work";
 import Contact from "./sections/Contact";
 
 const GlobalsStyle = createGlobalStyle`
@@ -139,8 +138,7 @@ const Wrapper = styled.div`
     height: 100vh;
     margin-bottom: 300px;
 
-    &:nth-child(5),
-    &:nth-child(6) {
+    &:nth-child(4) {
       height: auto;
     }
 
@@ -167,7 +165,6 @@ const Wrapper = styled.div`
 
 const App = () => {
   const [barcodeClick, setBarcodeClick] = useState(false);
-  const [menuClick, setMenuClick] = useState(false);
   const position = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -191,8 +188,7 @@ const App = () => {
         <GlobalsStyle />
         <Wrapper className={barcodeClick ? "active" : ""}>
           <Cursor id="cursor" className={barcodeClick ? "active" : ""} />
-          <Header isClick={barcodeClick} setMenuClick={setMenuClick} />
-          <Menu menuClick={menuClick} setMenuClick={setMenuClick} />
+          <Header isClick={barcodeClick}  />
           <Home barcodeClick={barcodeClick} onClick={setBarcodeClick} />
           <About />
           <Skill />
