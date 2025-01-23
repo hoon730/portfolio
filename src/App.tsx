@@ -15,6 +15,14 @@ import Contact from "./sections/Contact";
 
 const GlobalsStyle = createGlobalStyle`
   ${reset}
+
+  @font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
   * {
     margin: 0;
     padding: 0;
@@ -188,7 +196,7 @@ const App = () => {
         <GlobalsStyle />
         <Wrapper className={barcodeClick ? "active" : ""}>
           <Cursor id="cursor" className={barcodeClick ? "active" : ""} />
-          <Header isClick={barcodeClick}  />
+          <Header isClick={barcodeClick} />
           <Home barcodeClick={barcodeClick} onClick={setBarcodeClick} />
           <About />
           <Skill />

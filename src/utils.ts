@@ -11,42 +11,52 @@ export const getFormattedDate = (targetDate: Date): string => {
 
 export const frontendData = [
   {
+    id: 1,
     imgPath: "/img/icons/nextjs.png",
     name: "Next.js",
   },
   {
+    id: 2,
     imgPath: "/img/icons/typescript.png",
     name: "Typescript",
   },
   {
+    id: 3,
     imgPath: "/img/icons/react.png",
     name: "React",
   },
   {
+    id: 4,
     imgPath: "/img/icons/redux.png",
     name: "Redux",
   },
   {
+    id: 5,
     imgPath: "/img/icons/axios.png",
     name: "Axios",
   },
   {
+    id: 6,
     imgPath: "/img/icons/recoil.png",
     name: "Recoil",
   },
   {
+    id: 7,
     imgPath: "/img/icons/reactquery.png",
     name: "React Query",
   },
   {
+    id: 8,
     imgPath: "/img/icons/reactrouter.png",
     name: "React Router",
   },
   {
+    id: 9,
     imgPath: "/img/icons/styledcomponent.png",
     name: "Styled Component",
   },
   {
+    id: 10,
     imgPath: "/img/icons/javascript.png",
     name: "Javascript",
   },
@@ -54,18 +64,22 @@ export const frontendData = [
 
 export const backendData = [
   {
+    id: 1,
     imgPath: "/img/icons/nodejs.png",
     name: "Node.js",
   },
   {
+    id: 2,
     imgPath: "/img/icons/expressjs.png",
     name: "Express.js",
   },
   {
+    id: 3,
     imgPath: "/img/icons/prisma.png",
     name: "Prisma",
   },
   {
+    id: 4,
     imgPath: "/img/icons/supabase.png",
     name: "Supabase",
   },
@@ -73,18 +87,22 @@ export const backendData = [
 
 export const databaseData = [
   {
+    id: 1,
     imgPath: "/img/icons/firebase.png",
     name: "Firebase",
   },
   {
+    id: 2,
     imgPath: "/img/icons/graphql.png",
     name: "GraphQL",
   },
   {
+    id: 3,
     imgPath: "/img/icons/apolloserver.png",
     name: "Apollo Server",
   },
   {
+    id: 4,
     imgPath: "/img/icons/netlify.png",
     name: "Netlify",
   },

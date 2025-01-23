@@ -51,15 +51,19 @@ const Inner = styled.div`
 `;
 
 const SkillBox = styled.div`
-  width: 0;
-  height: 0;
+  width: 500px;
+  height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 0.3s ease-out;
-  overflow: hidden;
+  transform: scale(0);
+
+  @media (max-width: 768px) {
+    width: 65.1042vw;
+    height: 65.1042vw;
+  }
 `;
 
 const Skill = () => {
@@ -75,71 +79,44 @@ const Skill = () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "center center",
-          end: "bottom",
-          pin: true,
-          scrub: 2,
-          // markers: true,
+          start: "center center ", // Skill 섹션 시작
+          end: "bottom ", // 타임라인 종료를 섹션의 중간으로 조정
+          pin: true, // 섹션 고정
+          scrub: 2, // 스크롤 동기화
         },
       });
 
+      // 텍스트 애니메이션
       if (window.innerWidth > 768) {
-        tl.to(
-          textLeftRef.current,
-          {
-            left: 0,
-            x: 0,
-          },
-          0
-        ).to(
+        tl.to(textLeftRef.current, { left: 0, x: 0 }, 0).to(
           textRightRef.current,
-          {
-            right: 0,
-            x: 0,
-          },
+          { right: 0, x: 0 },
           0
         );
       } else if (window.innerWidth > 430) {
-        tl.to(
-          textLeftRef.current,
-          {
-            top: "15%",
-          },
-          0
-        ).to(
+        tl.to(textLeftRef.current, { top: "15%" }, 0).to(
           textRightRef.current,
-          {
-            top: "85%",
-          },
+          { top: "85%" },
           0
         );
       } else {
-        tl.to(
-          textLeftRef.current,
-          {
-            top: "20%",
-          },
-          0
-        ).to(
+        tl.to(textLeftRef.current, { top: "20%" }, 0).to(
           textRightRef.current,
-          {
-            top: "80%",
-          },
+          { top: "80%" },
           0
         );
       }
 
+      // Scale 애니메이션
       tl.to(boxRef.current, {
-        overflow: "visible",
-        width: window.innerWidth > 768 ? "500px" : "65.1042vw",
-        height: window.innerWidth > 768 ? "500px" : "65.1042vw",
+        scale: 1,
       }).to(boxRef, {
         onUpdate: () => {
           if (boxRef.current) {
-            const rotationY = window.scrollY * 0.2;
+            const rotationY = window.scrollY * 0.2; // 진행률에 따라 회전
             const skillBoxWidth = boxRef.current.offsetWidth;
             setClacTranslateZ(String(skillBoxWidth / 2));
-            boxRef.current.style.transform = `rotateY(${rotationY}deg)`;
+            boxRef.current.style.transform = `rotateY(${rotationY}deg)`; // 회전 적용
           }
         },
       });
@@ -147,24 +124,6 @@ const Skill = () => {
       return () => containerCtx.revert();
     });
   }, []);
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (boxRef.current) {
-  //       const scrollY = window.scrollY;
-  //       const rotationY = scrollY * 0.2;
-  //       const skillBoxWidth = boxRef.current.offsetWidth;
-  //       boxRef.current.style.transform = `rotateY(${rotationY}deg)`;
-  //       setClacTranslateZ(String(skillBoxWidth / 2));
-  //     }
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
 
   return (
     <Container ref={containerRef}>

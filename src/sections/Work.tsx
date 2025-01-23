@@ -9,15 +9,6 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Scanning = keyframes`
-  0% {
-    background-image: url("/img/pjh2.png");
-  }
-  100%{
-    background-image: url("/img/pjh.png");
-  }
-`;
-
 const blink = keyframes`
   0% {
     opacity: 1;
@@ -72,6 +63,7 @@ const Project = styled.div`
   align-items: center;
   overflow: hidden;
   border: 2px solid ${(props) => props.theme.fontColor};
+  cursor: pointer;
 
   &.active {
     width: 25vw;
@@ -232,14 +224,14 @@ const ProjectName = styled.div`
   padding-right: 5%;
   padding-top: 5%;
   color: #fff;
-  font: normal 3.3rem "Libre Barcode 39 Text", serif;
+  font: normal 2.7rem "Libre Barcode 39 Text", serif;
 
   &.on {
     animation: ${blink} 0.3s ease-in-out both;
   }
 
   @media (max-width: 768px) {
-    font: normal 6.875vw "Libre Barcode 39 Text", serif;
+    font: normal 5.625vw "Libre Barcode 39 Text", serif;
   }
 
   @media (max-width: 430px) {
@@ -304,48 +296,13 @@ const BoxBottom = styled.div`
   gap: 5px;
 `;
 
-const Cursor = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100px;
-  height: 100px;
-  background-image: url("/img/pjh.png");
-  background-size: cover;
-  background-position: center;
-  pointer-events: none;
-  z-index: 1;
-  transform: translate(-50%, -50%);
-
-  &.active {
-    animation: ${Scanning} 0.6s linear both;
-  }
-`;
-
 const Work = () => {
-  const [isClick, setIsClick] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(0);
   const [isOn, setIsOn] = useState(false);
   const workRef = useRef<HTMLDivElement>(null);
-  const cursorRef = useRef<HTMLDivElement>(null);
   const scannerRef = useRef<HTMLDivElement | null>(null);
   const projectRefs = useRef<HTMLDivElement[]>([]);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (cursorRef.current) {
-        cursorRef.current.style.left = `${e.clientX}px`;
-        cursorRef.current.style.top = `${e.clientY}px`;
-      }
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
 
   const handleMouseEnter = useCallback((idx: number) => {
     setSelectedIdx(idx);
@@ -392,11 +349,7 @@ const Work = () => {
   }, []);
 
   const onClick = () => {
-    setIsClick(true);
     setIsOpen(true);
-    setTimeout(() => {
-      setIsClick(false);
-    }, 600);
   };
 
   useGSAP(() => {
@@ -417,7 +370,6 @@ const Work = () => {
 
   return (
     <Container ref={workRef}>
-      <Cursor ref={cursorRef} className={isClick ? "active" : ""} />
       <Inner className="inner">
         <ProjectBox>
           <Scanner ref={scannerRef} className={isOn ? "on" : ""} />

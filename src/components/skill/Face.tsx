@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div<{ rotate: string }>`
@@ -31,6 +32,7 @@ const Title = styled.div`
   letter-spacing: 7px;
   border-top: 3px solid ${(props) => props.theme.fontColor};
   border-bottom: 3px solid ${(props) => props.theme.fontColor};
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
 
   span:last-child {
     margin-top: 6px;
@@ -72,6 +74,12 @@ const ImgBox = styled.div`
   align-items: center;
   border: 2px solid ${(props) => props.theme.fontColor};
   border-radius: 5px;
+  box-shadow: 1px 1px;
+  transition: box-shadow 0.3s ease-in-out;
+
+  &.active {
+    box-shadow: 3px 3px;
+  }
 
   @media (max-width: 768px) {
     width: 10.2865vw;
@@ -98,19 +106,20 @@ const StackName = styled.span`
 `;
 
 export interface skillstackProps {
+  id: number;
   imgPath: string;
   name: string;
 }
 
-const Face = ({
-  rotate,
-  skills,
-  title,
-}: {
+interface FaceProps {
   rotate: string;
   skills: skillstackProps[];
   title: string;
-}) => {
+}
+
+const Face = ({ rotate, skills, title }: FaceProps) => {
+  const [isMouseOn, setIsMouseOn] = useState<number | null>(null);
+
   return (
     <Container className="face" rotate={rotate}>
       <Wrapper>
@@ -120,8 +129,12 @@ const Face = ({
         </Title>
         <Stacks>
           {skills.map((skill, idx) => (
-            <Stack key={idx}>
-              <ImgBox>
+            <Stack
+              key={idx}
+              onMouseEnter={() => setIsMouseOn(skill.id)}
+              onMouseLeave={() => setIsMouseOn(null)}
+            >
+              <ImgBox className={idx + 1 === isMouseOn ? "active" : ""}>
                 <StackImg src={skill.imgPath} />
               </ImgBox>
               <StackName>{skill.name}</StackName>
