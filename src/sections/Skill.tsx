@@ -79,14 +79,13 @@ const Skill = () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "center center ", // Skill 섹션 시작
-          end: "bottom ", // 타임라인 종료를 섹션의 중간으로 조정
-          pin: true, // 섹션 고정
-          scrub: 2, // 스크롤 동기화
+          start: "center center ",
+          end: "+=120%",
+          pin: true,
+          scrub: 1,
         },
       });
 
-      // 텍스트 애니메이션
       if (window.innerWidth > 768) {
         tl.to(textLeftRef.current, { left: 0, x: 0 }, 0).to(
           textRightRef.current,
@@ -107,16 +106,18 @@ const Skill = () => {
         );
       }
 
-      // Scale 애니메이션
       tl.to(boxRef.current, {
         scale: 1,
-      }).to(boxRef, {
+      }).to(boxRef.current, {
         onUpdate: () => {
           if (boxRef.current) {
-            const rotationY = window.scrollY * 0.2; // 진행률에 따라 회전
+            const currentY = window.scrollY / 3 - window.innerHeight;
+            const boxHeight = boxRef.current.offsetTop;
+            const rotationY = currentY - boxHeight;
+            console.log(`boxHeight: ${boxHeight}, currentY: ${currentY}`);
             const skillBoxWidth = boxRef.current.offsetWidth;
             setClacTranslateZ(String(skillBoxWidth / 2));
-            boxRef.current.style.transform = `rotateY(${rotationY}deg)`; // 회전 적용
+            boxRef.current.style.transform = `rotateY(-${rotationY}deg)`;
           }
         },
       });
