@@ -4,6 +4,7 @@ import styled, { keyframes } from "styled-components";
 import gsap from "gsap";
 import { CSSPlugin } from "gsap/CSSPlugin";
 import { useGSAP } from "@gsap/react";
+import Menu from "./Menu";
 
 gsap.registerPlugin(CSSPlugin);
 
@@ -21,7 +22,7 @@ const SecondBar = keyframes`
     width: 0%;
   }
   100% {
-    width: 70%;
+    width: 75%;
   }
 `;
 
@@ -30,7 +31,7 @@ const ThirdBar = keyframes`
     width: 0%;
   }
   100% {
-    width: 40%;
+    width: 50%;
   }
 `;
 
@@ -113,10 +114,10 @@ const MenuIcon = styled.button`
 `;
 
 const BarBox = styled.div`
-  width: 1.5rem;
+  width: 1.7rem;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
   transform: translateY(150%);
 
   @media (max-width: 430px) {
@@ -135,13 +136,13 @@ const Bar = styled.span`
     }
   }
   &:nth-child(2) {
-    width: 70%;
+    width: 75%;
     &.active {
       animation: ${SecondBar} 0.3s ease-out both;
     }
   }
   &:nth-child(3) {
-    width: 40%;
+    width: 50%;
     &.active {
       animation: ${ThirdBar} 0.3s ease-out both;
     }
@@ -249,6 +250,7 @@ const Header = ({ isClick }: isClickProps) => {
           <Bar className={isMouseOn ? "active" : ""} />
         </BarBox>
       </MenuIcon>
+      <Menu/>
     </Container>
   );
 };

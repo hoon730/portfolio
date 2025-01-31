@@ -100,8 +100,9 @@ const Introduction = styled.div`
   div {
     overflow: hidden;
     p {
-      font-size: ${(props) => props.theme.fsExtraLarge};
-      font-family: "Archivo Narrow", sans-serif;
+      width: 80%;
+      font: normal ${(props) => props.theme.fsLarge} / 1.5 "Pretendard-Regular";
+      letter-spacing: -0.5px;
       text-align: justify;
       transform: translateY(100%);
     }
@@ -111,9 +112,11 @@ const Introduction = styled.div`
     align-items: center;
     gap: 35px;
     div {
-      width: 80%;
+      display: flex;
+      justify-content: center;
       p {
-        font-size: ${(props) => props.theme.fsLarge};
+        font: normal ${(props) => props.theme.fsMedium} / normal
+          "Pretendard-Regular";
       }
     }
   }
@@ -121,7 +124,8 @@ const Introduction = styled.div`
   @media (max-width: 430px) {
     div {
       p {
-        font-size: ${(props) => props.theme.fsMedium};
+        font: normal ${(props) => props.theme.fsRegular} / normal
+          "Pretendard-Regular";
       }
     }
   }
@@ -135,8 +139,12 @@ const PhotoBox = styled.div`
   width: 50%;
   height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
 `;
 
 const Photo = styled.div`
@@ -251,16 +259,16 @@ const About = () => {
             <Introduction>
               <Intro1>
                 <p className="intro1">
-                  Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet
-                  consectetur Mi vulputateametvulputate interdum .Bibendum a
-                  imperdiet tortor purus dolor id.
+                  안녕하세요! 직관적이고 상호작용이 뛰어난 UI를 설계하고,
+                  기능뿐만 아니라 즐거운 사용자 경험을 구현을 목표로하는
+                  프론트엔드 개발자 염동훈입니다.
                 </p>
               </Intro1>
               <Intro2>
                 <p className="intro2">
-                  Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet
-                  consectetur Mi vulputateametvulputate interdum .Bibendum a
-                  imperdiet tortor purus dolor id.
+                  신선한 아이디어와 팀원들과의 소통을 통해 더 나은 결과를
+                  만들고, 협업 속에서 성장하며 성실하게 나아가는 개발자가
+                  되고싶습니다.
                 </p>
               </Intro2>
             </Introduction>
