@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { CSSPlugin } from "gsap/CSSPlugin";
 import { useGSAP } from "@gsap/react";
 import Menu from "./Menu";
+import { use } from "motion/react-client";
 
 gsap.registerPlugin(CSSPlugin);
 
@@ -157,6 +158,7 @@ const Header = ({ isClick }: isClickProps) => {
   const [isHidden, setIsHidden] = useState(false);
   const [scrollValue, setScrollValue] = useState(0);
   const [isMouseOn, setIsMouseOn] = useState(false);
+  const [isMenuClick, setIsMenuClick] = useState(false);
 
   useEffect(() => {
     scrollValue;
@@ -231,7 +233,7 @@ const Header = ({ isClick }: isClickProps) => {
       <LogoBox className="logo_box">
         <Logo className="logo">YDH</Logo>
       </LogoBox>
-      <Nav>
+      {/* <Nav>
         <ul>
           {navArr.map((_, idx) => (
             <li key={idx} onMouseEnter={showLetters} onMouseLeave={showLetters}>
@@ -239,10 +241,11 @@ const Header = ({ isClick }: isClickProps) => {
             </li>
           ))}
         </ul>
-      </Nav>
+      </Nav> */}
       <MenuIcon
         onMouseEnter={() => setIsMouseOn(true)}
         onMouseLeave={() => setIsMouseOn(false)}
+        onClick={() => setIsMenuClick(true)}
       >
         <BarBox className="barBox">
           <Bar className={isMouseOn ? "active" : ""} />
@@ -250,7 +253,7 @@ const Header = ({ isClick }: isClickProps) => {
           <Bar className={isMouseOn ? "active" : ""} />
         </BarBox>
       </MenuIcon>
-      <Menu/>
+      <Menu isMenuClick={isMenuClick} setIsMenuClick={setIsMenuClick} />
     </Container>
   );
 };
