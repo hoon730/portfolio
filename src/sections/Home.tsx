@@ -289,7 +289,7 @@ const Home = ({ barcodeClick, onClick }: barcodeClickProps) => {
   }, [barcodeClick]);
 
   return (
-    <Container>
+    <Container id="home">
       <Inner className="inner">
         <TextBox className="text_box">
           <Text>

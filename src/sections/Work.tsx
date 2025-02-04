@@ -369,7 +369,7 @@ const Work = () => {
   }, []);
 
   return (
-    <Container ref={workRef}>
+    <Container id="work" ref={workRef}>
       <Inner className="inner">
         <ProjectBox>
           <Scanner ref={scannerRef} className={isOn ? "on" : ""} />

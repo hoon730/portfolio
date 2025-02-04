@@ -244,7 +244,7 @@ const About = () => {
   }, []);
 
   return (
-    <Container>
+    <Container id="about">
       <Inner ref={aboutRef} className="inner">
         <Contents>
           <Desc>

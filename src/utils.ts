@@ -9,6 +9,16 @@ export const getFormattedDate = (targetDate: Date): string => {
   return `${year}-${paddedMonth}-${paddedDate}`;
 };
 
+export const getFormattedTime = (targetTime: Date): string => {
+  const hours = targetTime.getHours();
+  const minutes = targetTime.getMinutes();
+
+  const paddedHours = hours < 10 ? `0${hours}` : String(hours);
+  const paddedMinutes = minutes < 10 ? `0${minutes}` : String(minutes);
+
+  return `${paddedHours}:${paddedMinutes}`;
+};
+
 export const frontendData = [
   {
     id: 1,
