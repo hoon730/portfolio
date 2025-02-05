@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
@@ -24,7 +24,7 @@ const roll = keyframes`
   }
 `;
 
-const Background = styled.div`
+const Background = styled.div<{ $isMenuClick: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -35,6 +35,22 @@ const Background = styled.div`
 
   &.active {
     display: block;
+  }
+
+  ::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+
+    animation: ${(props) =>
+      props.$isMenuClick
+        ? css`
+            ${roll} 0.5s ease-out both
+          `
+        : "none"};
   }
 `;
 
@@ -64,6 +80,7 @@ const Top = styled.div`
   flex-direction: column;
   gap: 20px;
   padding: 0 30px;
+  margin-top: 15px;
   margin-bottom: 20px;
 
   & > div {
@@ -121,11 +138,15 @@ const Nav = styled.nav`
 `;
 
 const Close = styled.div`
-  padding-top: 15px;
   cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.3s ease-out;
+  margin-bottom: 10px;
 
   svg {
+    transition: all 0.3s ease-out;
     font-size: 2.5rem;
+    color: #eee;
   }
 `;
 
@@ -160,6 +181,7 @@ const Contact = styled.div`
     svg {
       color: #333;
       font-size: 1.9rem;
+      transition: all 0.3s ease-out;
     }
   }
 `;
@@ -222,11 +244,10 @@ const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
   }, []);
 
   useEffect(() => {
-    if (isNavClick && backgroundRef.current) {
-      backgroundRef.current.style.animation = `${roll} 0.5s 0.3s ease-out both`;
+    setTimeout(() => {
       setIsNavClick(false);
-    }
-  }, []);
+    }, 500);
+  }, [isNavClick]);
 
   const handleMouseEnter = (
     e: React.MouseEvent<HTMLLIElement>,
@@ -281,7 +302,7 @@ const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
       rotate: 90,
       transformOrigin: "50% 50%",
       duration: 0.5,
-      ease: "power1.out",
+      ease: "power4.out",
     });
   };
 
@@ -302,10 +323,13 @@ const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
     });
   };
 
+  console.log(isNavClick);
+
   return (
     <>
       <Background
         ref={backgroundRef}
+        $isMenuClick={isMenuClick}
         className={isMenuClick ? "active" : ""}
         onClick={() => setIsMenuClick(false)}
       />
