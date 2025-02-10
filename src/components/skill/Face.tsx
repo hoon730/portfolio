@@ -78,7 +78,7 @@ const ImgBox = styled.div`
   transition: box-shadow 0.3s ease-in-out;
 
   &.active {
-    box-shadow: 3px 3px;
+    box-shadow: 4px 4px;
   }
 
   @media (max-width: 768px) {

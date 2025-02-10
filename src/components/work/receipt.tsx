@@ -35,7 +35,6 @@ const Background = styled.div<{ $isclick: boolean }>`
   width: 100%;
   height: 0;
   display: flex;
-  /* align-items: center; */
   background: #f0f0f0;
   transform-origin: top top;
   z-index: 10;

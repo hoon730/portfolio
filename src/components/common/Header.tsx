@@ -69,9 +69,6 @@ const Logo = styled.div`
   color: #f1f1f1;
   transform: translateY(150%);
 
-  @media (max-width: 430px) {
-    display: none;
-  }
 `;
 
 const MenuIcon = styled.button`
@@ -85,9 +82,6 @@ const BarBox = styled.div`
   gap: 5px;
   transform: translateY(150%);
 
-  @media (max-width: 430px) {
-    display: none;
-  }
 `;
 
 const Bar = styled.span`
