@@ -27,18 +27,6 @@ const roll = keyframes`
   }
 `;
 
-const reverseRoll = keyframes`
-  0% {
-    height: 100vh;
-  }
-  50% {
-    height: 100vh;
-  }
-  100% {
-    height: 0;
-  }
-`;
-
 const Background = styled.div`
   position: fixed;
   top: 0;
@@ -68,10 +56,9 @@ const Rolling = styled.div<{ $isActive: boolean }>`
           ${roll} 1.5s 0.2s  ease-out both
         `
       : "none"};
-  z-index: 99;
 `;
 
-const Container = styled.div<{ $isMobile: boolean }>`
+const Container = styled.div`
   position: fixed;
   top: 0;
   right: 0;
@@ -86,12 +73,6 @@ const Container = styled.div<{ $isMobile: boolean }>`
   transform: translateY(-100%);
   transition: transform 0.5s ease-out;
   transition-delay: 0.1s;
-  animation: ${({ $isMobile }) =>
-    $isMobile
-      ? css`
-          ${reverseRoll} 1.5s 0.3s  ease-out both
-        `
-      : "none"};
 
   &.active {
     transform: translateY(0);
@@ -297,7 +278,6 @@ interface MenuProps {
 const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
   const [isNavClick, setIsNavClick] = useState(false);
   const [isActive, setIsActive] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const navTopRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const navBottomRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const closeRef = useRef<HTMLDivElement>(null);
@@ -398,10 +378,7 @@ const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
   };
 
   const scrollToSection = (id: string) => {
-    gsap.to(window, {
-      duration: 0.3,
-      scrollTo: { y: `#${id}` },
-    });
+    gsap.set(window, { scrollTo: { y: `#${id}` } });
   };
 
   const handleNavClick = (id: string) => {
@@ -414,17 +391,13 @@ const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
 
       setTimeout(() => {
         setIsActive(false);
+        setIsMenuClick(false);
       }, 1800);
     } else {
-      setIsMobile(true);
-
       setTimeout(() => {
         scrollToSection(id);
-      }, 800);
-      
-      setTimeout(() => {
-        setIsMobile(false);
-      }, 1800);
+        setIsMenuClick(false);
+      }, 500);
     }
   };
 
@@ -436,7 +409,7 @@ const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
         onClick={() => setIsMenuClick(false)}
       />
       <Rolling $isActive={isActive} />
-      <Container $isMobile={isMobile} className={isMenuClick ? "active" : ""}>
+      <Container className={isMenuClick ? "active" : ""}>
         <Top>
           <div>
             <CloseBox>
