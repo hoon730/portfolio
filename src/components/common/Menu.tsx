@@ -16,7 +16,10 @@ const roll = keyframes`
     height: 0;
     background: #f0f0f0;
   }
-  50% {
+  40% {
+    height: 100%;
+  }
+  60% {
     height: 100%;
   }
   100% {
@@ -24,7 +27,19 @@ const roll = keyframes`
   }
 `;
 
-const Background = styled.div<{ $isMenuClick: boolean }>`
+const reverseRoll = keyframes`
+  0% {
+    height: 100vh;
+  }
+  50% {
+    height: 100vh;
+  }
+  100% {
+    height: 0;
+  }
+`;
+
+const Background = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -37,25 +52,26 @@ const Background = styled.div<{ $isMenuClick: boolean }>`
   &.active {
     transform: translateY(0);
   }
-
-  ::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 0;
-
-    animation: ${(props) =>
-      props.$isMenuClick
-        ? css`
-            ${roll} 0.5s ease-out both
-          `
-        : "none"};
-  }
 `;
 
-const Container = styled.div`
+const Rolling = styled.div<{ $isActive: boolean }>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: #f0f0f0;
+  pointer-events: none;
+  animation: ${({ $isActive }) =>
+    $isActive
+      ? css`
+          ${roll} 1.5s 0.2s  ease-out both
+        `
+      : "none"};
+  z-index: 99;
+`;
+
+const Container = styled.div<{ $isMobile: boolean }>`
   position: fixed;
   top: 0;
   right: 0;
@@ -70,9 +86,23 @@ const Container = styled.div`
   transform: translateY(-100%);
   transition: transform 0.5s ease-out;
   transition-delay: 0.1s;
+  animation: ${({ $isMobile }) =>
+    $isMobile
+      ? css`
+          ${reverseRoll} 1.5s 0.3s  ease-out both
+        `
+      : "none"};
 
   &.active {
     transform: translateY(0);
+  }
+
+  @media (max-width: 430px) {
+    width: 100%;
+    height: 100vh;
+    justify-content: space-between;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 `;
 
@@ -84,11 +114,7 @@ const Top = styled.div`
   margin-top: 15px;
   margin-bottom: 20px;
 
-  & > div {
-    :first-child {
-      display: flex;
-      justify-content: flex-end;
-    }
+  @media (max-width: 430px) {
   }
 `;
 
@@ -136,6 +162,26 @@ const Nav = styled.nav`
       }
     }
   }
+
+  @media (max-width: 430px) {
+    ul {
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      padding: 40px 0;
+
+      li {
+        a {
+          font: bold italic 4.2rem/1 "Archivo Narrow", sans-serif;
+        }
+      }
+    }
+  }
+`;
+
+const CloseBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const Close = styled.div`
@@ -177,12 +223,31 @@ const Contact = styled.div`
           color: #eee;
         }
       }
+
+      svg {
+        color: #333;
+        font-size: 1.9rem;
+        transition: all 0.3s ease-out;
+      }
+    }
+  }
+
+  @media (max-width: 430px) {
+    gap: 20px;
+
+    h3 {
+      font: bold 1rem/1 "Archivo Narrow", sans-serif;
+      text-align: center;
     }
 
-    svg {
-      color: #333;
-      font-size: 1.9rem;
-      transition: all 0.3s ease-out;
+    ul {
+      justify-content: center;
+
+      li {
+        svg {
+          font-size: 2.2rem;
+        }
+      }
     }
   }
 `;
@@ -199,9 +264,23 @@ const Bottom = styled.div`
   letter-spacing: 0.5px;
 
   h3 {
-    font: bold 0.9rem/1 "Archivo Narrow", sans-serif;
-    color: ${(props) => props.theme.fontColor};
-    letter-spacing: 2px;
+    span {
+      padding: 0 5px;
+      background: #333;
+      font: bold italic 0.9rem/1 "Archivo Narrow", sans-serif;
+      color: #f0f0f0;
+      letter-spacing: 2px;
+    }
+  }
+
+  @media (max-width: 430px) {
+    padding: 40px 30px;
+    text-align: center;
+    h3 {
+      span {
+        font: bold italic 1rem/1 "Archivo Narrow", sans-serif;
+      }
+    }
   }
 `;
 
@@ -217,6 +296,8 @@ interface MenuProps {
 
 const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
   const [isNavClick, setIsNavClick] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const navTopRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const navBottomRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const closeRef = useRef<HTMLDivElement>(null);
@@ -318,26 +399,47 @@ const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
 
   const scrollToSection = (id: string) => {
     gsap.to(window, {
-      duration: 1,
+      duration: 0.3,
       scrollTo: { y: `#${id}` },
-      ease: "power2.out",
     });
   };
 
-  console.log(isNavClick);
+  const handleNavClick = (id: string) => {
+    if (window.innerWidth > 430) {
+      setIsActive(true);
+
+      setTimeout(() => {
+        scrollToSection(id);
+      }, 800);
+
+      setTimeout(() => {
+        setIsActive(false);
+      }, 1800);
+    } else {
+      setIsMobile(true);
+
+      setTimeout(() => {
+        scrollToSection(id);
+      }, 800);
+      
+      setTimeout(() => {
+        setIsMobile(false);
+      }, 1800);
+    }
+  };
 
   return (
     <>
       <Background
         ref={backgroundRef}
-        $isMenuClick={isMenuClick}
         className={isMenuClick ? "active" : ""}
         onClick={() => setIsMenuClick(false)}
       />
-      <Container className={isMenuClick ? "active" : ""}>
+      <Rolling $isActive={isActive} />
+      <Container $isMobile={isMobile} className={isMenuClick ? "active" : ""}>
         <Top>
           <div>
-            <div>
+            <CloseBox>
               <Close
                 ref={closeRef}
                 onClick={() => setIsMenuClick(false)}
@@ -346,16 +448,13 @@ const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
               >
                 <IoClose />
               </Close>
-            </div>
+            </CloseBox>
             <Nav>
               <ul>
                 {navItems.map((item, idx) => (
                   <li
                     key={idx}
-                    onClick={() => {
-                      scrollToSection(item.id);
-                      setIsNavClick(true);
-                    }}
+                    onClick={() => handleNavClick(item.id)}
                     onMouseEnter={(e) => handleMouseEnter(e, idx)}
                     onMouseLeave={(e) => handleMouseLeave(e, idx)}
                   >
@@ -394,7 +493,9 @@ const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
           </Contact>
         </Top>
         <Bottom>
-          <h3>Fontend Developer</h3>
+          <h3>
+            <span>FRONTEND DEVELOPER</span>
+          </h3>
           <Time>
             <span>{getFormattedDate(new Date())}</span>
             <span>{getFormattedTime(new Date())}</span>
