@@ -31,10 +31,11 @@ const Background = styled.div<{ $isMenuClick: boolean }>`
   z-index: 100;
   width: 100%;
   height: 100%;
-  display: none;
+  transform: translateY(-100%);
+  transition: transform 0.5s ease-out;
 
   &.active {
-    display: block;
+    transform: translateY(0);
   }
 
   ::after {
