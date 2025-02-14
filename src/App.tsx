@@ -86,6 +86,8 @@ const GlobalsStyle = createGlobalStyle`
       &::-webkit-scrollbar {
       display: none;
       }
+      overflow: hidden;
+      touch-action: none;
     }
   }
 `;
@@ -190,6 +192,16 @@ const App = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
+  useEffect(() => {
+    if (barcodeClick) {
+      document.body.style.overflow = "auto";
+      document.body.style.touchAction = "none";
+    } else {
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+    }
+  }, [barcodeClick]);
+
   return (
     <>
       <ThemeProvider theme={lightTheme}>
@@ -200,7 +212,7 @@ const App = () => {
           <Home barcodeClick={barcodeClick} onClick={setBarcodeClick} />
           <About />
           <Skill />
-          <Work />
+          <Work setBarcodeClick={setBarcodeClick} />
           <Contact />
         </Wrapper>
       </ThemeProvider>

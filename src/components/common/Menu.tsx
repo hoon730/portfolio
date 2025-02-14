@@ -27,7 +27,7 @@ const roll = keyframes`
   }
 `;
 
-const Background = styled.div`
+const Background = styled.div<{ isMenuClick: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -405,6 +405,7 @@ const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
     <>
       <Background
         ref={backgroundRef}
+        isMenuClick={isMenuClick}
         className={isMenuClick ? "active" : ""}
         onClick={() => setIsMenuClick(false)}
       />
@@ -448,12 +449,12 @@ const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
             <h3>Contact</h3>
             <ul>
               <li>
-                <a href="#none">
+                <a href="mailto:ehdgns730@gmail.com">
                   <CiMail />
                 </a>
               </li>
               <li>
-                <a href="#none">
+                <a href="https://github.com/hoon730">
                   <IoLogoGithub />
                 </a>
               </li>

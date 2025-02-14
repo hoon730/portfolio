@@ -296,7 +296,11 @@ const BoxBottom = styled.div`
   gap: 5px;
 `;
 
-const Work = () => {
+interface BarcodeProps {
+  setBarcodeClick: (value: boolean) => void;
+}
+
+const Work = ({ setBarcodeClick }: BarcodeProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(0);
   const [isOn, setIsOn] = useState(false);
@@ -423,6 +427,7 @@ const Work = () => {
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           selectedIdx={selectedIdx}
+          setBarcodeClick={setBarcodeClick}
         />
       ) : null}
     </Container>

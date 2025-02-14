@@ -107,6 +107,7 @@ const ContactMethod = styled.div`
     flex-direction: column;
     justify-content: flex-end;
     padding-bottom: 5px;
+    cursor: pointer;
   }
 
   @media (max-width: 768px) {
@@ -188,11 +189,13 @@ const Contact = () => {
               <Title>CONTACT</Title>
               <ContactMethod>
                 <Email>
-                  <span>EMAIL</span>
+                  <a href="mailto:ehdgns730@gmail.com">
+                    <span>EMAIL</span>
+                  </a>
                   <SmallBar className="smallBar" />
                 </Email>
                 <Github>
-                  <span>GITHUB</span>
+                  <a href="https://github.com/hoon730"><span>GITHUB</span></a>
                   <SmallBar className="smallBar" />
                 </Github>
                 <Phone>

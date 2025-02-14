@@ -6,6 +6,8 @@ import gsap from "gsap";
 import { CSSPlugin, ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 
+import { IoClose } from "react-icons/io5";
+
 gsap.registerPlugin(CSSPlugin, ScrollTrigger);
 
 const roll = keyframes`
@@ -41,6 +43,16 @@ const Background = styled.div<{ $isclick: boolean }>`
 
   &.active {
     animation: ${roll} 0.5s 0.3s ease-out both;
+  }
+`;
+
+const Close = styled.div`
+  position: absolute;
+  top: 20px;
+  right: 50px;
+
+  svg {
+    font-size: 2.5rem;
   }
 `;
 
@@ -177,15 +189,19 @@ const ProjectImgBox = styled.div`
 `;
 const ProjectImg = styled.img``;
 
+interface ReceiptProps {
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  selectedIdx: number | null;
+  setBarcodeClick: (value: boolean) => void;
+}
+
 const Receipt = ({
   isOpen,
   setIsOpen,
   selectedIdx,
-}: {
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-  selectedIdx: number | null;
-}) => {
+  setBarcodeClick,
+}: ReceiptProps) => {
   useGSAP(() => {
     if (isOpen) {
       const tl = gsap.timeline();
@@ -205,8 +221,8 @@ const Receipt = ({
   return (
     <Background
       $isclick={isOpen}
-      onClick={() => setIsOpen(false)}
       className={isOpen ? "active" : ""}
+      onClick={() => setBarcodeClick(true)}
     >
       {projectData
         .filter((project) => project.id === selectedIdx)
@@ -253,6 +269,14 @@ const Receipt = ({
             </RightBox>
           </Container>
         ))}
+      <Close
+        onClick={() => {
+          setIsOpen(false);
+          setBarcodeClick(false);
+        }}
+      >
+        <IoClose />
+      </Close>
     </Background>
   );
 };
