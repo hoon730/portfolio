@@ -247,6 +247,8 @@ const ProjectDesc = styled.div`
   padding-left: 5%;
   padding-bottom: 5%;
   color: #fff;
+  font-size: ${(props) => props.theme.fsSmall};
+  font-weight: bold;
 
   &.on {
     animation: ${blink} 0.3s ease-in-out both;
@@ -258,14 +260,14 @@ const ProjectDesc = styled.div`
 `;
 
 const Box = styled.div`
-  border: 2px solid #fff;
-  width: 60%;
+  border: 1px solid #fff;
+  width: 55%;
   height: 85px;
 `;
 
 const BoxTop = styled.div`
   display: flex;
-  border-bottom: 2px solid #fff;
+  border-bottom: 1px solid #fff;
   height: 30%;
 
   & > div {
@@ -276,12 +278,12 @@ const BoxTop = styled.div`
 `;
 
 const ProjectNum = styled.div`
-  width: 10%;
-  border-right: 2px solid #fff;
+  width: 20%;
+  border-right: 1px solid #fff;
 `;
 
 const ProjectLogo = styled.div`
-  width: 90%;
+  width: 80%;
   letter-spacing: 1px;
 `;
 
@@ -409,10 +411,10 @@ const Work = ({ setBarcodeClick }: BarcodeProps) => {
                     <ProjectDesc className={isOn ? "on" : ""} onClick={onClick}>
                       <Box>
                         <BoxTop>
-                          <ProjectNum>{idx + 1}</ProjectNum>
+                          <ProjectNum>#{idx + 1}</ProjectNum>
                           <ProjectLogo>{project.name}</ProjectLogo>
                         </BoxTop>
-                        <BoxBottom>{project.summary}</BoxBottom>
+                        <BoxBottom>{project.platform}</BoxBottom>
                       </Box>
                     </ProjectDesc>
                   </Filter>

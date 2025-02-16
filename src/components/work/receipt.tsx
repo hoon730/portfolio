@@ -38,8 +38,6 @@ const Background = styled.div<{ $isclick: boolean }>`
   height: 0;
   display: flex;
   background: #f0f0f0;
-  transform-origin: top top;
-  z-index: 10;
 
   &.active {
     animation: ${roll} 0.5s 0.3s ease-out both;
@@ -145,6 +143,7 @@ const Platform = styled.div``;
 const Assignment = styled.div``;
 
 const SkillStack = styled.div`
+  font-size: ${(props) => props.theme.fsMedium};
   h3 {
     font-weight: bold;
     margin-bottom: 20px;
@@ -171,8 +170,8 @@ const RightBox = styled.div`
   }
 `;
 
-const Summary = styled.div`
-  font-size: ${(props) => props.theme.fsExtraLarge};
+const Summary = styled.p`
+  font-size: ${(props) => props.theme.fsLarge};
 
   @media (max-width: 768px) {
     font-size: ${(props) => props.theme.fsMedium};
@@ -239,15 +238,15 @@ const Receipt = ({
               <Contents>
                 <Desc>
                   <Date>
-                    <span>기간: </span>
+                    <span>Date </span>
                     {project.date}
                   </Date>
                   <Platform>
-                    <span>유형: </span>
+                    <span>Category </span>
                     {project.platform}
                   </Platform>
                   <Assignment>
-                    <span>담당 페이지: </span>
+                    <span>Part </span>
                     {project.assignment}
                   </Assignment>
                 </Desc>
@@ -262,10 +261,10 @@ const Receipt = ({
               </Contents>
             </LeftBox>
             <RightBox>
-              <Summary>{project.summary}</Summary>
               <ProjectImgBox>
                 <ProjectImg />
               </ProjectImgBox>
+              <Summary>{project.summary}</Summary>
             </RightBox>
           </Container>
         ))}
