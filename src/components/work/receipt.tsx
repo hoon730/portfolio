@@ -112,8 +112,19 @@ const ProjectName = styled.div`
   }
 `;
 const Category = styled.div`
-  font-size: ${(props) => props.theme.fsExtraLarge};
-  font-weight: bold;
+  span {
+    padding: 0 5px;
+    font-size: ${(props) => props.theme.fsExtraLarge};
+    font-weight: bold;
+    border: 2px solid ${(props) => props.theme.fontColor};
+    border-radius: 5px;
+    transition: box-shadow 0.3s ease-in-out;
+    
+    &:hover {
+      box-shadow: 3px 3px;
+    }
+  }
+
 
   @media (max-width: 768px) {
     font-size: ${(props) => props.theme.fsMedium};
@@ -128,8 +139,16 @@ const Desc = styled.div`
   gap: 10px;
   margin-bottom: 65px;
 
+  & > div {
+    display: flex;
+  }
+
   span {
-    font-weight: bold;
+    width: 200px;
+    &:first-child {
+      width: 100px;
+      font-weight: bold;
+    }
   }
 
   @media (max-width: 768px) {
@@ -171,14 +190,14 @@ const RightBox = styled.div`
 `;
 
 const Summary = styled.p`
-  font-size: ${(props) => props.theme.fsLarge};
+  font: 300 ${(props) => props.theme.fsMedium} / normal "Pretendard-Regular";
 
   @media (max-width: 768px) {
-    font-size: ${(props) => props.theme.fsMedium};
+    font: 300 ${(props) => props.theme.fsMedium} / normal "Pretendard-Regular";
   }
 
   @media (max-width: 430px) {
-    font-size: ${(props) => props.theme.fsRegular};
+    font: 300 ${(props) => props.theme.fsRegular} / normal "Pretendard-Regular";
   }
 `;
 const ProjectImgBox = styled.div`
@@ -233,21 +252,23 @@ const Receipt = ({
                   <span>{project.name}</span>
                   <span>®</span>
                 </ProjectName>
-                <Category>{project.category}</Category>
+                <Category>
+                  <span>Visist Website</span>
+                </Category>
               </Title>
               <Contents>
                 <Desc>
                   <Date>
                     <span>Date </span>
-                    {project.date}
+                    <span>{project.date}</span>
                   </Date>
                   <Platform>
                     <span>Category </span>
-                    {project.platform}
+                    <span>{project.platform}</span>
                   </Platform>
                   <Assignment>
                     <span>Part </span>
-                    {project.assignment}
+                    <span>{project.assignment}</span>
                   </Assignment>
                 </Desc>
                 <SkillStack>
