@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { projectData } from "../../utils";
 
@@ -48,6 +48,10 @@ const Close = styled.div`
   position: absolute;
   top: 20px;
   right: 50px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.3s ease-out;
+  margin-bottom: 10px;
 
   svg {
     font-size: 2.5rem;
@@ -119,12 +123,11 @@ const Category = styled.div`
     border: 2px solid ${(props) => props.theme.fontColor};
     border-radius: 5px;
     transition: box-shadow 0.3s ease-in-out;
-    
+
     &:hover {
       box-shadow: 3px 3px;
     }
   }
-
 
   @media (max-width: 768px) {
     font-size: ${(props) => props.theme.fsMedium};
@@ -212,6 +215,7 @@ interface ReceiptProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   selectedIdx: number | null;
   setBarcodeClick: (value: boolean) => void;
+  setProjectClick: (value: boolean) => void;
 }
 
 const Receipt = ({
@@ -219,7 +223,10 @@ const Receipt = ({
   setIsOpen,
   selectedIdx,
   setBarcodeClick,
+  setProjectClick,
 }: ReceiptProps) => {
+  const closeRef = useRef<HTMLDivElement>(null);
+
   useGSAP(() => {
     if (isOpen) {
       const tl = gsap.timeline();
@@ -235,6 +242,24 @@ const Receipt = ({
       });
     }
   }, [isOpen]);
+
+  const startRotating = () => {
+    gsap.to(closeRef.current, {
+      rotate: 90,
+      transformOrigin: "50% 50%",
+      duration: 0.5,
+      ease: "power4.out",
+    });
+  };
+
+  const endRotating = () => {
+    gsap.to(closeRef.current, {
+      rotate: -90,
+      transformOrigin: "50% 50%",
+      duration: 0.5,
+      ease: "power1.out",
+    });
+  };
 
   return (
     <Background
@@ -290,9 +315,13 @@ const Receipt = ({
           </Container>
         ))}
       <Close
+        ref={closeRef}
+        onMouseEnter={startRotating}
+        onMouseLeave={endRotating}
         onClick={() => {
           setIsOpen(false);
           setBarcodeClick(false);
+          setProjectClick(false);
         }}
       >
         <IoClose />

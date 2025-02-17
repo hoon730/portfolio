@@ -35,7 +35,7 @@ const ThirdBar = keyframes`
   }
 `;
 
-const Container = styled.header`
+const Container = styled.header<{ $projectClick: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -43,7 +43,7 @@ const Container = styled.header`
   width: 100%;
   height: 70px;
   padding: 0 30px;
-  display: flex;
+  display: ${({ $projectClick }) => ($projectClick ? "none" : "flex")};
   justify-content: space-between;
   align-items: center;
   transition: all 0.3s ease;
@@ -68,7 +68,6 @@ const Logo = styled.div`
   background: ${(props) => props.theme.fontColor};
   color: #f1f1f1;
   transform: translateY(150%);
-
 `;
 
 const MenuIcon = styled.button`
@@ -81,7 +80,6 @@ const BarBox = styled.div`
   flex-direction: column;
   gap: 5px;
   transform: translateY(150%);
-
 `;
 
 const Bar = styled.span`
@@ -110,9 +108,10 @@ const Bar = styled.span`
 
 interface isClickProps {
   isClick: boolean;
+  projectClick: boolean;
 }
 
-const Header = ({ isClick }: isClickProps) => {
+const Header = ({ isClick, projectClick }: isClickProps) => {
   const [isHidden, setIsHidden] = useState(false);
   const [scrollValue, setScrollValue] = useState(0);
   const [isMouseOn, setIsMouseOn] = useState(false);
@@ -177,7 +176,10 @@ const Header = ({ isClick }: isClickProps) => {
   }, []);
 
   return (
-    <Container className={isHidden ? "active" : ""}>
+    <Container
+      className={isHidden ? "active" : ""}
+      $projectClick={projectClick}
+    >
       <LogoBox className="logo_box">
         <Logo className="logo">YDH</Logo>
       </LogoBox>

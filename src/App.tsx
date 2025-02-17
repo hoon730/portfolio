@@ -175,6 +175,7 @@ const Wrapper = styled.div`
 
 const App = () => {
   const [barcodeClick, setBarcodeClick] = useState(false);
+  const [projectClick, setProjectClick] = useState(false);
   const position = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -208,11 +209,14 @@ const App = () => {
         <GlobalsStyle />
         <Wrapper className={barcodeClick ? "active" : ""}>
           <Cursor id="cursor" className={barcodeClick ? "active" : ""} />
-          <Header isClick={barcodeClick} />
+          <Header isClick={barcodeClick} projectClick={projectClick} />
           <Home barcodeClick={barcodeClick} onClick={setBarcodeClick} />
           <About />
           <Skill />
-          <Work setBarcodeClick={setBarcodeClick} />
+          <Work
+            setBarcodeClick={setBarcodeClick}
+            setProjectClick={setProjectClick}
+          />
           <Contact />
         </Wrapper>
       </ThemeProvider>

@@ -300,9 +300,10 @@ const BoxBottom = styled.div`
 
 interface BarcodeProps {
   setBarcodeClick: (value: boolean) => void;
+  setProjectClick: (value: boolean) => void;
 }
 
-const Work = ({ setBarcodeClick }: BarcodeProps) => {
+const Work = ({ setBarcodeClick, setProjectClick }: BarcodeProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(0);
   const [isOn, setIsOn] = useState(false);
@@ -356,6 +357,7 @@ const Work = ({ setBarcodeClick }: BarcodeProps) => {
 
   const onClick = () => {
     setIsOpen(true);
+    setProjectClick(true);
   };
 
   useGSAP(() => {
@@ -430,6 +432,7 @@ const Work = ({ setBarcodeClick }: BarcodeProps) => {
           setIsOpen={setIsOpen}
           selectedIdx={selectedIdx}
           setBarcodeClick={setBarcodeClick}
+          setProjectClick={setProjectClick}
         />
       ) : null}
     </Container>
