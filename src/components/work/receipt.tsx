@@ -56,12 +56,21 @@ const Close = styled.div`
   svg {
     font-size: 2.5rem;
   }
+  @media (max-width: 768px) {
+    top: 15px;
+    right: 15px;
+  }
+  @media (max-width: 430px) {
+    svg {
+      font-size: 2rem;
+    }
+  }
 `;
 
 const Container = styled.div`
   width: 100%;
   height: 0%;
-  padding: 12vh 50px;
+  padding: 11vh 50px;
   display: flex;
   justify-content: space-between;
   transform-origin: top top;
@@ -71,7 +80,7 @@ const Container = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 10vh 20px;
+    padding: 9vh 20px;
     flex-direction: column;
     gap: 30px;
   }
@@ -87,7 +96,11 @@ const LeftBox = styled.div`
   }
 `;
 
-const Title = styled.div``;
+const Title = styled.div`
+  @media (max-width: 768px) {
+    margin-bottom: 20px;
+  }
+`;
 
 const ProjectName = styled.div`
   display: flex;
@@ -105,6 +118,7 @@ const ProjectName = styled.div`
   }
 
   @media (max-width: 768px) {
+    justify-content: center;
     font-size: 8.3333vw;
     padding-bottom: 5px;
     letter-spacing: 5px;
@@ -116,13 +130,14 @@ const ProjectName = styled.div`
   }
 `;
 const Category = styled.div`
-  span {
+  a {
     padding: 0 5px;
     font-size: ${(props) => props.theme.fsExtraLarge};
     font-weight: bold;
     border: 2px solid ${(props) => props.theme.fontColor};
     border-radius: 5px;
     transition: box-shadow 0.3s ease-in-out;
+    cursor: pointer;
 
     &:hover {
       box-shadow: 3px 3px;
@@ -130,7 +145,11 @@ const Category = styled.div`
   }
 
   @media (max-width: 768px) {
-    font-size: ${(props) => props.theme.fsMedium};
+    span {
+      font-size: ${(props) => props.theme.fsMedium};
+    }
+  }
+  @media (max-width: 430px) {
   }
 `;
 
@@ -147,6 +166,8 @@ const Desc = styled.div`
   }
 
   span {
+    font-size: ${(props) => props.theme.fsMedium};
+
     width: 200px;
     &:first-child {
       width: 100px;
@@ -156,7 +177,15 @@ const Desc = styled.div`
 
   @media (max-width: 768px) {
     gap: 5px;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
+  }
+
+  @media (max-width: 430px) {
+    span {
+      &:last-child {
+        font-size: ${(props) => props.theme.fsSmall};
+      }
+    }
   }
 `;
 
@@ -170,12 +199,32 @@ const SkillStack = styled.div`
     font-weight: bold;
     margin-bottom: 20px;
   }
+  @media (max-width: 768px) {
+    font-size: ${(props) => props.theme.fsRegular};
+    h3 {
+      margin-bottom: 10px;
+    }
+  }
+  @media (max-width: 430px) {
+    font-size: ${(props) => props.theme.fsSmall};
+    h3 {
+      font-size: ${(props) => props.theme.fsRegular};
+    }
+  }
 `;
 
 const Skills = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
+
+  span {
+    font-weight: bold;
+    background: #111;
+    color: #f0f0f0;
+    padding: 5px;
+    border-radius: 5px;
+  }
 `;
 
 const RightBox = styled.div`
@@ -187,8 +236,6 @@ const RightBox = styled.div`
 
   @media (max-width: 768px) {
     width: 100%;
-    flex-direction: column-reverse;
-    gap: 20px;
   }
 `;
 
@@ -200,15 +247,16 @@ const Summary = styled.p`
   }
 
   @media (max-width: 430px) {
-    font: 300 ${(props) => props.theme.fsRegular} / normal "Pretendard-Regular";
+    font: 300 ${(props) => props.theme.fsSmall} / normal "Pretendard-Regular";
   }
 `;
-const ProjectImgBox = styled.div`
+const ProjectVideoBox = styled.div`
   width: 100%;
   height: 70%;
-  background: #fff;
 `;
-const ProjectImg = styled.img``;
+const ProjectVideo = styled.video`
+  width: 100%;
+`;
 
 interface ReceiptProps {
   isOpen: boolean;
@@ -278,7 +326,9 @@ const Receipt = ({
                   <span>®</span>
                 </ProjectName>
                 <Category>
-                  <span>Visist Website</span>
+                  <a href={project.urlPath} target="_blank">
+                    Visist Website
+                  </a>
                 </Category>
               </Title>
               <Contents>
@@ -300,16 +350,24 @@ const Receipt = ({
                   <h3>SKILL STACK</h3>
                   <Skills>
                     {project.skillStack.map((skill) => (
-                      <span>{skill}</span>
+                      <div>
+                        <span>{skill}</span>
+                      </div>
                     ))}
                   </Skills>
                 </SkillStack>
               </Contents>
             </LeftBox>
             <RightBox>
-              <ProjectImgBox>
-                <ProjectImg />
-              </ProjectImgBox>
+              <ProjectVideoBox>
+                <ProjectVideo
+                  src={project.videoPath}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                />
+              </ProjectVideoBox>
               <Summary>{project.summary}</Summary>
             </RightBox>
           </Container>
