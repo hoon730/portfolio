@@ -143,7 +143,7 @@ export const projectData = [
     urlPath: "https://auroraplus-3fc8e.web.app",
     name: "AURORA",
     category: "TEAM PROJECT",
-    date: "2024/11-2024/12",
+    date: "2024.11-2024.12",
     platform: "OTT Platform",
     assignment: "Main",
     summary:
@@ -159,7 +159,7 @@ export const projectData = [
     urlPath: "https://junggonara-8874f.web.app/",
     name: "JOONGONARA",
     category: "TEAM PROJECT",
-    date: "2024/08 - 2024/9",
+    date: "2024.08 - 2024.9",
     platform: "E-Commerce",
     assignment: "Detail + Header",
     summary:
@@ -172,9 +172,10 @@ export const projectData = [
     logoPath: "/img/work/logo/rrl_logo.svg",
     pagePath: "/img/work/page/joonggonara.png",
     videoPath: "/video/",
+    urlPath: "https://double-rl.web.app",
     name: "RRL",
     category: "PERSONAL PROJECT",
-    date: "2024/09 - 2024/10",
+    date: "2024.07",
     platform: "SNS 플랫폼",
     assignment: "상세페이지 + 마이프로필",
     summary:

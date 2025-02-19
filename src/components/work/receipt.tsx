@@ -14,33 +14,41 @@ const roll = keyframes`
   0% {
     height: 0;
   }
-  100% {
+  40% {
     height: 100%;
+  }
+  60% {
+    height: 100%;
+  }
+  100% {
+    height: 0;
   }
 `;
 
 const show = keyframes`
   0% {
     height: 0;
-    opacity: 0;
   }
   100% {
     height: 100%;
-    opacity: 1;
+    padding: 11vh 50px;
   }
 `;
 
 const Background = styled.div<{ $isclick: boolean }>`
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
   width: 100%;
   height: 0;
   display: flex;
   background: #f0f0f0;
+  overflow: hidden;
+  z-index: 10;
+  cursor: auto;
 
   &.active {
-    animation: ${roll} 0.5s 0.3s ease-out both;
+    animation: ${roll} 1.5s 0.2s ease-out both;
   }
 `;
 
@@ -52,9 +60,14 @@ const Close = styled.div`
   border-radius: 10px;
   transition: all 0.3s ease-out;
   margin-bottom: 10px;
+  border-radius: 50%;
 
   svg {
     font-size: 2.5rem;
+  }
+
+  &:hover {
+    
   }
   @media (max-width: 768px) {
     top: 15px;
@@ -68,15 +81,19 @@ const Close = styled.div`
 `;
 
 const Container = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
   width: 100%;
   height: 0%;
-  padding: 11vh 50px;
   display: flex;
   justify-content: space-between;
-  transform-origin: top top;
+  z-index: 9;
+  background: #f0f0f0;
+  cursor: auto;
 
   &.active {
-    animation: ${show} 0.5s 1s ease-out both;
+    animation: ${show} 0.3s 0.8s ease-out both;
   }
 
   @media (max-width: 768px) {
@@ -216,7 +233,7 @@ const SkillStack = styled.div`
 const Skills = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 
   span {
     font-weight: bold;
@@ -310,11 +327,12 @@ const Receipt = ({
   };
 
   return (
-    <Background
-      $isclick={isOpen}
-      className={isOpen ? "active" : ""}
-      onClick={() => setBarcodeClick(true)}
-    >
+    <>
+      <Background
+        $isclick={isOpen}
+        className={isOpen ? "active" : ""}
+        onClick={() => setBarcodeClick(true)}
+      ></Background>
       {projectData
         .filter((project) => project.id === selectedIdx)
         .map((project) => (
@@ -327,7 +345,7 @@ const Receipt = ({
                 </ProjectName>
                 <Category>
                   <a href={project.urlPath} target="_blank">
-                    Visist Website
+                    Visit Website
                   </a>
                 </Category>
               </Title>
@@ -370,21 +388,21 @@ const Receipt = ({
               </ProjectVideoBox>
               <Summary>{project.summary}</Summary>
             </RightBox>
+            <Close
+              ref={closeRef}
+              onMouseEnter={startRotating}
+              onMouseLeave={endRotating}
+              onClick={() => {
+                setIsOpen(false);
+                setBarcodeClick(false);
+                setProjectClick(false);
+              }}
+            >
+              <IoClose />
+            </Close>
           </Container>
         ))}
-      <Close
-        ref={closeRef}
-        onMouseEnter={startRotating}
-        onMouseLeave={endRotating}
-        onClick={() => {
-          setIsOpen(false);
-          setBarcodeClick(false);
-          setProjectClick(false);
-        }}
-      >
-        <IoClose />
-      </Close>
-    </Background>
+    </>
   );
 };
 
