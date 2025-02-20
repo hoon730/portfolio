@@ -27,7 +27,7 @@ const roll = keyframes`
   }
 `;
 
-const Background = styled.div<{ isMenuClick: boolean }>`
+const Background = styled.div<{ $isMenuClick: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -405,7 +405,7 @@ const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
     <>
       <Background
         ref={backgroundRef}
-        isMenuClick={isMenuClick}
+        $isMenuClick={isMenuClick}
         className={isMenuClick ? "active" : ""}
         onClick={() => setIsMenuClick(false)}
       />

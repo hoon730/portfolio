@@ -36,7 +36,7 @@ const show = keyframes`
 `;
 
 const Background = styled.div<{ $isclick: boolean }>`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -67,7 +67,6 @@ const Close = styled.div`
   }
 
   &:hover {
-    
   }
   @media (max-width: 768px) {
     top: 15px;
@@ -81,7 +80,7 @@ const Close = styled.div`
 `;
 
 const Container = styled.div`
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -97,7 +96,6 @@ const Container = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 9vh 20px;
     flex-direction: column;
     gap: 30px;
   }
@@ -331,7 +329,6 @@ const Receipt = ({
       <Background
         $isclick={isOpen}
         className={isOpen ? "active" : ""}
-        onClick={() => setBarcodeClick(true)}
       ></Background>
       {projectData
         .filter((project) => project.id === selectedIdx)
@@ -367,8 +364,8 @@ const Receipt = ({
                 <SkillStack>
                   <h3>SKILL STACK</h3>
                   <Skills>
-                    {project.skillStack.map((skill) => (
-                      <div>
+                    {project.skillStack.map((skill, idx) => (
+                      <div key={idx}>
                         <span>{skill}</span>
                       </div>
                     ))}
@@ -394,7 +391,7 @@ const Receipt = ({
               onMouseLeave={endRotating}
               onClick={() => {
                 setIsOpen(false);
-                setBarcodeClick(false);
+                setBarcodeClick(true);
                 setProjectClick(false);
               }}
             >

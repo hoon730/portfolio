@@ -28,6 +28,7 @@ const blink = keyframes`
 `;
 
 const Container = styled.section`
+  position: relative;
   overflow: hidden;
 `;
 
@@ -387,6 +388,7 @@ const Work = ({ setBarcodeClick, setProjectClick }: BarcodeProps) => {
               ref={(el) => (projectRefs.current[idx] = el!)}
               className={selectedIdx === idx ? "active" : ""}
               onMouseEnter={() => handleMouseEnter(idx)}
+              onClick={() => setBarcodeClick(false)}
             >
               <Wrapper className={selectedIdx === idx ? "active" : ""}>
                 <Title className={selectedIdx === idx ? "active" : ""}>

@@ -167,10 +167,10 @@ const Photo = styled.div`
 `;
 
 const Barcode = styled.div<BarcodeProps>`
-  width: ${(props) => props.width || "5%"};
+  width: ${(props) => props.$width || "5%"};
   height: 100%;
   background: ${(props) => props.theme.fontColor};
-  margin-right: ${(props) => props.gap || "2%"};
+  margin-right: ${(props) => props.$gap || "2%"};
   background: #000;
   transform: translateY(100%);
 `;
@@ -192,8 +192,8 @@ const ImgBox = styled.div`
 `;
 
 interface BarcodeProps {
-  width: string;
-  gap: string;
+  $width: string;
+  $gap: string;
 }
 
 const barcodes = [
@@ -279,8 +279,8 @@ const About = () => {
                 <Barcode
                   className="barcode"
                   key={index}
-                  width={barcode.width}
-                  gap={barcode.gap}
+                  $width={barcode.width}
+                  $gap={barcode.gap}
                 />
               ))}
               <ImgBox>

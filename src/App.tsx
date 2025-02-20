@@ -86,8 +86,6 @@ const GlobalsStyle = createGlobalStyle`
       &::-webkit-scrollbar {
       display: none;
       }
-      overflow: hidden;
-      touch-action: none;
     }
   }
 `;
@@ -196,7 +194,7 @@ const App = () => {
   useEffect(() => {
     if (barcodeClick) {
       document.body.style.overflow = "auto";
-      document.body.style.touchAction = "none";
+      document.body.style.touchAction = "auto";
     } else {
       document.body.style.overflow = "hidden";
       document.body.style.touchAction = "none";
