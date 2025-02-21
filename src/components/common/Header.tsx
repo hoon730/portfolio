@@ -62,7 +62,7 @@ const LogoBox = styled.div`
   overflow: hidden;
 `;
 
-const Logo = styled.div`
+const Logo = styled.a`
   font: bold 32px/1 "Archivo Narrow", sans-serif;
   padding: 0 5px;
   background: ${(props) => props.theme.fontColor};
@@ -181,7 +181,7 @@ const Header = ({ isClick, projectClick }: isClickProps) => {
       $projectClick={projectClick}
     >
       <LogoBox className="logo_box">
-        <Logo className="logo">YDH</Logo>
+        <Logo href="#" className="logo">YDH</Logo>
       </LogoBox>
 
       <MenuIcon
