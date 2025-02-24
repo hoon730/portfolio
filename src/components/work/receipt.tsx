@@ -35,6 +35,16 @@ const show = keyframes`
   }
 `;
 
+const mobileShow = keyframes`
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 100%;
+    padding: 8vh 50px;
+  }
+`;
+
 const Background = styled.div<{ $isclick: boolean }>`
   position: absolute;
   top: 0;
@@ -98,6 +108,9 @@ const Container = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 30px;
+    &.active {
+      animation: ${mobileShow} 0.3s 0.8s ease-out both;
+    }
   }
 `;
 
@@ -134,20 +147,25 @@ const ProjectName = styled.div`
 
   @media (max-width: 768px) {
     justify-content: center;
-    font-size: 8.3333vw;
+    font-size: 6.3333vw;
     padding-bottom: 5px;
     letter-spacing: 5px;
 
     span:last-child {
       margin-top: 0.7813vw;
-      font-size: 3.6458vw;
+      font-size: 2.6458vw;
     }
+  }
+  
+  @media (max-width: 430px) {
+    font-size: 7.3333vw;
+    margin-bottom: 35px;
   }
 `;
 const Category = styled.div`
   a {
     padding: 0 5px;
-    font-size: ${(props) => props.theme.fsExtraLarge};
+    font-size: 22px;
     font-weight: bold;
     border: 2px solid ${(props) => props.theme.fontColor};
     border-radius: 5px;
@@ -160,8 +178,8 @@ const Category = styled.div`
   }
 
   @media (max-width: 768px) {
-    span {
-      font-size: ${(props) => props.theme.fsMedium};
+    a {
+      font-size: ${(props) => props.theme.fsRegular};
     }
   }
   @media (max-width: 430px) {
@@ -181,12 +199,13 @@ const Desc = styled.div`
   }
 
   span {
-    font-size: ${(props) => props.theme.fsMedium};
-
     width: 200px;
+    letter-spacing: 1px;
     &:first-child {
       width: 100px;
       font-weight: bold;
+      font-size: ${(props) => props.theme.fsMedium};
+      letter-spacing: normal;
     }
   }
 
@@ -209,33 +228,30 @@ const Platform = styled.div``;
 const Assignment = styled.div``;
 
 const SkillStack = styled.div`
-  font-size: ${(props) => props.theme.fsMedium};
   h3 {
+    font-size: ${(props) => props.theme.fsMedium};
     font-weight: bold;
     margin-bottom: 20px;
   }
   @media (max-width: 768px) {
-    font-size: ${(props) => props.theme.fsRegular};
     h3 {
-      margin-bottom: 10px;
+      font-size: ${(props) => props.theme.fsRegular};
+      margin-bottom: 20px;
     }
   }
   @media (max-width: 430px) {
     font-size: ${(props) => props.theme.fsSmall};
-    h3 {
-      font-size: ${(props) => props.theme.fsRegular};
-    }
   }
 `;
 
 const Skills = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 17px;
 
   span {
     font-weight: bold;
-    background: #111;
+    background: #333;
     color: #f0f0f0;
     padding: 5px;
     border-radius: 5px;
@@ -255,7 +271,7 @@ const RightBox = styled.div`
 `;
 
 const Summary = styled.p`
-  font: 300 ${(props) => props.theme.fsMedium} / normal "Pretendard-Regular";
+  font: 300 19px / 1.3 "Pretendard-Regular";
 
   @media (max-width: 768px) {
     font: 300 ${(props) => props.theme.fsMedium} / normal "Pretendard-Regular";

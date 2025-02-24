@@ -114,7 +114,6 @@ const Skill = () => {
             const currentY = window.scrollY / 3 - window.innerHeight;
             const boxHeight = boxRef.current.offsetTop;
             const rotationY = currentY - boxHeight;
-            console.log(`boxHeight: ${boxHeight}, currentY: ${currentY}`);
             const skillBoxWidth = boxRef.current.offsetWidth;
             setClacTranslateZ(String(skillBoxWidth / 2));
             boxRef.current.style.transform = `rotateY(-${rotationY}deg)`;
