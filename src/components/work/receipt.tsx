@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useRef } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { projectData } from "../../utils";
 
@@ -305,6 +305,7 @@ const Receipt = ({
   setProjectClick,
 }: ReceiptProps) => {
   const closeRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useGSAP(() => {
     if (isOpen) {
@@ -339,6 +340,19 @@ const Receipt = ({
       ease: "power1.out",
     });
   };
+
+  useEffect(() => {
+    const playVideo = () => {
+      if(isOpen) {
+        setTimeout(() => {
+          videoRef.current?.play()
+        }, 1500);
+      } else {
+        videoRef.current?.pause()
+      }
+    }
+    playVideo()
+  }, [isOpen])
 
   return (
     <>
@@ -392,8 +406,8 @@ const Receipt = ({
             <RightBox>
               <ProjectVideoBox>
                 <ProjectVideo
+                  ref={videoRef}
                   src={project.videoPath}
-                  autoPlay
                   muted
                   loop
                   playsInline
