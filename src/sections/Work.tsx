@@ -205,16 +205,25 @@ const Scanner = styled.div`
   }
 
   @media (max-width: 768px) {
-    width: 52.5vw;
-    height: 52.5vw;
-    left: 0.5vw;
-    transform: translate(-1.75vw, -1.25vw);
+    width: 54.5vw;
+    height: 54.5vw;
+    transform: translate(-2.25vw, -2.25vw);
 
     &.on {
-      width: 51.5vw;
-      height: 51.5vw;
-      left: -0.7vw;
-      transform: translate(0vw, -0.75vw);
+      width: 51.25vw;
+      height: 51.25vw;
+      transform: translate(-0.7vw, -0.7vw);
+    }
+  }
+  @media (max-width: 430px) {
+    width: 56.5vw;
+    height: 56.5vw;
+    transform: translate(-3.15vw, -3.15vw);
+
+    &.on {
+      width: 51vw;
+      height: 51vw;
+      transform: translate(-0.5vw, -0.5vw);
     }
   }
 `;

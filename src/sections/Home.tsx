@@ -189,6 +189,11 @@ const Text = styled.div`
     font-size: ${(props) => props.theme.fsLarge};
     letter-spacing: 1.5px;
   }
+
+  @media (max-width: 430px) {
+    font-size: ${(props) => props.theme.fsSmall};
+    letter-spacing: 1.3px;
+  }
 `;
 
 const BarcodeBox = styled.div`
@@ -200,7 +205,7 @@ const Barcode = styled.div`
   font-family: "Libre Barcode 39", system-ui;
 
   @media (max-width: 768px) {
-    font-size: 19.5313vw;
+    font-size: 14.5313vw;
   }
 `;
 

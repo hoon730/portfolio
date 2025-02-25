@@ -13,10 +13,13 @@ export const getFormattedTime = (targetTime: Date): string => {
   const hours = targetTime.getHours();
   const minutes = targetTime.getMinutes();
 
-  const paddedHours = hours < 10 ? `0${hours}` : String(hours);
+  const period = hours >= 12 ? "pm" : "am";
+  const hours12 = hours % 12 === 0 ? 12 : hours % 12;
+
+  const paddedHours = hours12 < 10 ? `${hours12}` : String(hours12);
   const paddedMinutes = minutes < 10 ? `0${minutes}` : String(minutes);
 
-  return `${paddedHours}:${paddedMinutes}`;
+  return `${paddedHours}:${paddedMinutes} ${period}`;
 };
 
 export const frontendData = [

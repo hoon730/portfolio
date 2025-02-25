@@ -91,10 +91,7 @@ const Top = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 0 30px;
-  margin-top: 15px;
-  margin-bottom: 20px;
-
+  padding: 15px 30px;
   @media (max-width: 430px) {
   }
 `;
@@ -148,12 +145,12 @@ const Nav = styled.nav`
     ul {
       flex-direction: column;
       align-items: center;
-      gap: 30px;
-      padding: 40px 0;
+      gap: 45px;
+      padding: 50px 0;
 
       li {
         a {
-          font: bold italic 4.2rem/1 "Archivo Narrow", sans-serif;
+          font: bold italic 3.5rem/1 "Archivo Narrow", sans-serif;
         }
       }
     }
@@ -268,6 +265,12 @@ const Bottom = styled.div`
 const Time = styled.div`
   display: flex;
   flex-direction: column;
+  @media (max-width: 430px) {
+    gap: 5px;
+    span {
+      font-size: 1rem;
+    }
+  }
 `;
 
 interface MenuProps {

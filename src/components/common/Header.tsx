@@ -62,12 +62,15 @@ const LogoBox = styled.div`
   overflow: hidden;
 `;
 
-const Logo = styled.a`
+const Logo = styled.div`
   font: bold 32px/1 "Archivo Narrow", sans-serif;
   padding: 0 5px;
   background: ${(props) => props.theme.fontColor};
   color: #f1f1f1;
   transform: translateY(150%);
+  @media (max-width: 430px) {
+    font: bold 28px/1 "Archivo Narrow", sans-serif;
+  }
 `;
 
 const MenuIcon = styled.button`
@@ -80,6 +83,9 @@ const BarBox = styled.div`
   flex-direction: column;
   gap: 5px;
   transform: translateY(150%);
+  @media (max-width: 430px) {
+    
+  }
 `;
 
 const Bar = styled.span`
@@ -124,7 +130,7 @@ const Header = ({ isClick, projectClick }: isClickProps) => {
   useGSAP(() => {
     const tl = gsap.timeline();
     if (isClick) {
-      tl.to(["logo_box", ".logo", ".barBox"], {
+      tl.to([".logo_box", ".logo", ".barBox"], {
         y: 0,
         duration: 0.9,
         delay: 2,
@@ -181,7 +187,7 @@ const Header = ({ isClick, projectClick }: isClickProps) => {
       $projectClick={projectClick}
     >
       <LogoBox className="logo_box">
-        <Logo href="#" className="logo">YDH</Logo>
+        <Logo className="logo">YDH</Logo>
       </LogoBox>
 
       <MenuIcon

@@ -31,17 +31,7 @@ const show = keyframes`
   }
   100% {
     height: 100%;
-    padding: 11vh 50px;
-  }
-`;
-
-const mobileShow = keyframes`
-  0% {
-    height: 0;
-  }
-  100% {
-    height: 100%;
-    padding: 8vh 50px;
+    padding: var(--animation-padding);
   }
 `;
 
@@ -90,6 +80,8 @@ const Close = styled.div`
 `;
 
 const Container = styled.div`
+  --animation-padding: 11vh 50px;
+
   position: absolute;
   bottom: 0;
   left: 0;
@@ -107,10 +99,12 @@ const Container = styled.div`
 
   @media (max-width: 768px) {
     flex-direction: column;
-    gap: 30px;
-    &.active {
-      animation: ${mobileShow} 0.3s 0.8s ease-out both;
-    }
+    gap: 40px;
+    --animation-padding: 8vh 50px;
+  }
+  @media (max-width: 430px) {
+    gap: 60px;
+    --animation-padding: 8vh 20px;
   }
 `;
 
@@ -125,9 +119,6 @@ const LeftBox = styled.div`
 `;
 
 const Title = styled.div`
-  @media (max-width: 768px) {
-    margin-bottom: 20px;
-  }
 `;
 
 const ProjectName = styled.div`
@@ -149,20 +140,26 @@ const ProjectName = styled.div`
     justify-content: center;
     font-size: 6.3333vw;
     padding-bottom: 5px;
+    margin-bottom: 20px;
     letter-spacing: 5px;
 
     span:last-child {
-      margin-top: 0.7813vw;
+      margin-top: 0.5813vw;
       font-size: 2.6458vw;
     }
   }
-  
+
   @media (max-width: 430px) {
-    font-size: 7.3333vw;
-    margin-bottom: 35px;
+    font-size: 8.3333vw;
+    padding-bottom: 2px;
+    margin-bottom: 30px;
+    span:last-child {
+      margin-top: 0.7813vw;
+      font-size: 3vw;
+    }
   }
 `;
-const Category = styled.div`
+const VisitBtn = styled.div`
   a {
     padding: 0 5px;
     font-size: 22px;
@@ -186,6 +183,29 @@ const Category = styled.div`
   }
 `;
 
+const MobileVisitBtn = styled.div`
+  display: none;
+  justify-content: center;
+  a {
+    padding: 5px 10px;
+    font-size: ${(props) => props.theme.fsLarge};
+    font-weight: bold;
+    border: 2px solid ${(props) => props.theme.fontColor};
+    border-radius: 5px;
+    transition: box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 3px 3px;
+    }
+  }
+  @media (max-width: 430px) {
+    a {
+      font-size: ${(props) => props.theme.fsMedium};
+    }
+  }
+`;
+
 const Contents = styled.div``;
 
 const Desc = styled.div`
@@ -196,10 +216,12 @@ const Desc = styled.div`
 
   & > div {
     display: flex;
+    align-items: center;
   }
 
   span {
     width: 200px;
+    font-size: ${(props) => props.theme.fsRegular};
     letter-spacing: 1px;
     &:first-child {
       width: 100px;
@@ -215,9 +237,16 @@ const Desc = styled.div`
   }
 
   @media (max-width: 430px) {
-    span {
-      &:last-child {
-        font-size: ${(props) => props.theme.fsSmall};
+    & > div {
+      justify-content: space-between;
+
+      span {
+        width: auto;
+        font-size: ${(props) => props.theme.fsRegular};
+        &:last-child {
+          width: auto;
+          font-size: ${(props) => props.theme.fsSmall};
+        }
       }
     }
   }
@@ -256,6 +285,9 @@ const Skills = styled.div`
     padding: 5px;
     border-radius: 5px;
   }
+  @media (max-width: 768px) {
+    flex-direction: row;
+  }
 `;
 
 const RightBox = styled.div`
@@ -283,7 +315,6 @@ const Summary = styled.p`
 `;
 const ProjectVideoBox = styled.div`
   width: 100%;
-  height: 70%;
 `;
 const ProjectVideo = styled.video`
   width: 100%;
@@ -305,7 +336,9 @@ const Receipt = ({
   setProjectClick,
 }: ReceiptProps) => {
   const closeRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const visitRef = useRef<HTMLDivElement>(null);
+  const mobileRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     if (isOpen) {
@@ -343,16 +376,23 @@ const Receipt = ({
 
   useEffect(() => {
     const playVideo = () => {
-      if(isOpen) {
+      if (isOpen) {
         setTimeout(() => {
-          videoRef.current?.play()
+          videoRef.current?.play();
         }, 1500);
       } else {
-        videoRef.current?.pause()
+        videoRef.current?.pause();
       }
+    };
+    playVideo();
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (window.innerWidth < 769 && visitRef.current && mobileRef.current) {
+      visitRef.current.style.display = "none";
+      mobileRef.current.style.display = "flex";
     }
-    playVideo()
-  }, [isOpen])
+  }, []);
 
   return (
     <>
@@ -370,11 +410,11 @@ const Receipt = ({
                   <span>{project.name}</span>
                   <span>®</span>
                 </ProjectName>
-                <Category>
+                <VisitBtn ref={visitRef}>
                   <a href={project.urlPath} target="_blank">
                     Visit Website
                   </a>
-                </Category>
+                </VisitBtn>
               </Title>
               <Contents>
                 <Desc>
@@ -414,6 +454,11 @@ const Receipt = ({
                 />
               </ProjectVideoBox>
               <Summary>{project.summary}</Summary>
+              <MobileVisitBtn ref={mobileRef}>
+                <a href={project.urlPath} target="_blank">
+                  Visit Website
+                </a>
+              </MobileVisitBtn>
             </RightBox>
             <Close
               ref={closeRef}
