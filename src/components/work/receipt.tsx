@@ -118,8 +118,7 @@ const LeftBox = styled.div`
   }
 `;
 
-const Title = styled.div`
-`;
+const Title = styled.div``;
 
 const ProjectName = styled.div`
   display: flex;
@@ -160,6 +159,9 @@ const ProjectName = styled.div`
   }
 `;
 const VisitBtn = styled.div`
+  @media (max-width: 768px) {
+    display: none;
+  }
   a {
     padding: 0 5px;
     font-size: 22px;
@@ -173,19 +175,16 @@ const VisitBtn = styled.div`
       box-shadow: 3px 3px;
     }
   }
-
-  @media (max-width: 768px) {
-    a {
-      font-size: ${(props) => props.theme.fsRegular};
-    }
-  }
   @media (max-width: 430px) {
   }
 `;
 
 const MobileVisitBtn = styled.div`
   display: none;
-  justify-content: center;
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: center;
+  }
   a {
     padding: 5px 10px;
     font-size: ${(props) => props.theme.fsLarge};

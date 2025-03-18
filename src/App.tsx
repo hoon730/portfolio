@@ -116,19 +116,26 @@ const Scanning = keyframes`
   }
 `;
 
-const Cursor = styled.div`
+const Cursor = styled.div<{ $isMobile: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
   width: 100px;
   height: 100px;
-  background: url("/img/pjh.png") center/cover no-repeat;
+  background: ${({ $isMobile }) =>
+    $isMobile ? "transparent" : "url('/img/pjh.png') center/cover no-repeat"};
   z-index: 100;
   pointer-events: none;
   transform: translate(-50%, -50%);
 
   &.active {
     animation: ${Scanning} 1s linear both;
+  }
+
+  @media (max-width: 768px) {
+    &.active {
+      animation: none;
+    }
   }
 `;
 
@@ -174,6 +181,7 @@ const Wrapper = styled.div`
 const App = () => {
   const [barcodeClick, setBarcodeClick] = useState(false);
   const [projectClick, setProjectClick] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const position = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -201,12 +209,24 @@ const App = () => {
     }
   }, [barcodeClick]);
 
+  useEffect(() => {
+    if (window.innerWidth < 769) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  }, []);
+
   return (
     <>
       <ThemeProvider theme={lightTheme}>
         <GlobalsStyle />
         <Wrapper className={barcodeClick ? "active" : ""}>
-          <Cursor id="cursor" className={barcodeClick ? "active" : ""} />
+          <Cursor
+            id="cursor"
+            className={barcodeClick ? "active" : ""}
+            $isMobile={isMobile}
+          />
           <Header isClick={barcodeClick} projectClick={projectClick} />
           <Home barcodeClick={barcodeClick} onClick={setBarcodeClick} />
           <About />
