@@ -1,12 +1,29 @@
 import { useState, useEffect } from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
 import gsap from "gsap";
 import { CSSPlugin } from "gsap/CSSPlugin";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { useGSAP } from "@gsap/react";
 import Menu from "./Menu";
 
-gsap.registerPlugin(CSSPlugin);
+gsap.registerPlugin(CSSPlugin, ScrollToPlugin);
+
+const roll = keyframes`
+  0% {
+    height: 0;
+    background: #f0f0f0;
+  }
+  40% {
+    height: 100%;
+  }
+  60% {
+    height: 100%;
+  }
+  100% {
+    height: 0;
+  }
+`;
 
 const FirstBar = keyframes`
   0% {
@@ -68,6 +85,7 @@ const Logo = styled.div`
   background: ${(props) => props.theme.fontColor};
   color: #f1f1f1;
   transform: translateY(150%);
+  cursor: pointer;
   @media (max-width: 430px) {
     font: bold 28px/1 "Archivo Narrow", sans-serif;
   }
@@ -83,9 +101,6 @@ const BarBox = styled.div`
   flex-direction: column;
   gap: 5px;
   transform: translateY(150%);
-  @media (max-width: 430px) {
-    
-  }
 `;
 
 const Bar = styled.span`
@@ -112,6 +127,23 @@ const Bar = styled.span`
   }
 `;
 
+const Rolling = styled.div<{ $isActive: boolean }>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: #f0f0f0;
+  pointer-events: none;
+  z-index: 1000;
+  animation: ${({ $isActive }) =>
+    $isActive
+      ? css`
+          ${roll} 1.5s 0.2s ease-out both
+        `
+      : "none"};
+`;
+
 interface isClickProps {
   isClick: boolean;
   projectClick: boolean;
@@ -122,6 +154,7 @@ const Header = ({ isClick, projectClick }: isClickProps) => {
   const [scrollValue, setScrollValue] = useState(0);
   const [isMouseOn, setIsMouseOn] = useState(false);
   const [isMenuClick, setIsMenuClick] = useState(false);
+  const [isLogoClick, setIsLogoClick] = useState(false);
 
   useEffect(() => {
     scrollValue;
@@ -181,13 +214,33 @@ const Header = ({ isClick, projectClick }: isClickProps) => {
     });
   }, []);
 
+  const scrollToTop = () => {
+    setIsLogoClick(true);
+
+    setTimeout(() => {
+      gsap.to(window, {
+        duration: 0.3,
+        scrollTo: { y: 0, autoKill: false },
+        ease: "power2.inOut",
+        onComplete: () => {
+          setTimeout(() => {
+            setIsLogoClick(false);
+          }, 1000);
+        },
+      });
+    }, 800);
+  };
+
   return (
     <Container
       className={isHidden ? "active" : ""}
       $projectClick={projectClick}
     >
+      <Rolling $isActive={isLogoClick} />
       <LogoBox className="logo_box">
-        <Logo className="logo">YDH</Logo>
+        <Logo className="logo" onClick={scrollToTop}>
+          YDH
+        </Logo>
       </LogoBox>
 
       <MenuIcon
