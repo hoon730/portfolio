@@ -13,7 +13,7 @@ export const getFormattedTime = (targetTime: Date): string => {
   const hours = targetTime.getHours();
   const minutes = targetTime.getMinutes();
 
-  const period = hours >= 12 ? "pm" : "am";
+  const period = hours >= 12 ? "PM" : "AM";
   const hours12 = hours % 12 === 0 ? 12 : hours % 12;
 
   const paddedHours = hours12 < 10 ? `${hours12}` : String(hours12);
@@ -96,9 +96,19 @@ export const backendData = [
     imgPath: "/img/icons/supabase.png",
     name: "Supabase",
   },
+  {
+    id: 5,
+    imgPath: "/img/icons/graphql.png",
+    name: "GraphQL",
+  },
+  {
+    id: 6,
+    imgPath: "/img/icons/apolloserver.png",
+    name: "Apollo Server",
+  },
 ];
 
-export const databaseData = [
+export const deploymentData = [
   {
     id: 1,
     imgPath: "/img/icons/firebase.png",
@@ -106,18 +116,36 @@ export const databaseData = [
   },
   {
     id: 2,
-    imgPath: "/img/icons/graphql.png",
-    name: "GraphQL",
+    imgPath: "/img/icons/netlify.png",
+    name: "Netlify",
   },
   {
     id: 3,
-    imgPath: "/img/icons/apolloserver.png",
-    name: "Apollo Server",
+    imgPath: "/img/icons/vercel.png",
+    name: "Vercel",
+  },
+];
+
+export const utilitiesData = [
+  {
+    id: 1,
+    imgPath: "/img/icons/git.png",
+    name: "Git",
+  },
+  {
+    id: 2,
+    imgPath: "/img/icons/github.png",
+    name: "Github",
+  },
+  {
+    id: 3,
+    imgPath: "/img/icons/figma.png",
+    name: "Figma",
   },
   {
     id: 4,
-    imgPath: "/img/icons/netlify.png",
-    name: "Netlify",
+    imgPath: "/img/icons/slack.png",
+    name: "Slack",
   },
 ];
 
@@ -182,7 +210,7 @@ export const projectData = [
     platform: "Movie Review",
     assignment: "Main + Review + OST",
     summary:
-    "Javascript를 사용하여 영화 트레일러 및 소개 페이지 구현, 관람객 평점 및 리뷰 작성/저장 기능, 영화 OST 사운드 트랙 제공 기능을 구현한 KILL BLL 웹 사이트",
+      "Javascript를 사용하여 영화 트레일러 및 소개 페이지 구현, 관람객 평점 및 리뷰 작성/저장 기능, 영화 OST 사운드 트랙 제공 기능을 구현한 KILL BLL 웹 사이트",
     barcode: "KILLBILL",
     skillStack: ["Javascript", "Scss", "Html"],
   },
@@ -201,50 +229,5 @@ export const projectData = [
       "Javascript를 사용하여 근처 매장 위치 제공(카카오맵 API), 룩북 컬렌션 UI구현, 리미티드 아이템 슬라이더 구현(Slick)을 구현한 DoubleRL 웹 사이트",
     barcode: "DOUBLERL",
     skillStack: ["Javascript", "Scss", "Html"],
-  },
-  {
-    id: 5,
-    logoPath: "/img/work/logo/instagram_logo.svg",
-    pagePath: "/img/work/page/joonggonara.png",
-    videoPath: "/video/",
-    name: "BITCENTER",
-    category: "PERSONAL PROJECT",
-    date: "2024/09 - 2024/10",
-    platform: "SNS 플랫폼",
-    assignment: "상세페이지 + 마이프로필",
-    summary:
-      "Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet consectetur Mi vulputateametvulputate interdum .Bibendum a imperdiet tortor purus dolor id. Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet consectetur Mi vulputateametvulputate interdum ",
-    barcode: "PROJECT",
-    skillStack: ["React", "Firebase", "React-Router-Dom"],
-  },
-  {
-    id: 6,
-    logoPath: "/img/work/logo/instagram_logo.svg",
-    pagePath: "/img/work/page/joonggonara.png",
-    videoPath: "/video/",
-    name: "IRELAND",
-    category: "PERSONAL PROJECT",
-    date: "2024/09 - 2024/10",
-    platform: "SNS 플랫폼",
-    assignment: "상세페이지 + 마이프로필",
-    summary:
-      "Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet consectetur Mi vulputateametvulputate interdum .Bibendum a imperdiet tortor purus dolor id. Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet consectetur Mi vulputateametvulputate interdum ",
-    barcode: "PROJECT ",
-    skillStack: ["React", "Firebase", "React-Router-Dom"],
-  },
-  {
-    id: 7,
-    logoPath: "/img/work/logo/instagram_logo.svg",
-    pagePath: "/img/work/page/joonggonara.png",
-    videoPath: "/video/",
-    name: "NOTTINGHILL",
-    category: "PERSONAL PROJECT",
-    date: "2024/09 - 2024/10",
-    platform: "SNS 플랫폼",
-    assignment: "상세페이지 + 마이프로필",
-    summary:
-      "Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet consectetur Mi vulputateametvulputate interdum .Bibendum a imperdiet tortor purus dolor id. Lorem ipsum dolor sit amet consectetur. ipsum dolor sit amet consectetur Mi vulputateametvulputate interdum ",
-    barcode: "PROJECT",
-    skillStack: ["React", "Firebase", "React-Router-Dom"],
   },
 ];

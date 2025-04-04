@@ -199,7 +199,7 @@ const Contact = () => {
                   <SmallBar className="smallBar" />
                 </Github>
                 <Phone>
-                  <span>PHONE</span>
+                  <a href="tel:010-4348-7148">PHONE</a>
                   <SmallBar className="smallBar" />
                 </Phone>
               </ContactMethod>

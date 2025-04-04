@@ -25,7 +25,9 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.div`
+  width: 100%;
   display: flex;
+  justify-content: center;
   font-weight: 900;
   font-size: 4rem;
   padding-bottom: 7px;

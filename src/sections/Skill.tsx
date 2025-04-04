@@ -1,8 +1,11 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import { frontendData } from "../utils";
-import { backendData } from "../utils";
-import { databaseData } from "../utils";
+import {
+  frontendData,
+  backendData,
+  deploymentData,
+  utilitiesData,
+} from "../utils";
 import Face from "../components/skill/Face";
 
 import gsap from "gsap";
@@ -58,7 +61,7 @@ const SkillBox = styled.div`
   align-items: center;
   position: relative;
   transform-style: preserve-3d;
-  transform: scale(0);
+  transform: scale(0) rotateY(0deg);
 
   @media (max-width: 768px) {
     width: 65.1042vw;
@@ -76,47 +79,38 @@ const Skill = () => {
 
   useGSAP(() => {
     const containerCtx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "center center ",
-          end: "+=120%",
-          pin: true,
-          scrub: 1,
-        },
-      });
-
       if (window.innerWidth > 768) {
-        tl.to(textLeftRef.current, { left: 0, x: 0 }, 0).to(
-          textRightRef.current,
-          { right: 0, x: 0 },
-          0
-        );
+        gsap.to(textLeftRef.current, { left: 0, x: 0, duration: 1 });
+        gsap.to(textRightRef.current, { right: 0, x: 0, duration: 1 });
       } else if (window.innerWidth > 430) {
-        tl.to(textLeftRef.current, { top: "15%" }, 0).to(
-          textRightRef.current,
-          { top: "85%" },
-          0
-        );
+        gsap.to(textLeftRef.current, { top: "15%", duration: 1 });
+        gsap.to(textRightRef.current, { top: "85%", duration: 1 });
       } else {
-        tl.to(textLeftRef.current, { top: "20%" }, 0).to(
-          textRightRef.current,
-          { top: "80%" },
-          0
-        );
+        gsap.to(textLeftRef.current, { top: "20%", duration: 1 });
+        gsap.to(textRightRef.current, { top: "80%", duration: 1 });
       }
 
-      tl.to(boxRef.current, {
-        scale: 1,
-      }).to(boxRef.current, {
-        onUpdate: () => {
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "center center",
+        end: "+=300%",
+        pin: true,
+        scrub: 1,
+        onUpdate: (self) => {
           if (boxRef.current) {
-            const currentY = window.scrollY / 3 - window.innerHeight;
-            const boxHeight = boxRef.current.offsetTop;
-            const rotationY = currentY - boxHeight;
+            if (self.progress < 0.1) {
+              const scaleProgress = self.progress / 0.1;
+              boxRef.current.style.transform = `scale(${scaleProgress}) rotateY(0deg)`;
+            } else if (self.progress < 0.9) {
+              const rotationProgress = (self.progress - 0.1) / 0.8;
+              const rotationY = rotationProgress * 270;
+              boxRef.current.style.transform = `scale(1) rotateY(-${rotationY}deg)`;
+            } else {
+              boxRef.current.style.transform = `scale(1) rotateY(-270deg)`;
+            }
+
             const skillBoxWidth = boxRef.current.offsetWidth;
             setClacTranslateZ(String(skillBoxWidth / 2));
-            boxRef.current.style.transform = `rotateY(-${rotationY}deg)`;
           }
         },
       });
@@ -138,19 +132,19 @@ const Skill = () => {
             title="FRONTEND"
           />
           <Face
-            rotate={`rotateY(90deg)  translateZ(${calcTranslateZ}px)`}
+            rotate={`rotateY(-270deg) translateZ(${calcTranslateZ}px)`}
             skills={backendData}
             title="BACKEND"
           />
           <Face
-            rotate={`rotateY(180deg)  translateZ(${calcTranslateZ}px)`}
-            skills={databaseData}
+            rotate={`rotateY(-180deg) translateZ(${calcTranslateZ}px)`}
+            skills={deploymentData}
             title="DATABASE"
           />
           <Face
-            rotate={`rotateY(-90deg)  translateZ(${calcTranslateZ}px)`}
-            skills={frontendData}
-            title="FRONTEND"
+            rotate={`rotateY(-90deg) translateZ(${calcTranslateZ}px)`}
+            skills={utilitiesData}
+            title="UTILITIES"
           />
         </SkillBox>
         <div ref={textRightRef} className="text right_text">
