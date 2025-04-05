@@ -150,8 +150,8 @@ const ProjectName = styled.div`
 
   @media (max-width: 430px) {
     font-size: 8.3333vw;
-    padding-bottom: 4px;
-    margin: 15px 0;
+    padding-bottom: 2px;
+    margin: 15px;
     span:last-child {
       margin-top: 0.7813vw;
       font-size: 3vw;
