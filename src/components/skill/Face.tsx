@@ -102,7 +102,6 @@ const StackName = styled.span`
   text-align: center;
 
   @media (max-width: 768px) {
-    /* display: none; */
     font-size: 1.8229vw;
   }
 `;

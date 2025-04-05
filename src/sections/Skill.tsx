@@ -139,7 +139,7 @@ const Skill = () => {
           <Face
             rotate={`rotateY(-180deg) translateZ(${calcTranslateZ}px)`}
             skills={deploymentData}
-            title="DATABASE"
+            title="DEPLOY"
           />
           <Face
             rotate={`rotateY(-90deg) translateZ(${calcTranslateZ}px)`}
