@@ -74,7 +74,7 @@ const Close = styled.div`
   }
   @media (max-width: 430px) {
     svg {
-      font-size: 2rem;
+      font-size: 2.2rem;
     }
   }
 `;
@@ -104,7 +104,7 @@ const Container = styled.div`
   }
   @media (max-width: 430px) {
     gap: 60px;
-    --animation-padding: 8vh 20px;
+    --animation-padding: 7vh 20px;
   }
 `;
 
@@ -150,8 +150,8 @@ const ProjectName = styled.div`
 
   @media (max-width: 430px) {
     font-size: 8.3333vw;
-    padding-bottom: 2px;
-    margin-bottom: 30px;
+    padding-bottom: 4px;
+    margin: 15px 0;
     span:last-child {
       margin-top: 0.7813vw;
       font-size: 3vw;
@@ -275,7 +275,7 @@ const SkillStack = styled.div`
 const Skills = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 17px;
+  gap: 20px;
 
   span {
     font-weight: bold;
@@ -286,6 +286,10 @@ const Skills = styled.div`
   }
   @media (max-width: 768px) {
     flex-direction: row;
+    gap: 10px;
+    span {
+      padding: 5px 10px;
+    }
   }
 `;
 
