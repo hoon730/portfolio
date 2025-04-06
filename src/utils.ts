@@ -194,7 +194,7 @@ export const projectData = [
     platform: "E-Commerce",
     assignment: "Detail + Header",
     summary:
-      "Javascript를 사용하여여 사용자 인증(로그인/회원가입), 장바구니 기능(찜 목록), 구매 및 결제창 구현, 매물 위치 제공(카카오맵 API),최근 검색어 저장 기능을 구현한 중고나라 클론 코딩 웹 사이트",
+      "Javascript를 사용하여 사용자 인증(로그인/회원가입), 장바구니 기능(LocalStorage), 구매 및 결제창 구현, 매물 위치 제공(카카오맵 API),최근 검색어 저장 기능을 구현한 중고나라 클론 코딩 웹 사이트",
     barcode: "JOONGONARA",
     skillStack: ["Javascript", "Scss", "Html"],
   },
@@ -210,7 +210,7 @@ export const projectData = [
     platform: "Movie Review",
     assignment: "Main + Review + OST",
     summary:
-      "Javascript를 사용하여 영화 트레일러 및 소개 페이지 구현, 관람객 평점 및 리뷰 작성/저장 기능, 영화 OST 사운드 트랙 제공 기능을 구현한 KILL BLL 웹 사이트",
+      "Javascript를 사용하여 영화 트레일러 및 소개 페이지 구현, 관람객 평점 및 리뷰 작성/저장 기능(LocalStorage), 영화 OST 사운드 트랙 제공 기능을 구현한 KILL BLL 웹 사이트",
     barcode: "KILLBILL",
     skillStack: ["Javascript", "Scss", "Html"],
   },
