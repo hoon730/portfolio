@@ -75,14 +75,6 @@ const GlobalsStyle = createGlobalStyle`
     body {
       /* background: ${(props) => props.theme.bgColor}; */
       background: #F0F0F0;
-      font-family: "Libre Franklin", sans-serif;
-      /* font-family: "Archivo Narrow", sans-serif; */
-      /* font-family: "Libre Barcode 39", system-ui; */
-      /* font-family: "Libre Barcode 128", system-ui; */
-      /* font-family: "Libre Barcode 128 Text", system-ui;/ */
-      /* font-family: "Fira Code", monospace; */
-      /* font-family: "PT Mono", monospace; */
-      /* font-family: "Libre Barcode 39 Text", serif; */
       &::-webkit-scrollbar {
       display: none;
       }
@@ -142,7 +134,7 @@ const Cursor = styled.div<{ $isMobile: boolean }>`
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  cursor: none;
+  cursor: inherit;
 
   &.active {
     animation: ${ShowingCursor} 1s linear both;
@@ -203,9 +195,13 @@ const App = () => {
     if (barcodeClick) {
       document.body.style.overflow = "auto";
       document.body.style.touchAction = "auto";
+      document.documentElement.style.overflow = "auto";
+      document.body.style.cursor = "auto";
     } else {
       document.body.style.overflow = "hidden";
       document.body.style.touchAction = "none";
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.cursor = "none";
     }
   }, [barcodeClick]);
 
@@ -217,11 +213,58 @@ const App = () => {
     }
   }, []);
 
+  // 새로고침 시 초기화
+  useEffect(() => {
+    // 첫 로딩인지 새로고침인지 확인
+    const isFirstLoad = !sessionStorage.getItem("hasVisited");
+
+    // 스크롤 위치를 맨 위로 이동
+    window.scrollTo(0, 0);
+
+    // URL 해시 제거
+    if (window.location.hash) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+
+    // 모든 상태 초기화 (바코드 클릭은 항상 false로 시작)
+    setBarcodeClick(false);
+    setProjectClick(false);
+
+    if (isFirstLoad) {
+      // 첫 로딩 시: 커서 안보이게, 스크롤 막기
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.cursor = "none";
+
+      // 첫 방문 기록
+      sessionStorage.setItem("hasVisited", "true");
+    } else {
+      // 새로고침 시: 커서 보이게, 스크롤 활성화 (바코드 클릭은 Laser 애니메이션을 위해 필요)
+      document.body.style.overflow = "auto";
+      document.body.style.touchAction = "auto";
+      document.documentElement.style.overflow = "auto";
+      document.body.style.cursor = "auto";
+    }
+
+    // 커서 상태 초기화
+    const cursor = document.getElementById("cursor");
+    if (cursor) {
+      cursor.classList.remove("active");
+    }
+
+    // Wrapper 상태 초기화
+    const wrapper = document.querySelector("[data-wrapper]");
+    if (wrapper) {
+      wrapper.classList.remove("active");
+    }
+  }, []);
+
   return (
     <>
       <ThemeProvider theme={lightTheme}>
         <GlobalsStyle />
-        <Wrapper className={barcodeClick ? "active" : ""}>
+        <Wrapper className={barcodeClick ? "active" : ""} data-wrapper>
           <Cursor
             id="cursor"
             className={barcodeClick ? "active" : ""}

@@ -22,7 +22,7 @@ export const getFormattedTime = (targetTime: Date): string => {
   return `${paddedHours}:${paddedMinutes} ${period}`;
 };
 
-export const frontendData = [
+export const mainData = [
   {
     id: 1,
     imgPath: "/img/icons/nextjs.png",
@@ -30,81 +30,51 @@ export const frontendData = [
   },
   {
     id: 2,
-    imgPath: "/img/icons/typescript.png",
-    name: "Typescript",
-  },
-  {
-    id: 3,
     imgPath: "/img/icons/react.png",
     name: "React",
   },
   {
+    id: 3,
+    imgPath: "/img/icons/typescript.png",
+    name: "Typescript",
+  },
+  {
     id: 4,
-    imgPath: "/img/icons/redux.png",
-    name: "Redux",
+    imgPath: "/img/icons/javascript.png",
+    name: "Javascript",
   },
   {
     id: 5,
-    imgPath: "/img/icons/axios.png",
-    name: "Axios",
+    imgPath: "/img/icons/tailwind.png",
+    name: "Tailwind",
   },
   {
     id: 6,
-    imgPath: "/img/icons/recoil.png",
-    name: "Recoil",
-  },
-  {
-    id: 7,
-    imgPath: "/img/icons/reactquery.png",
-    name: "React Query",
-  },
-  {
-    id: 8,
-    imgPath: "/img/icons/reactrouter.png",
-    name: "React Router",
-  },
-  {
-    id: 9,
     imgPath: "/img/icons/styledcomponent.png",
     name: "Styled Component",
   },
   {
-    id: 10,
-    imgPath: "/img/icons/javascript.png",
-    name: "Javascript",
+    id: 7,
+    imgPath: "/img/icons/scss.png",
+    name: "Scss",
   },
 ];
 
-export const backendData = [
+export const libraryData = [
   {
     id: 1,
-    imgPath: "/img/icons/nodejs.png",
-    name: "Node.js",
+    imgPath: "/img/icons/zustand.png",
+    name: "Zustand",
   },
   {
     id: 2,
-    imgPath: "/img/icons/expressjs.png",
-    name: "Express.js",
+    imgPath: "/img/icons/recoil.png",
+    name: "Recoil",
   },
   {
     id: 3,
-    imgPath: "/img/icons/prisma.png",
-    name: "Prisma",
-  },
-  {
-    id: 4,
-    imgPath: "/img/icons/supabase.png",
-    name: "Supabase",
-  },
-  {
-    id: 5,
-    imgPath: "/img/icons/graphql.png",
-    name: "GraphQL",
-  },
-  {
-    id: 6,
-    imgPath: "/img/icons/apolloserver.png",
-    name: "Apollo Server",
+    imgPath: "/img/icons/reactquery.png",
+    name: "React Query",
   },
 ];
 

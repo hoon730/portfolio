@@ -298,7 +298,7 @@ const Home = ({ barcodeClick, onClick }: barcodeClickProps) => {
       <Inner className="inner">
         <TextBox className="text_box">
           <Text>
-            <span className="portfolio">FRONTEND DEVELOPER</span>
+            <span className="portfolio">WEB PUBLISHER</span>
           </Text>
           <BarcodeBox>
             <Barcode>

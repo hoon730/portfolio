@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import styled, { keyframes, css } from "styled-components";
 
 import gsap from "gsap";
@@ -144,21 +144,18 @@ const Rolling = styled.div<{ $isActive: boolean }>`
       : "none"};
 `;
 
-interface isClickProps {
+interface HeaderProps {
   isClick: boolean;
   projectClick: boolean;
 }
 
-const Header = ({ isClick, projectClick }: isClickProps) => {
+const Header = ({ isClick, projectClick }: HeaderProps) => {
   const [isHidden, setIsHidden] = useState(false);
-  const [scrollValue, setScrollValue] = useState(0);
   const [isMouseOn, setIsMouseOn] = useState(false);
   const [isMenuClick, setIsMenuClick] = useState(false);
   const [isLogoClick, setIsLogoClick] = useState(false);
 
-  useEffect(() => {
-    scrollValue;
-  }, []);
+  const navArr = useMemo(() => ["HOME", "PROJECTS", "CONTACT"], []);
 
   useGSAP(() => {
     const tl = gsap.timeline();
@@ -174,47 +171,56 @@ const Header = ({ isClick, projectClick }: isClickProps) => {
 
   useEffect(() => {
     let lastScrollY = 0;
+    let ticking = false;
 
-    const updateScrollValue = () => {
-      const currentScrollY = window.scrollY;
-      setScrollValue(currentScrollY);
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
 
-      if (currentScrollY > lastScrollY && currentScrollY > 70) {
-        setIsHidden(true);
-      } else {
-        setIsHidden(false);
+          if (currentScrollY > lastScrollY && currentScrollY > 70) {
+            setIsHidden(true);
+          } else {
+            setIsHidden(false);
+          }
+
+          lastScrollY = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
       }
-
-      lastScrollY = currentScrollY;
     };
 
-    window.addEventListener("scroll", updateScrollValue);
-
-    return () => {
-      window.removeEventListener("scroll", updateScrollValue);
-    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navArr = ["HOME", "PROJECTS", "CONTACT"];
-
+  // 성능 최적화: DOM 조작 최적화
   useEffect(() => {
     const navItems = document.querySelectorAll(".navItem");
 
+    if (navItems.length === 0) return;
+
     navItems.forEach((item, index) => {
       const txt = navArr[index];
+      if (!txt) return;
 
-      const txtLength = txt.length;
-      for (let i = 0; i < txtLength; i++) {
+      // 기존 내용 정리
+      item.innerHTML = "";
+
+      const fragment = document.createDocumentFragment();
+      for (let i = 0; i < txt.length; i++) {
         const span = document.createElement("span");
         span.className = "letter";
-        span.innerHTML = txt[i];
+        span.textContent = txt[i];
         span.setAttribute("key", String(i));
-        item.appendChild(span);
+        fragment.appendChild(span);
       }
+      item.appendChild(fragment);
     });
-  }, []);
+  }, [navArr]);
 
-  const scrollToTop = () => {
+  const scrollToTop = useCallback(() => {
     setIsLogoClick(true);
 
     setTimeout(() => {
@@ -229,7 +235,19 @@ const Header = ({ isClick, projectClick }: isClickProps) => {
         },
       });
     }, 800);
-  };
+  }, []);
+
+  const handleMenuClick = useCallback(() => {
+    setIsMenuClick(true);
+  }, []);
+
+  const handleMouseEnter = useCallback(() => {
+    setIsMouseOn(true);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsMouseOn(false);
+  }, []);
 
   return (
     <Container
@@ -244,9 +262,9 @@ const Header = ({ isClick, projectClick }: isClickProps) => {
       </LogoBox>
 
       <MenuIcon
-        onMouseEnter={() => setIsMouseOn(true)}
-        onMouseLeave={() => setIsMouseOn(false)}
-        onClick={() => setIsMenuClick(true)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleMenuClick}
       >
         <BarBox className="barBox">
           <Bar className={isMouseOn ? "active" : ""} />

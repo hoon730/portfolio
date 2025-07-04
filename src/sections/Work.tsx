@@ -370,6 +370,15 @@ const Work = ({ setBarcodeClick, setProjectClick }: BarcodeProps) => {
     setProjectClick(true);
   };
 
+  // Receipt 열릴 때 스크롤 제어
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [isOpen]);
+
   useGSAP(() => {
     const workCtx = gsap.context(() => {
       gsap.timeline({

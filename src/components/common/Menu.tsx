@@ -1,4 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 import styled, { keyframes, css } from "styled-components";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
@@ -13,17 +19,16 @@ gsap.registerPlugin(ScrollToPlugin);
 
 const roll = keyframes`
   0% {
-    height: 0;
-    background: #f0f0f0;
+    transform: translateY(100vh);
   }
-  40% {
-    height: 100%;
+  25% {
+    transform: translateY(0);
   }
   60% {
-    height: 100%;
+    transform: translateY(0);
   }
   100% {
-    height: 0;
+    transform: translateY(100vh);
   }
 `;
 
@@ -46,14 +51,16 @@ const Rolling = styled.div<{ $isActive: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 0;
+  width: 100vw;
+  height: 100vh;
   background: #f0f0f0;
   pointer-events: none;
+  transform: translateY(100vh);
+  z-index: 999;
   animation: ${({ $isActive }) =>
     $isActive
       ? css`
-          ${roll} 1.5s 0.2s  ease-out both
+          ${roll} 3.5s 0.2s cubic-bezier(0.25, 0.8, 0.25, 1) both
         `
       : "none"};
 `;
@@ -106,7 +113,7 @@ const Nav = styled.nav`
       overflow: hidden;
       position: relative;
 
-      a {
+      div {
         display: inline-block;
         font: bold italic 2.2rem/1 "Archivo Narrow", sans-serif;
         letter-spacing: 1px;
@@ -149,7 +156,7 @@ const Nav = styled.nav`
       padding: 50px 0;
 
       li {
-        a {
+        div {
           font: bold italic 3.5rem/1 "Archivo Narrow", sans-serif;
         }
       }
@@ -278,131 +285,170 @@ interface MenuProps {
   setIsMenuClick: (value: boolean) => void;
 }
 
-const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
-  const [isNavClick, setIsNavClick] = useState(false);
+const Menu: React.FC<MenuProps> = ({ isMenuClick, setIsMenuClick }) => {
   const [isActive, setIsActive] = useState(false);
-  const navTopRefs = useRef<(HTMLAnchorElement | null)[]>([]);
-  const navBottomRefs = useRef<(HTMLAnchorElement | null)[]>([]);
-  const closeRef = useRef<HTMLDivElement>(null);
-  const backgroundRef = useRef<HTMLDivElement>(null);
-  const navItems = [
-    { name: "HOME", id: "home" },
-    { name: "ABOUT", id: "about" },
-    { name: "WORK", id: "work" },
-  ];
+  const [isNavClick, setIsNavClick] = useState(false);
 
+  const backgroundRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLDivElement>(null);
+  const navTopRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const navBottomRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // 성능 최적화: navItems를 useMemo로 메모이제이션
+  const navItems = useMemo(
+    () => [
+      { name: "HOME", id: "home" },
+      { name: "ABOUT", id: "about" },
+      { name: "WORK", id: "work" },
+    ],
+    []
+  );
+
+  // 성능 최적화: DOM 조작 최적화
   useEffect(() => {
-    navItems.forEach((text, index) => {
-      if (navTopRefs.current[index] && navBottomRefs.current[index]) {
-        text.name.split("").forEach((char) => {
+    navItems.forEach((item, index) => {
+      const topRef = navTopRefs.current[index];
+      const bottomRef = navBottomRefs.current[index];
+
+      if (topRef && bottomRef && !topRef.hasChildNodes()) {
+        const topFragment = document.createDocumentFragment();
+        const bottomFragment = document.createDocumentFragment();
+
+        item.name.split("").forEach((char) => {
           const topSpan = document.createElement("span");
           const bottomSpan = document.createElement("span");
+
           topSpan.textContent = char;
           topSpan.classList.add("topSpan");
           bottomSpan.textContent = char;
           bottomSpan.classList.add("bottomSpan");
-          navTopRefs.current[index]?.appendChild(topSpan);
-          navBottomRefs.current[index]?.appendChild(bottomSpan);
+
+          topFragment.appendChild(topSpan);
+          bottomFragment.appendChild(bottomSpan);
         });
+
+        topRef.appendChild(topFragment);
+        bottomRef.appendChild(bottomFragment);
       }
     });
-  }, []);
+  }, [navItems]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsNavClick(false);
-    }, 500);
+    if (isNavClick) {
+      const timer = setTimeout(() => {
+        setIsNavClick(false);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
   }, [isNavClick]);
 
-  const handleMouseEnter = (
-    e: React.MouseEvent<HTMLLIElement>,
-    idx: number
-  ) => {
-    const topSpan = e.currentTarget.querySelectorAll(".topSpan");
-    const bottomSpan = e.currentTarget.querySelectorAll(".bottomSpan");
-    const secondRef = navBottomRefs.current[idx];
-    gsap.to(topSpan, {
-      y: "-100%",
-      duration: 0.3,
-      stagger: 0.05,
-      ease: "power1.out",
-    });
-    gsap.to(secondRef, {
-      top: 0,
-    });
-    gsap.to(bottomSpan, {
-      y: 0,
-      duration: 0.3,
-      stagger: 0.05,
-      ease: "power1.out",
-    });
-  };
+  // 성능 최적화: useCallback으로 이벤트 핸들러 최적화
+  const handleMouseEnter = useCallback(
+    (e: React.MouseEvent<HTMLLIElement>, idx: number) => {
+      const topSpan = e.currentTarget.querySelectorAll(".topSpan");
+      const bottomSpan = e.currentTarget.querySelectorAll(".bottomSpan");
+      const secondRef = navBottomRefs.current[idx];
 
-  const handleMouseLeave = (
-    e: React.MouseEvent<HTMLLIElement>,
-    idx: number
-  ) => {
-    const topSpan = e.currentTarget.querySelectorAll(".topSpan");
-    const bottomSpan = e.currentTarget.querySelectorAll(".bottomSpan");
-    const secondRef = navBottomRefs.current[idx];
-    gsap.to(topSpan, {
-      y: 0,
-      duration: 0.3,
-      stagger: 0.05,
-      ease: "power1.out",
-    });
-    gsap.to(secondRef, {
-      top: "100%",
-    });
-    gsap.to(bottomSpan, {
-      y: "100%",
-      duration: 0.3,
-      stagger: 0.05,
-      ease: "power1.in",
-    });
-  };
+      gsap.to(topSpan, {
+        y: "-100%",
+        duration: 0.3,
+        stagger: 0.05,
+        ease: "power1.out",
+      });
+      gsap.to(secondRef, {
+        top: 0,
+      });
+      gsap.to(bottomSpan, {
+        y: 0,
+        duration: 0.3,
+        stagger: 0.05,
+        ease: "power1.out",
+      });
+    },
+    []
+  );
 
-  const startRotating = () => {
-    gsap.to(closeRef.current, {
-      rotate: 90,
-      transformOrigin: "50% 50%",
-      duration: 0.5,
-      ease: "power4.out",
-    });
-  };
+  const handleMouseLeave = useCallback(
+    (e: React.MouseEvent<HTMLLIElement>, idx: number) => {
+      const topSpan = e.currentTarget.querySelectorAll(".topSpan");
+      const bottomSpan = e.currentTarget.querySelectorAll(".bottomSpan");
+      const secondRef = navBottomRefs.current[idx];
 
-  const endRotating = () => {
-    gsap.to(closeRef.current, {
-      rotate: -90,
-      transformOrigin: "50% 50%",
-      duration: 0.5,
-      ease: "power1.out",
-    });
-  };
+      gsap.to(topSpan, {
+        y: 0,
+        duration: 0.3,
+        stagger: 0.05,
+        ease: "power1.out",
+      });
+      gsap.to(secondRef, {
+        top: "100%",
+      });
+      gsap.to(bottomSpan, {
+        y: "100%",
+        duration: 0.3,
+        stagger: 0.05,
+        ease: "power1.in",
+      });
+    },
+    []
+  );
 
-  const scrollToSection = (id: string) => {
-    gsap.set(window, { scrollTo: { y: `#${id}` } });
-  };
-
-  const handleNavClick = (id: string) => {
-    if (window.innerWidth > 430) {
-      setIsActive(true);
-
-      setTimeout(() => {
-        scrollToSection(id);
-      }, 800);
-
-      setTimeout(() => {
-        setIsActive(false);
-        setIsMenuClick(false);
-      }, 1800);
-    } else {
-      setTimeout(() => {
-        scrollToSection(id);
-        setIsMenuClick(false);
-      }, 500);
+  const startRotating = useCallback(() => {
+    if (closeRef.current) {
+      gsap.to(closeRef.current, {
+        rotate: 90,
+        transformOrigin: "50% 50%",
+        duration: 0.5,
+        ease: "power4.out",
+      });
     }
-  };
+  }, []);
+
+  const endRotating = useCallback(() => {
+    if (closeRef.current) {
+      gsap.to(closeRef.current, {
+        rotate: -90,
+        transformOrigin: "50% 50%",
+        duration: 0.5,
+        ease: "power1.out",
+      });
+    }
+  }, []);
+
+  const scrollToSection = useCallback((id: string) => {
+    gsap.set(window, { scrollTo: { y: `#${id}` } });
+  }, []);
+
+  const handleNavClick = useCallback(
+    (id: string) => {
+      if (window.innerWidth > 430) {
+        setIsActive(true);
+
+        setTimeout(() => {
+          scrollToSection(id);
+        }, 2000);
+
+        setTimeout(() => {
+          setIsActive(false);
+          setIsMenuClick(false);
+        }, 3900);
+      } else {
+        setTimeout(() => {
+          scrollToSection(id);
+          setIsMenuClick(false);
+        }, 500);
+      }
+    },
+    [scrollToSection, setIsMenuClick]
+  );
+
+  const handleBackgroundClick = useCallback(() => {
+    setIsMenuClick(false);
+  }, [setIsMenuClick]);
+
+  const handleCloseClick = useCallback(() => {
+    setIsMenuClick(false);
+  }, [setIsMenuClick]);
 
   return (
     <>
@@ -410,7 +456,7 @@ const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
         ref={backgroundRef}
         $isMenuClick={isMenuClick}
         className={isMenuClick ? "active" : ""}
-        onClick={() => setIsMenuClick(false)}
+        onClick={handleBackgroundClick}
       />
       <Rolling $isActive={isActive} />
       <Container className={isMenuClick ? "active" : ""}>
@@ -419,7 +465,7 @@ const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
             <CloseBox>
               <Close
                 ref={closeRef}
-                onClick={() => setIsMenuClick(false)}
+                onClick={handleCloseClick}
                 onMouseEnter={startRotating}
                 onMouseLeave={endRotating}
               >
@@ -430,19 +476,17 @@ const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
               <ul>
                 {navItems.map((item, idx) => (
                   <li
-                    key={idx}
+                    key={item.id}
                     onClick={() => handleNavClick(item.id)}
                     onMouseEnter={(e) => handleMouseEnter(e, idx)}
                     onMouseLeave={(e) => handleMouseLeave(e, idx)}
                   >
-                    <a
-                      href="#none"
-                      ref={(el) => (navTopRefs.current[idx] = el)}
-                    ></a>
-                    <a
-                      href="#none"
-                      ref={(el) => (navBottomRefs.current[idx] = el)}
-                    ></a>
+                    <div
+                      ref={(el) => el && (navTopRefs.current[idx] = el)}
+                    ></div>
+                    <div
+                      ref={(el) => el && (navBottomRefs.current[idx] = el)}
+                    ></div>
                   </li>
                 ))}
               </ul>
@@ -457,12 +501,16 @@ const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
                 </a>
               </li>
               <li>
-                <a href="https://github.com/hoon730">
+                <a
+                  href="https://github.com/hoon730"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <IoLogoGithub />
                 </a>
               </li>
               <li>
-                <a href="#none">
+                <a href="tel:01043487148">
                   <CiMobile3 />
                 </a>
               </li>
@@ -483,4 +531,4 @@ const Menu = ({ isMenuClick, setIsMenuClick }: MenuProps) => {
   );
 };
 
-export default Menu;
+export default React.memo(Menu);

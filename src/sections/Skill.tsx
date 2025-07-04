@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
 import {
-  frontendData,
-  backendData,
+  mainData,
+  libraryData,
   deploymentData,
   utilitiesData,
 } from "../utils";
@@ -128,13 +128,13 @@ const Skill = () => {
         <SkillBox ref={boxRef}>
           <Face
             rotate={`rotateY(0deg) translateZ(${calcTranslateZ}px)`}
-            skills={frontendData}
-            title="FRONTEND"
+            skills={mainData}
+            title="MAIN"
           />
           <Face
             rotate={`rotateY(-270deg) translateZ(${calcTranslateZ}px)`}
-            skills={backendData}
-            title="BACKEND"
+            skills={libraryData}
+            title="LIBRARY"
           />
           <Face
             rotate={`rotateY(-180deg) translateZ(${calcTranslateZ}px)`}
@@ -144,7 +144,7 @@ const Skill = () => {
           <Face
             rotate={`rotateY(-90deg) translateZ(${calcTranslateZ}px)`}
             skills={utilitiesData}
-            title="UTILITIES"
+            title="UTILS"
           />
         </SkillBox>
         <div ref={textRightRef} className="text right_text">
