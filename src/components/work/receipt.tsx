@@ -20,10 +20,10 @@ const roll = keyframes`
   0% {
     transform: translateY(100vh);
   }
-  30% {
+  40% {
     transform: translateY(0);
   }
-  70% {
+  60% {
     transform: translateY(0);
   }
   100% {
@@ -56,7 +56,7 @@ const Background = styled.div<{ $isclick: boolean }>`
   transform: translateY(100vh);
 
   &.active {
-    animation: ${roll} 3.5s 0.2s cubic-bezier(0.25, 0.8, 0.25, 1) both;
+    animation: ${roll} 2.5s 0.2s cubic-bezier(0.25, 0.8, 0.25, 1) both;
   }
 `;
 

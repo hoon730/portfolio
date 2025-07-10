@@ -21,7 +21,7 @@ const roll = keyframes`
   0% {
     transform: translateY(100vh);
   }
-  25% {
+  40% {
     transform: translateY(0);
   }
   60% {
@@ -60,7 +60,7 @@ const Rolling = styled.div<{ $isActive: boolean }>`
   animation: ${({ $isActive }) =>
     $isActive
       ? css`
-          ${roll} 3.5s 0.2s cubic-bezier(0.25, 0.8, 0.25, 1) both
+          ${roll} 2.5s 0.2s cubic-bezier(0.25, 0.8, 0.25, 1) both
         `
       : "none"};
 `;
@@ -112,6 +112,7 @@ const Nav = styled.nav`
     li {
       overflow: hidden;
       position: relative;
+      cursor: pointer;
 
       div {
         display: inline-block;
@@ -422,16 +423,23 @@ const Menu: React.FC<MenuProps> = ({ isMenuClick, setIsMenuClick }) => {
   const handleNavClick = useCallback(
     (id: string) => {
       if (window.innerWidth > 430) {
-        setIsActive(true);
+        // 1. Container 먼저 올라가기 시작
+        setIsMenuClick(false);
 
+        // 2. Container가 완전히 올라간 후 Rolling 애니메이션 시작
+        setTimeout(() => {
+          setIsActive(true);
+        }, 500); // Container transition 시간(0.5s) 후
+
+        // 3. Rolling 애니메이션 40%~60% 구간(화면이 완전히 가려진 상태)에서 스크롤 이동
         setTimeout(() => {
           scrollToSection(id);
-        }, 2000);
+        }, 1500); // Container(0.5s) + Rolling delay(0.2s) + Rolling 50% 지점(0.8s)
 
+        // 4. Rolling 애니메이션 완료 후 상태 초기화
         setTimeout(() => {
           setIsActive(false);
-          setIsMenuClick(false);
-        }, 3900);
+        }, 3700); // Container(0.5s) + Rolling 전체 시간(3.2s)
       } else {
         setTimeout(() => {
           scrollToSection(id);
